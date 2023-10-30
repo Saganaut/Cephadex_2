@@ -1,0 +1,231 @@
+from datetime import datetime, timedelta
+from models.decks.deck import Deck
+from models.group.group import Group
+from models.quiz.quiz import Test
+from models.user.subscription_plan import SubscriptionPlan
+from models.association_tables import user_group_association, distribution, source_files
+from models.user.usage_record import UsageRecord
+from run.extensions import db
+from typing import Optional
+from models.helpers.log_decorators import log_decorator
+from config.settings import TOKENS_PER_PAGE
+from flask_login import UserMixin
+import uuid
+
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String(20), nullable=True, unique=True)
+    password = db.Column(db.String(80), nullable=True)
+    email = db.Column(db.String(255), nullable=False)
+    email_confirmed_at = db.Column(db.DateTime())
+    first_name = db.Column(db.String(50), nullable=True)
+    last_name = db.Column(db.String(50), nullable=True)
+    decks = db.relationship(
+        "Deck", backref=db.backref("user", lazy="joined"), lazy="select"
+    )
+    ## external auth + external type
+    external_id = db.Column(db.String(255), nullable=True)
+    external_type = db.Column(db.String(255), nullable=True)
+    time_created = db.Column(db.DateTime, default=datetime.utcnow)
+    time_accessed = db.Column(
+        db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+    )
+    test = db.relationship("Test", secondary=distribution, backref="taker")
+    account_type = db.Column(db.String(255), nullable=True, default="free")
+    account_status = db.Column(db.String(255), nullable=True, default="free")
+    account_expiration = db.Column(db.DateTime, nullable=True)
+    account_expiration_reason = db.Column(db.String(255), nullable=True)
+    gender = db.Column(db.String(255), nullable=True)
+    pic = db.Column(db.String(255), nullable=True)
+    contacted_email = db.Column(db.Boolean, default=False)
+    dob = db.Column(db.DateTime, nullable=True)
+    timezone = db.Column(db.String(64))
+    subscription_plan = db.Column(
+        db.Integer, db.ForeignKey("subscription_plans.id"), nullable=False, default=1
+    )
+    subscription_start_date = db.Column(db.DateTime)
+    subscription_end_date = db.Column(db.DateTime)
+    latest_roll_over = db.Column(db.DateTime)
+    groups = db.relationship("Group", secondary=user_group_association, backref="users")
+    role = db.Column(db.String(255), nullable=True)
+    stripe_customer_id = db.Column(db.String(255), nullable=True)
+    guest = db.Column(db.Boolean, default=False)
+    used_trial = db.Column(db.Boolean, default=False)
+    fs_uniquifier = db.Column(
+        db.String(255), unique=True, nullable=False, default=lambda: str(uuid.uuid4())
+    )
+    active = db.Column(db.Boolean(), nullable=False, default=True)
+
+    def member_since(self) -> str:
+        return self.time_created.strftime("%b %Y")
+
+    def quantity_decks(self) -> int:
+        return len(self.decks)
+
+    def quantity_cards(self) -> int:
+        return sum(len(deck.cards) for deck in self.decks)
+
+    def quantity_tests(self) -> int:
+        return Test.query.filter_by(creator=self.id).count()
+
+    def quantity_files(self) -> int:
+        return (
+            Deck.query.join(source_files)
+            .filter(source_files.c.deck_id == Deck.id)
+            .filter(Deck.user_id == self.id)
+            .count()
+        )
+
+    def quantity_groups(self) -> int:
+        return Group.query.filter_by(creator_id=self.id).count()
+
+    def quantity_decks_public(self) -> int:
+        return Deck.query.filter_by(user_id=self.id, public=True).count()
+
+    def quantity_cards_mastered(self) -> int:
+        counter = 0
+        for deck in self.decks:
+            for card in deck.cards:
+                if card.box_id == 3:
+                    counter += 1
+        return counter
+
+    def quantity_cards_learning(self) -> int:
+        counter = 0
+        for deck in self.decks:
+            for card in deck.cards:
+                if card.box_id != 3 and card.times_asked != 0:
+                    counter += 1
+        return counter
+
+    def quantity_cards_new(self) -> int:
+        counter = 0
+        for deck in self.decks:
+            for card in deck.cards:
+                if card.times_asked == 0:
+                    counter += 1
+        return counter
+
+    def remaining_credit(self) -> float:
+        if usage_record := (
+            UsageRecord.query.filter_by(user_id=self.id)
+            .order_by(UsageRecord.date.desc())
+            .first()
+        ):
+            return round(usage_record.remaining_count / TOKENS_PER_PAGE)
+        subscription_plan = SubscriptionPlan.query.filter_by(
+            id=self.subscription_plan
+        ).first()
+        new_record = UsageRecord(
+            user_id=self.id,
+            operation_type="initializing",
+            time_period="month",
+            limit_count=subscription_plan.limit_count,
+            operation_count=0,
+            remaining_count=subscription_plan.limit_count,
+        )
+
+        db.session.add(new_record)
+        db.session.commit()
+        return round(new_record.remaining_count / 682)
+
+    def roll_over_date(self) -> str:
+        if self.latest_roll_over:
+            next_roll_over = self.latest_roll_over + timedelta(days=31)
+        else:
+            next_roll_over = self.subscription_start_date + timedelta(days=31)
+        return next_roll_over.strftime("%b %d, %Y")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "email_confirmed_at": self.email_confirmed_at.isoformat()
+            if self.email_confirmed_at
+            else None,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "external_id": self.external_id,
+            "external_type": self.external_type,
+            "time_created": self.time_created.isoformat(),
+            "time_accessed": self.time_accessed.isoformat(),
+            "account_type": self.account_type,
+            "account_status": self.account_status,
+            "account_expiration": self.account_expiration.isoformat()
+            if self.account_expiration
+            else None,
+            "account_expiration_reason": self.account_expiration_reason,
+            "gender": self.gender,
+            "pic": self.pic,
+            "contacted_email": self.contacted_email,
+            "dob": self.dob.isoformat() if self.dob else None,
+            "timezone": self.timezone,
+            "subscription_plan": self.subscription_plan,
+            "subscription_start_date": self.subscription_start_date.isoformat()
+            if self.subscription_start_date
+            else None,
+            "subscription_end_date": self.subscription_end_date.isoformat()
+            if self.subscription_end_date
+            else None,
+            "latest_roll_over": self.latest_roll_over.isoformat()
+            if self.latest_roll_over
+            else None,
+            "role": self.role,
+            "stripe_customer_id": self.stripe_customer_id,
+            "guest": self.guest,
+            "used_trial": self.used_trial,
+            "member_since": self.member_since(),
+            "quantity_decks": self.quantity_decks(),
+            "quantity_cards": self.quantity_cards(),
+            "quantity_tests": self.quantity_tests(),
+            "quantity_files": self.quantity_files(),
+            "quantity_groups": self.quantity_groups(),
+            "quantity_decks_public": self.quantity_decks_public(),
+            "quantity_cards_mastered": self.quantity_cards_mastered(),
+            "quantity_cards_learning": self.quantity_cards_learning(),
+            "quantity_cards_new": self.quantity_cards_new(),
+            "remaining_credit": self.remaining_credit(),
+            "roll_over_date": self.roll_over_date(),
+        }
+
+    @log_decorator
+    def perform_operation(
+        self, operation_type: str, n: int, operation_details: str = None
+    ) -> "Optional[bool]":
+        # Check the user's remaining count for this time period
+        usage_record = (
+            UsageRecord.query.filter_by(user_id=self.id)
+            .order_by(UsageRecord.date.desc())
+            .first()
+        )
+        subscription_plan = SubscriptionPlan.query.filter_by(
+            id=self.subscription_plan
+        ).first()
+        if usage_record is None:
+            remaining_count = subscription_plan.limit_count
+        else:
+            remaining_count = usage_record.remaining_count
+        if remaining_count - n <= 0:
+            return False
+        # Perform the operation and update the usage record
+        # Update the usage reco
+        new_record = UsageRecord(
+            user_id=self.id,
+            operation_type=operation_type,
+            time_period="month",
+            limit_count=subscription_plan.limit_count,
+        )
+        new_record.operation_count = n
+        if usage_record is None:
+            new_record.remaining_count = subscription_plan.limit_count - n
+        else:
+            new_record.remaining_count = usage_record.remaining_count - n
+        db.session.add(new_record)
+
+    def check_subscription_plan(self) -> "SubscriptionPlan":
+        subscription_plan = SubscriptionPlan.query.filter_by(
+            id=self.subscription_plan
+        ).first()
+        return subscription_plan

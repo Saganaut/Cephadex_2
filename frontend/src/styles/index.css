@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif; 
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.hero-title {
+  font-size: 3rem; /* Adjust font size as needed */
+  font-weight: bold;
+  line-height: 1.2; /* Adjust line height as needed */
+}
+
+.underlined-text {
+  position: relative;
+  display: inline-block; /* Make it block-level to control the pseudo-element positioning */
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -5px; /* Adjust this value to move the underline up or down */
+    height: 8px; /* Adjust underline thickness as needed */
+    background: linear-gradient(to right, transparent, #FFD700, transparent); 
+    border-radius: 5px; /* To make the underline slightly curved */
+    z-index: -1;
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  /* This essentially 'delays' the autofill background color change indefinitely */
+}
