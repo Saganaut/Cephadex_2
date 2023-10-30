@@ -14,8 +14,8 @@ class GameVote(db.Model):
 def to_dict():
     return {
         "id": self.id,
-        "answer_id": self.answer_id,
-        "user_id": self.user_id,
+        "answer-id": self.answer_id,
+        "user-id": self.user_id,
         "round": self.round,
-        "game_id": self.game_id,
+        "game-id": self.game_id,
     }

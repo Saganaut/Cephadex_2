@@ -33,12 +33,12 @@ class TestResult(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "test_id": self.test_id,
+            "test-id": self.test_id,
             "taker": self.taker,
             "creator": self.creator,
-            "due_date": self.due_date,
-            "start_time": self.start_time,
-            "end_time": self.end_time,
+            "due-date": self.due_date,
+            "start-time": self.start_time,
+            "end-time": self.end_time,
             "points": self.points,
             "correct": self.correct,
             "blank": self.blank,

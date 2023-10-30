@@ -14,10 +14,10 @@ class DeletedAccounts(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "user_id": self.user_id,
+            "user-id": self.user_id,
             "email": self.email,
-            "time_created": self.time_created.isoformat(),
-            "time_deleted": self.time_deleted.isoformat(),
+            "time-created": self.time_created.isoformat(),
+            "time-deleted": self.time_deleted.isoformat(),
             "reason": self.reason,
-            "reason_details": self.reason_details,
+            "reason-details": self.reason_details,
         }

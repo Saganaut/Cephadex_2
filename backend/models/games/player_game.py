@@ -13,10 +13,10 @@ class PlayerGame(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'player_id': self.player_id,
+            'player-id': self.player_id,
             'username': self.username,
-            'game_id': self.game_id,
+            'game-id': self.game_id,
             'score': self.score,
-            'turns_as_main_player': self.turns_as_main_player,
+            'turns-as-main-player': self.turns_as_main_player,
             'points': self.points,
         }

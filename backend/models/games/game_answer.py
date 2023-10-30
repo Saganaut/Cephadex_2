@@ -14,8 +14,8 @@ def to_dict():
     return {
         "id": self.id,
         "text": self.text,
-        "game_id": self.game_id,
+        "game-id": self.game_id,
         "round": self.round,
-        "user_id": self.user_id,
-        "is_correct": self.is_correct,
+        "user-id": self.user_id,
+        "is-correct": self.is_correct,
     }

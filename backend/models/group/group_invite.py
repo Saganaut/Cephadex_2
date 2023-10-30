@@ -19,10 +19,10 @@ class GroupInvite(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'group_id': self.group_id,
-            'user_id': self.user_id,
-            'invited_by_id': self.invited_by_id,
-            'invited_by_email': self.invited_by_email,
-            'time_created': self.time_created.isoformat() if self.time_created else None,
-            'time_updated': self.time_updated.isoformat() if self.time_updated else None,
+            'group-id': self.group_id,
+            'user-id': self.user_id,
+            'invited-by-id': self.invited_by_id,
+            'invited-by-email': self.invited_by_email,
+            'time-created': self.time_created.isoformat() if self.time_created else None,
+            'time-updated': self.time_updated.isoformat() if self.time_updated else None,
         }

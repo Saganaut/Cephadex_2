@@ -23,11 +23,11 @@ class Group(db.Model):
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "group_type": self.group_type,
-            "time_created": self.time_created,
-            "time_updated": self.time_updated,
-            "creator_id": self.creator_id,
+            "group-type": self.group_type,
+            "time-created": self.time_created,
+            "time-updated": self.time_updated,
+            "creator-id": self.creator_id,
             "avatar": self.avatar,
-            "is_private": self.is_private,
+            "is-private": self.is_private,
             "fav": self.fav
         }

@@ -16,13 +16,13 @@ class DeckFiles(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "file_name": self.file_name,
-            "file_path": self.file_path,
-            "file_type": self.file_type,
-            "file_size": self.file_size,
-            "text_string": self.text_string,
-            "create_type": self.create_type,
-            "time_created": self.time_created.isoformat() if self.time_created else None,  # converting time to string
+            "file-name": self.file_name,
+            "file-path": self.file_path,
+            "file-type": self.file_type,
+            "file-size": self.file_size,
+            "text-string": self.text_string,
+            "create-type": self.create_type,
+            "time-created": self.time_created.isoformat() if self.time_created else None,  # converting time to string
             "fav": self.fav
 
         

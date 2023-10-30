@@ -1,6 +1,6 @@
-
 from datetime import datetime
 from run.extensions import db
+
 
 class BlogPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,9 +18,6 @@ class BlogPost(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     category = db.Column(db.String(100))
 
-
-
-
     def to_json(self):
         return {
             "id": self.id,
@@ -28,11 +25,11 @@ class BlogPost(db.Model):
             "slug": self.slug,
             "content": self.content,
             "summary": self.summary,
-            "author_name": self.author_name,
+            "author-name": self.author_name,
             "tags": self.tags,
             "thumbnail": self.thumbnail,
-            "time_created": self.time_created,
-            "time_updated": self.time_updated,
+            "time-created": self.time_created,
+            "time-updated": self.time_updated,
             "views": self.views,
-            "user_id": self.user_id
+            "user-id": self.user_id,
         }

@@ -24,12 +24,12 @@ class QuestionResult(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "test_id": self.test_id,
+            "test-id": self.test_id,
             "taker": self.taker,
-            "question_id": self.question_id,
+            "question-id": self.question_id,
             "answer": self.answer,
             "points": self.points,
-            "time_created": self.time_created,
-            "quiz_result_id": self.quiz_result_id,
+            "time-created": self.time_created,
+            "quiz-result-id": self.quiz_result_id,
             "correct": self.correct,
         }

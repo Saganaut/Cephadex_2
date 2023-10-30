@@ -145,49 +145,49 @@ class User(db.Model, UserMixin):
             "email_confirmed_at": self.email_confirmed_at.isoformat()
             if self.email_confirmed_at
             else None,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
-            "external_id": self.external_id,
-            "external_type": self.external_type,
-            "time_created": self.time_created.isoformat(),
-            "time_accessed": self.time_accessed.isoformat(),
-            "account_type": self.account_type,
-            "account_status": self.account_status,
-            "account_expiration": self.account_expiration.isoformat()
+            "first-name": self.first_name,
+            "last-name": self.last_name,
+            "external-id": self.external_id,
+            "external-type": self.external_type,
+            "time-created": self.time_created.isoformat(),
+            "time-accessed": self.time_accessed.isoformat(),
+            "account-type": self.account_type,
+            "account-status": self.account_status,
+            "account-expiration": self.account_expiration.isoformat()
             if self.account_expiration
             else None,
-            "account_expiration_reason": self.account_expiration_reason,
+            "account-expiration-reason": self.account_expiration_reason,
             "gender": self.gender,
             "pic": self.pic,
-            "contacted_email": self.contacted_email,
+            "contacted-email": self.contacted_email,
             "dob": self.dob.isoformat() if self.dob else None,
             "timezone": self.timezone,
-            "subscription_plan": self.subscription_plan,
-            "subscription_start_date": self.subscription_start_date.isoformat()
+            "subscription-plan": self.subscription_plan,
+            "subscription-start-date": self.subscription_start_date.isoformat()
             if self.subscription_start_date
             else None,
-            "subscription_end_date": self.subscription_end_date.isoformat()
+            "subscription-end-date": self.subscription_end_date.isoformat()
             if self.subscription_end_date
             else None,
-            "latest_roll_over": self.latest_roll_over.isoformat()
+            "latest-roll-over": self.latest_roll_over.isoformat()
             if self.latest_roll_over
             else None,
             "role": self.role,
-            "stripe_customer_id": self.stripe_customer_id,
+            "stripe-customer-id": self.stripe_customer_id,
             "guest": self.guest,
-            "used_trial": self.used_trial,
-            "member_since": self.member_since(),
-            "quantity_decks": self.quantity_decks(),
-            "quantity_cards": self.quantity_cards(),
-            "quantity_tests": self.quantity_tests(),
-            "quantity_files": self.quantity_files(),
-            "quantity_groups": self.quantity_groups(),
-            "quantity_decks_public": self.quantity_decks_public(),
-            "quantity_cards_mastered": self.quantity_cards_mastered(),
-            "quantity_cards_learning": self.quantity_cards_learning(),
-            "quantity_cards_new": self.quantity_cards_new(),
-            "remaining_credit": self.remaining_credit(),
-            "roll_over_date": self.roll_over_date(),
+            "used-trial": self.used_trial,
+            "member-since": self.member_since(),
+            "quantity-decks": self.quantity_decks(),
+            "quantity-cards": self.quantity_cards(),
+            "quantity-tests": self.quantity_tests(),
+            "quantity-files": self.quantity_files(),
+            "quantity-groups": self.quantity_groups(),
+            "quantity-decks-public": self.quantity_decks_public(),
+            "quantity-cards-mastered": self.quantity_cards_mastered(),
+            "quantity-cards-learning": self.quantity_cards_learning(),
+            "quantity-cards-new": self.quantity_cards_new(),
+            "remaining-credit": self.remaining_credit(),
+            "roll-over-date": self.roll_over_date(),
         }
 
     @log_decorator

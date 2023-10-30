@@ -17,7 +17,7 @@ class JobNotification(db.Model):
     input_details = db.Column(db.String(128), nullable=True)
     extract_type = db.Column(db.String(128), nullable=True)
 
-    def to_dict():
+    def to_dict(self):
         return {
             "id": self.id,
             "user_id": self.user_id,
@@ -25,8 +25,8 @@ class JobNotification(db.Model):
             "state": self.state,
             "complete": self.complete,
             "notified": self.notified,
-            "time_created": self.time_created,
+            "time-created": self.time_created,
             "cost": self.cost,
-            "input_details": self.input_details,
-            "extract_type": self.extract_type,
+            "input-details": self.input_details,
+            "extract-type": self.extract_type,
         }

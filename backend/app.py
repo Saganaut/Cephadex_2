@@ -1,7 +1,5 @@
-
-
-
 import eventlet
+
 eventlet.monkey_patch(socket=False)
 from flask_cors import CORS
 
@@ -10,9 +8,7 @@ import datetime as dt
 import random
 from flask import g, redirect, render_template, request, session
 from flask import url_for, send_file, jsonify, make_response
-from models.models_ import (
-    Job, JobNotification, UsageRecord, User
-)
+from models.models_ import Job, JobNotification, UsageRecord, User
 from models.send_email import send_email
 from factory import create_app
 from run.extensions import db, socketio
@@ -25,10 +21,14 @@ from flask_wtf.csrf import generate_csrf
 from flask_login import login_user, logout_user, current_user, LoginManager
 
 
-
 app = create_app()
-cors = CORS(app, resources={r"/*": {"origins": "http://localhost:3000", "supports_credentials": True}})
-logging.getLogger('flask_cors').level = logging.DEBUG
+cors = CORS(
+    app,
+    resources={
+        r"/*": {"origins": "http://localhost:5173", "supports_credentials": True}
+    },
+)
+logging.getLogger("flask_cors").level = logging.DEBUG
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -38,18 +38,21 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-        
 @app.context_processor
 def inject_csrf_token():
     """Inject CSRF token into templates"""
     return dict(csrf_token=generate_csrf())
 
+
 @app.route("/api_0/csrf-token")
 def get_csrf_token():
     token = generate_csrf()  # generate a CSRF token
     response = make_response(jsonify({"detail": "CSRF cookie set"}))
-    response.set_cookie("csrf_token", token, secure=True, httponly=True, samesite='Strict')  # set the CSRF token as a cookie
+    response.set_cookie(
+        "csrf_token", token, secure=True, httponly=True, samesite="Strict"
+    )  # set the CSRF token as a cookie
     return response
+
 
 @app.after_request
 def after_request(response):
@@ -57,13 +60,17 @@ def after_request(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
-    response.headers["Referrer-Policy"] = "no-referrer-when-downgrade" ## ONLY FOR http AND LOCALHOST, FOR GOOGLE AUTH
-    return response    
+    response.headers[
+        "Referrer-Policy"
+    ] = "no-referrer-when-downgrade"  ## ONLY FOR http AND LOCALHOST, FOR GOOGLE AUTH
+    return response
+
 
 @app.before_request
 def before_request():
     """Addressing bug with import anki and feedback form"""
     g.feedback_form = None
+
 
 ###  REGISTERING BLUEPRINTS AFTER REQUESTS
 register_blueprints(app)
@@ -73,81 +80,99 @@ register_blueprints(app)
 def page_not_found(e):
     return jsonify({"error": "Page not found"}), 404
 
+
 @app.errorhandler(500)
 def internal_server_error(e):
     return jsonify({"error": "Internal server error"}), 500
+
 
 @app.errorhandler(405)
 def method_not_allowed(e):
     return jsonify({"error": "Method not allowed"}), 500
 
+
 @app.errorhandler(403)
 def forbidden(e):
     return jsonify({"error": "Forbidden"}), 500
+
 
 @app.errorhandler(401)
 def unauthorized(e):
     return jsonify({"error": "Unauthorized access"}), 500
 
-@app.route('/robots.txt')
+
+@app.route("/robots.txt")
 def robots():
     """For indexing"""
-    return send_file('static/robots.txt')
+    return send_file("static/robots.txt")
 
-@app.route('/sitemap.xml')
+
+@app.route("/sitemap.xml")
 def sitemap():
     """For indexing"""
-    return send_file('static/sitemap.xml')
+    return send_file("static/sitemap.xml")
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     """Home page"""
-    if not current_user.is_authenticated or current_user.guest is True: # type: ignore
-        return render_template('index.html')
+    if not current_user.is_authenticated or current_user.guest is True:  # type: ignore
+        return render_template("index.html")
     cache_buster = random.randint(1, 999999)
-    return redirect(url_for("deck_bp.view_decks")+'?v=' + str(cache_buster))
+    return redirect(url_for("deck_bp.view_decks") + "?v=" + str(cache_buster))
 
-@app.route('/testing1', methods = ['GET', 'POST'])
+
+@app.route("/testing1", methods=["GET", "POST"])
 def testing1():
     """test page"""
-    return render_template('testing1.html')
-        
-@app.route('/update_sidebar_state', methods=['POST'])
+    return render_template("testing1.html")
+
+
+@app.route("/update_sidebar_state", methods=["POST"])
 def update_sidebar_state():
     """Toggle side bar state"""
-    is_collapsed = request.form.get('sidebar-collapsed') == 'true'
-    session['sidebar-collapsed'] = is_collapsed
-    return '', 204  # return 204 No Content response
+    is_collapsed = request.form.get("sidebar-collapsed") == "true"
+    session["sidebar-collapsed"] = is_collapsed
+    return "", 204  # return 204 No Content response
 
-@app.route("/landingpage", methods = ["GET", "POST"])
+
+@app.route("/landingpage", methods=["GET", "POST"])
 def landingpage():
-    """ landing page, deprecated"""
+    """landing page, deprecated"""
     return render_template("landingpage.html", title="Landing Page")
 
 
 def notify(user_id):
-## find unnotified jobs  
+    ## find unnotified jobs
     if jobs := find_unnotified_jobs(user_id):
-## send notification
+        ## send notification
         for job in jobs:
-            if current_user.contacted_email is True: # type: ignore
-                send_email(current_user.email, current_user.first_name,'deck_ready')
-          ## mark job as notified
+            if current_user.contacted_email is True:  # type: ignore
+                send_email(current_user.email, current_user.first_name, "deck_ready")
+            ## mark job as notified
             job.notified = True
             db.session.commit()
     return True
 
+
 def find_unnotified_jobs(user_id: int) -> list[JobNotification]:
-    return JobNotification.query.filter_by(user_id=user_id,complete=True, notified=False).all()
+    return JobNotification.query.filter_by(
+        user_id=user_id, complete=True, notified=False
+    ).all()
+
 
 ## Look through Job Notification, find items that are not completed for each user
 def find_non_complete_job_notifs(user_id: int) -> list[JobNotification]:
     return JobNotification.query.filter_by(user_id=user_id, complete=False).all()
-## If not complete 
+
+
+## If not complete
+
 
 ## Look through jobs for that notification and check if jobs are completed
 def find_jobs_by_slug(slug: str):
     return Job.query.filter_by(slug=slug).order_by(Job.id.asc()).all()
+
 
 def check_jobs_complete(jobs: list[Job]) -> bool:
     counter = 0
@@ -156,16 +181,27 @@ def check_jobs_complete(jobs: list[Job]) -> bool:
             counter = counter + 1
     return counter == len(jobs)
 
+
 def job_error_checker(slug: str) -> bool:
     error_ratio = check_for_errors(slug)
     if error_ratio > 0:
         job_notification = JobNotification.query.filter_by(slug=slug).first()
-        credit = current_user.remaining_credit() * TOKENS_PER_PAGE + job_notification.cost + (TOKENS_PER_PAGE * 10)
-        new_usage_record = UsageRecord(user_id=job_notification.user_id,
-            date=dt.datetime.now(dt.timezone.utc), operation_type="credit",
-            operation_details="credit for job error", operation_count=0,
-            remaining_count = credit, status="active", time_period="month",
-            limit_count = credit)
+        credit = (
+            current_user.remaining_credit() * TOKENS_PER_PAGE
+            + job_notification.cost
+            + (TOKENS_PER_PAGE * 10)
+        )
+        new_usage_record = UsageRecord(
+            user_id=job_notification.user_id,
+            date=dt.datetime.now(dt.timezone.utc),
+            operation_type="credit",
+            operation_details="credit for job error",
+            operation_count=0,
+            remaining_count=credit,
+            status="active",
+            time_period="month",
+            limit_count=credit,
+        )
         db.session.add(new_usage_record)
         db.session.commit()
         return True
@@ -184,61 +220,65 @@ def check_for_errors(slug: str) -> float:
     return error_count / len(jobs)
 
 
-
-
 @app.route("/query", methods=["POST"])
 # @auth_required
 def query():
     progress = 0
     job_id = request.form["id"]
     data = Job.query.filter_by(slug=job_id).first()
-    num_completed = Job.query.filter_by(slug=job_id).filter(Job.state.in_(["completed", "failed"])).count()
+    num_completed = (
+        Job.query.filter_by(slug=job_id)
+        .filter(Job.state.in_(["completed", "failed"]))
+        .count()
+    )
     num_total = Job.query.filter_by(slug=job_id).count()
     slug = JobNotification.query.filter_by(slug=job_id).first()
     if num_total != 0:
-        progress = int(num_completed/num_total*95)
+        progress = int(num_completed / num_total * 95)
     if data is None:
         return jsonify({"state": None, "progress": None, "result": None}), 201
     else:
-        return jsonify(
-            {
-                "state": data.state,
-                "progress": progress,
-                "result": slug.state,
-            }
-        ), 201
+        return (
+            jsonify(
+                {
+                    "state": data.state,
+                    "progress": progress,
+                    "result": slug.state,
+                }
+            ),
+            201,
+        )
+
 
 @app.route("/has-session-notification", methods=["GET"])
 # @auth_required
 def has_session():
-    if 'slug' in session:
+    if "slug" in session:
         return jsonify({"hasSession": True})
     else:
         return jsonify({"hasSession": False})
-    
+
+
 @app.route("/notification_complete", methods=["POST"])
 # @auth_required
 def notification_complete():
-    slug_id= request.form["id"]
+    slug_id = request.form["id"]
     slug = JobNotification.query.filter_by(slug=slug_id).first()
-    session.pop('slug', None)
+    session.pop("slug", None)
 
     if job_error_checker(slug.slug):
-        slug.state = 'error'
+        slug.state = "error"
         db.session.commit()
         return jsonify("error"), 201
-    if slug.state == 'ready':
-        session.pop('slug', None)
-        slug.state = 'notified'
+    if slug.state == "ready":
+        session.pop("slug", None)
+        slug.state = "notified"
         db.session.commit()
         try:
-            send_email(current_user.email, current_user.first_name,'deck_ready')
+            send_email(current_user.email, current_user.first_name, "deck_ready")
         except Exception as e:
             logger.error("error sending email", e)
         return jsonify("success"), 201
- 
-
-
 
 
 def create_assessment(
@@ -303,10 +343,6 @@ def create_assessment(
     return response
 
 
-
-
-
-
 if __name__ == "__main__":
     print("app is main")
     app.run(debug=DEBUG)
@@ -322,7 +358,7 @@ else:
 
 ##@app.after_request
 ##def analyze_memory(response):
-  ##  objgraph.show_most_common_types(limit=10)
-  ##  objgraph.show_growth()
+##  objgraph.show_most_common_types(limit=10)
+##  objgraph.show_growth()
 
-   ## return response
+## return response

@@ -25,9 +25,9 @@ def to_dict(self):
         "subject": self.subject,
         "grade": self.grade,
         "topic": self.topic,
-        "sub_topic": self.sub_topic,
+        "sub-topic": self.sub_topic,
         "difficulty": self.difficulty,
         "concepts": self.concepts,
-        "time_created": self.time_created,
+        "time-created": self.time_created,
         "language": self.language,
     }

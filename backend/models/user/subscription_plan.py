@@ -20,8 +20,8 @@ class SubscriptionPlan(db.Model):
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "limit_count": self.limit_count,
-            "limit_time_period": self.limit_time_period,
+            "limit-count": self.limit_count,
+            "limit-time-period": self.limit_time_period,
             "price": self.price,
             "duration": self.duration,
         }

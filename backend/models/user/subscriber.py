@@ -23,8 +23,8 @@ class Subscriber(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
+            "first-name": self.first_name,
+            "last-name": self.last_name,
             "email": self.email,
-            "time_created": self.time_created.isoformat(),
+            "time-created": self.time_created.isoformat(),
         }

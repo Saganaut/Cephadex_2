@@ -17,10 +17,10 @@ class Images(db.Model):
 def to_dict():
     return {
         "id": self.id,
-        "blog_id": self.blog_id,
+        "blog-id": self.blog_id,
         "name": self.name,
         "type": self.type,
-        "image_url": self.image_url,
-        "thumbnail_url": self.thumbnail_url,
-        "time_created": self.time_created,
+        "image-url": self.image_url,
+        "thumbnail-url": self.thumbnail_url,
+        "time-created": self.time_created,
     }
