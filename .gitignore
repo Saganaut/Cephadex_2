@@ -1,4 +1,4 @@
-frontend/backenv/
+backend/backenv/
 frontend/node_modules/
 
 
@@ -37,11 +37,8 @@ backend/logs
 backend/report.csv
 backend/.vscode
 backend/instance
-backend/static/audio
-backend/static/files/*
-backend/static/profile_pictures
+
 backend/migrations
-backend/templates/quiz_bp/obsolete
 
 frontend/.pnp
 frontend/.pnp.js
