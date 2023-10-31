@@ -1,12 +1,16 @@
-import React from "react";
-import { ModalProvider } from "./ModalContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { UserProvider } from "./UserContext";
+import { store } from "@store/store";
+import React from "react";
 import { Provider } from "react-redux";
-import { store } from "../store/store";
-import { FilterProvider } from "./FilterContext";
 
-const ContextWrapper = ({ children }) => {
+import { FilterProvider } from "./FilterContext";
+import { ModalProvider } from "./ModalContext";
+import { UserProvider } from "./UserContext";
+
+interface ContextWrapperProps {
+  children: React.ReactNode;
+}
+const ContextWrapper: React.FC<ContextWrapperProps> = ({ children }) => {
   return (
     <div>
       <Provider store={store}>
