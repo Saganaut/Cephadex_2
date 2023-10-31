@@ -1,10 +1,11 @@
-import React from "react";
-import { useUser } from "../contexts/UserContext";
-import { Routes, Route } from "react-router-dom";
-import { publicRoutePaths } from "../routes/PublicRoutes";
-import { privateRoutePaths } from "../routes/PrivateRoutes";
+import { useUser } from "@contexts/UserContext";
+import React, { type ReactElement } from "react";
+import { Route, Routes } from "react-router-dom";
 
-const AppRoutes = () => {
+import { privateRoutePaths } from "../routes/PrivateRoutes";
+import { publicRoutePaths } from "../routes/PublicRoutes";
+
+const AppRoutes = (): ReactElement => {
   const { user } = useUser();
 
   const routesToRender = user ? privateRoutePaths : publicRoutePaths;
