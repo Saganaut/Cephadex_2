@@ -84,5 +84,8 @@ frontend/*.ntvs*
 frontend/*.njsproj
 frontend/*.sln
 frontend/*.sw?
+package-lock.json
+.prettierrc
+package.json
 
 ```

@@ -1,0 +1,157 @@
+import React from "react";
+import { useState } from "react";
+import { RadioGroup } from "@headlessui/react";
+import { CardTypeOption } from "@app/Features/Extract/CardTypeOption";
+type CardType =
+  | "Mix"
+  | "Definitions"
+  | "Fill in the blanks"
+  | "Multiple choice"
+  | "Translate"
+  | "Formulas"
+  | "Theories"
+  | "Rhyme"
+  | "Vocabulary builder"
+  | "Explain"
+  | "Discuss"
+  | "Transcribe"
+  | "Summarize"
+  | "Turn to notes "
+  | "Custom";
+
+const CardTypeSelector = () => {
+  let [card, setCard] = useState<CardType>("Mix");
+
+  const [showExpanded, setShowExpanded] = useState(false);
+
+  return (
+    <>
+      <div className="rounded-xl min-h-full bg-mariana-blue py-2 h-auto">
+        <RadioGroup value={card} onChange={(value: CardType) => setCard(value)}>
+          <RadioGroup.Label>
+            {" "}
+            <div className="flex justify-center">
+              <div className=" text-aquamarine">
+                Select one option from the list below
+              </div>
+            </div>
+          </RadioGroup.Label>
+          <div className="container mx-auto p-4">
+            <div className="grid lg:grid-cols-4  w-full md:grid-cols-2 sm:grid-cols-1 gap-0">
+              <div className="  rounded-full w-full px-2 py-4 mx-2">
+                <CardTypeOption name="Mix" />
+              </div>
+
+              <div className="rounded-full px-2 py-4 mx-2">
+                <CardTypeOption name="Definitions" />
+              </div>
+
+              <div className="rounded-full px-2 py-4 mx-2">
+                <CardTypeOption name="Fill in the blanks" />
+              </div>
+
+              <div className="rounded-full px-2 py-4 mx-2">
+                <CardTypeOption name="Multiple choice" />
+              </div>
+
+              <div
+                className={`${
+                  showExpanded ? "" : "hidden"
+                } rounded-full px-2 py-4 mx-2 expanded`}
+              >
+                <CardTypeOption name="Translate" />
+              </div>
+
+              <div
+                className={`${
+                  showExpanded ? "" : "hidden"
+                } rounded-full px-2 py-4 mx-2 expanded`}
+              >
+                <CardTypeOption name="Formulas" />
+              </div>
+              <div>
+                <div
+                  className={`${
+                    showExpanded ? "" : "hidden"
+                  } rounded-full px-2 py-4 mx-2 expanded`}
+                >
+                  <CardTypeOption name="Theories" />
+                </div>
+              </div>
+              <div
+                className={`${
+                  showExpanded ? "" : "hidden"
+                } rounded-full px-2 py-4 mx-2 expanded`}
+              >
+                <CardTypeOption name="Rhyme" />
+              </div>
+              <div
+                className={`${
+                  showExpanded ? "" : "hidden"
+                } rounded-full px-2 py-4 mx-2 expanded`}
+              >
+                <CardTypeOption name="Comprehension" />
+              </div>
+              <div
+                className={`${
+                  showExpanded ? "" : "hidden"
+                } rounded-full px-2 py-4 mx-2 expanded`}
+              >
+                <CardTypeOption name="Vocab builder" />
+              </div>
+              <div
+                className={`${
+                  showExpanded ? "" : "hidden"
+                } rounded-full px-2 py-4 mx-2 expanded`}
+              >
+                <CardTypeOption name="Explain" />
+              </div>
+              <div
+                className={`${
+                  showExpanded ? "" : "hidden"
+                } rounded-full px-2 py-4 mx-2 expanded`}
+              >
+                <CardTypeOption name="Discuss" />
+              </div>
+              <div
+                className={`${
+                  showExpanded ? "" : "hidden"
+                } rounded-full px-2 py-4 mx-2 expanded`}
+              >
+                <CardTypeOption name="Transcribe" />
+              </div>
+              <div
+                className={`${
+                  showExpanded ? "" : "hidden"
+                } rounded-full px-2 py-4 mx-2 expanded`}
+              >
+                <CardTypeOption name="Summarize" />
+              </div>
+              <div
+                className={`${
+                  showExpanded ? "" : "hidden"
+                } rounded-full px-2 py-4 mx-2 expanded`}
+              >
+                <CardTypeOption name="Turn to notes" />
+              </div>
+              <div
+                className={`${
+                  showExpanded ? "" : "hidden"
+                } rounded-full px-2 py-4 mx-2 expanded`}
+              >
+                <CardTypeOption name="Custom" />
+              </div>
+            </div>
+          </div>
+        </RadioGroup>
+      </div>{" "}
+      <div>
+        <button onClick={() => setShowExpanded((prev) => !prev)}>
+          {showExpanded ? "Hide Expanded" : "Show Expanded"}
+        </button>
+      </div>
+    </>
+  );
+};
+
+export { CardTypeSelector };
