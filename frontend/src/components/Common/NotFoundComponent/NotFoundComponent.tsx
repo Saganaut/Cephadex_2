@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { type ReactElement } from "react";
 
-function NotFoundComponent() {
-    return (
-        <div>
-            <h1>Component not found</h1>
-        </div>
-    );
-    }
+function NotFoundComponent(): ReactElement {
+  return (
+    <div>
+      <h1>Component not found</h1>
+    </div>
+  );
+}
 export default NotFoundComponent;
