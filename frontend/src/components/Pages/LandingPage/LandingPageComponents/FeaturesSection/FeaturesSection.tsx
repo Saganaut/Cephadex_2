@@ -1,5 +1,5 @@
-import React from "react";
 import { FeatureCard } from "@pages/LandingPage/LandingPageComponents/FeaturesSection/FeatureCard.js";
+import React, { type ReactElement } from "react";
 
 const featuresContent = [
   {
@@ -37,20 +37,20 @@ const featuresContent = [
   },
 ];
 
-const FeaturesSection = () => {
+const FeaturesSection = (): ReactElement => {
   return (
-    <div className="lg:h-screen bg-mariana-blue">
+    <div className="bg-mariana-blue lg:h-screen">
       <section className=" ">
-        <div className="container px-5 py-24 mx-auto">
-          <div className="flex flex-col text-center w-full mb-20">
-            <h1 className="sm:text-3xl text-2xl font-medium title-font text-aquamarine">
-              Who's it for?
+        <div className="container mx-auto px-5 py-24">
+          <div className="mb-20 flex w-full flex-col text-center">
+            <h1 className="title-font text-2xl font-medium text-aquamarine sm:text-3xl">
+              Who&apos;s it for?
             </h1>
-            <h2 className="text-xs text-white tracking-widest font-medium title-font mb-1">
+            <h2 className="title-font mb-1 text-xs font-medium tracking-widest text-white">
               A variety of users
             </h2>
           </div>
-          <div className="flex flex-wrap -m-4">
+          <div className="-m-4 flex flex-wrap">
             <FeatureCard {...featuresContent[0]} />
             <FeatureCard {...featuresContent[1]} />
             <FeatureCard {...featuresContent[2]} />

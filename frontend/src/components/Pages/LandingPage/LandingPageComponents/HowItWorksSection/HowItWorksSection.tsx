@@ -1,9 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
 import createWorksheetIcon from "@pages/LandingPage/LandingPageComponents/HowItWorksSection/assets/create-worksheet-icon.png";
 import CustomDeckIcon from "@pages/LandingPage/LandingPageComponents/HowItWorksSection/assets/custom-deck-icon.png";
 import MasterIcon from "@pages/LandingPage/LandingPageComponents/HowItWorksSection/assets/master-icon.png";
 import SelectInputIcon from "@pages/LandingPage/LandingPageComponents/HowItWorksSection/assets/select-input-icon.png";
+import React, { type ReactElement } from "react";
+import { Link } from "react-router-dom";
+
 const HowItWorksContent = [
   {
     image: createWorksheetIcon,
@@ -31,27 +32,38 @@ const HowItWorksContent = [
   },
 ];
 
-const HowItWorksCard = ({ image, title, text, link }) => {
+interface HowItWorksCardProps {
+  image: string;
+  title: string;
+  text: string;
+  link: string;
+}
+const HowItWorksCard: React.FC<HowItWorksCardProps> = ({
+  image,
+  title,
+  text,
+  link,
+}) => {
   return (
     <div>
-      <div className="flex justify-center items-center">
+      <div className="flex items-center justify-center">
         <img className="h-20" src={image} alt={title} />
       </div>
-      <h5 className="text-xl my-2">{title}</h5>
+      <h5 className="my-2 text-xl">{title}</h5>
       <p>{text}</p>
 
-      <Link className="text-blaze-orange my-3" to={link}>
+      <Link className="my-3 text-blaze-orange" to={link}>
         Study time
       </Link>
     </div>
   );
 };
 
-const HowItWorksSection = () => {
+const HowItWorksSection = (): ReactElement => {
   return (
-    <div className="md:h-screen p-10">
+    <div className="p-10 md:h-screen">
       <div className="flex flex-col md:h-full">
-        <div className="flex justify-center items-center mb-5">
+        <div className="mb-5 flex items-center justify-center">
           <h1 className="text-4xl font-bold text-electric-violet">
             How it works
           </h1>
@@ -59,7 +71,7 @@ const HowItWorksSection = () => {
 
         <div className="flex flex-col md:flex-row">
           {HowItWorksContent.map((contentItem, index) => (
-            <div key={index} className="w-full md:w-1/4 p-5">
+            <div key={index} className="w-full p-5 md:w-1/4">
               <HowItWorksCard {...contentItem} />
             </div>
           ))}

@@ -1,5 +1,5 @@
-import React from "react";
 import { TestimonialCard } from "@pages/LandingPage/LandingPageComponents/TestimonialSection/TestimonialCard";
+import React, { type ReactElement } from "react";
 
 const Testimnonials = [
   {
@@ -25,18 +25,18 @@ const Testimnonials = [
   },
 ];
 
-const TestimonialsSection = () => {
+const TestimonialsSection = (): ReactElement => {
   return (
     <>
       {/* Hello world */}
       <section className="body-font">
-        <div className="container px-5 py-24 mx-auto">
+        <div className="container mx-auto px-5 py-24">
           <div className="flex justify-center">
-            <h1 className="text-4xl font-bold text-center text-electric-violet p-5">
+            <h1 className="p-5 text-center text-4xl font-bold text-electric-violet">
               Hear what our users have to say
             </h1>
           </div>
-          <div className="flex flex-wrap m-4">
+          <div className="m-4 flex flex-wrap">
             <TestimonialCard {...Testimnonials[0]} />
             <TestimonialCard {...Testimnonials[1]} />
             <TestimonialCard {...Testimnonials[2]} />
