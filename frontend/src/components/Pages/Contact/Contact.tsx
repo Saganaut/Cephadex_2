@@ -1,22 +1,16 @@
-import React, {
-  useState,
-  useContext,
-  useEffect,
-  useCallback,
-  useMemo,
-} from "react";
-import { FeedbackForm } from "@pages/Contact/FeedbackForm";
 import { AddressInfo } from "@pages/Contact/AddressInfo";
+import { FeedbackForm } from "@pages/Contact/FeedbackForm";
+import React, { type ReactElement } from "react";
 
-const Contact = () => {
+const Contact = (): ReactElement => {
   return (
     <>
-      <section className="text-gray-600 body-font relative">
-        <div className="container mx-auto flex sm:flex-nowrap flex-wrap">
-          <div className="lg:w-2/3 md:w-1/2 bg-gray-300 rounded-lg overflow-hidden flex items-end justify-start relative">
+      <section className="body-font relative text-gray-600">
+        <div className="container mx-auto flex flex-wrap sm:flex-nowrap">
+          <div className="relative flex items-end justify-start overflow-hidden rounded-lg bg-gray-300 md:w-1/2 lg:w-2/3">
             <AddressInfo />
           </div>
-          <div className="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
+          <div className="mt-8 flex w-full flex-col bg-white md:ml-auto md:mt-0 md:w-1/2 md:py-8 lg:w-1/3">
             <FeedbackForm />
           </div>
         </div>

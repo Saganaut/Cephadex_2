@@ -1,51 +1,51 @@
-import React from "react";
+import React, { type ReactElement } from "react";
 
-const FeedbackForm = () => {
+const FeedbackForm = (): ReactElement => {
   return (
     <>
-      <h2 className="text-gray-900 text-lg mb-1 font-medium title-font">
+      <h2 className="title-font mb-1 text-lg font-medium text-gray-900">
         Feedback
       </h2>
-      <p className="leading-relaxed mb-5 text-gray-600">
+      <p className="mb-5 leading-relaxed text-gray-600">
         Post-ironic portland shabby chic echo park, banjo fashion axe
       </p>
       <div className="relative mb-4">
-        <label htmlFor="name" className="leading-7 text-sm text-gray-600">
+        <label htmlFor="name" className="text-sm leading-7 text-gray-600">
           Name
         </label>
         <input
           type="text"
           id="name"
           name="name"
-          className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          className="w-full rounded border border-gray-300 bg-white px-3 py-1 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
         />
       </div>
       <div className="relative mb-4">
-        <label htmlFor="email" className="leading-7 text-sm text-gray-600">
+        <label htmlFor="email" className="text-sm leading-7 text-gray-600">
           Email
         </label>
         <input
           type="email"
           id="email"
           name="email"
-          className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          className="w-full rounded border border-gray-300 bg-white px-3 py-1 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
         />
       </div>
       <div className="relative mb-4">
-        <label htmlFor="message" className="leading-7 text-sm text-gray-600">
+        <label htmlFor="message" className="text-sm leading-7 text-gray-600">
           Message
         </label>
         <textarea
           id="message"
           name="message"
-          className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+          className="h-32 w-full resize-none rounded border border-gray-300 bg-white px-3 py-1 text-base leading-6 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
           defaultValue={""}
         />
       </div>
-      <button className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+      <button className="rounded border-0 bg-indigo-500 px-6 py-2 text-lg text-white hover:bg-indigo-600 focus:outline-none">
         Button
       </button>
-      <p className="text-xs text-gray-500 mt-3">
+      <p className="mt-3 text-xs text-gray-500">
         Chicharrones blog helvetica normcore iceland tousled brook viral
         artisan.
       </p>
