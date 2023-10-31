@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import { PricingCard } from "@pages/Pricing/PricingCard";
+import React, { type ReactElement, useState } from "react";
 
 const PricingPlans = [
   {
@@ -59,28 +59,28 @@ const PricingPlans = [
   },
 ];
 
-const Pricing = () => {
+const Pricing = (): ReactElement => {
   const [monthly, setMonthly] = useState(true);
 
-  const toggleMonthly = () => {
+  const toggleMonthly = (): void => {
     setMonthly(!monthly);
     console.log(monthly);
   };
 
   return (
     <div>
-      <section className="text-gray-600 body-font overflow-hidden">
-        <div className="container px-5 py-24 mx-auto">
-          <div className="flex flex-col text-center w-full mb-20">
-            <h1 className="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">
+      <section className="body-font overflow-hidden text-gray-600">
+        <div className="container mx-auto px-5 py-24">
+          <div className="mb-20 flex w-full flex-col text-center">
+            <h1 className="title-font mb-2 text-3xl font-medium text-gray-900 sm:text-4xl">
               Pricing
             </h1>
-            <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-500">
+            <p className="mx-auto text-base leading-relaxed text-gray-500 lg:w-2/3">
               Choose a plan to suit your needs.
             </p>
-            <div className="flex mx-auto border-2 border-electric-violet rounded overflow-hidden mt-6">
+            <div className="mx-auto mt-6 flex overflow-hidden rounded border-2 border-electric-violet">
               <button
-                className={`py-1 px-4 ${
+                className={`px-4 py-1 ${
                   monthly ? "bg-electric-violet text-white" : ""
                 } focus:outline-none`}
                 onClick={toggleMonthly}
@@ -89,7 +89,7 @@ const Pricing = () => {
                 Monthly{" "}
               </button>
               <button
-                className={`py-1 px-4 ${
+                className={`px-4 py-1 ${
                   !monthly ? "bg-electric-violet  text-white" : ""
                 } focus:outline-none`}
                 onClick={toggleMonthly}
@@ -98,7 +98,7 @@ const Pricing = () => {
               </button>
             </div>
           </div>
-          <div className="flex flex-wrap m-4">
+          <div className="m-4 flex flex-wrap">
             {PricingPlans.map((plan, index) => (
               <PricingCard key={index} plan={plan} monthly={monthly} />
             ))}

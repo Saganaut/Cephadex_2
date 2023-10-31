@@ -1,12 +1,7 @@
-import React, { useState, useContext, useEffect, useCallback, useMemo } from 'react';
+import React, { type ReactElement } from "react";
 
+const Terms = (): ReactElement => {
+  return <div>Terms</div>;
+};
 
-const Terms = () => {
-    return (
-        <div>
-            Terms
-        </div>
-    )
-}
-
-export { Terms }
+export { Terms };

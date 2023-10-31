@@ -1,27 +1,31 @@
-import React, { useState, useContext, useEffect, useCallback, useMemo } from 'react';
+import React from "react";
 
-
-const PricingCardListItems = ({ feature }) => {
-    return (
-        <div>
-            <p className="flex items-center text-gray-600 mb-6">
-        <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-blaze-orange text-white rounded-full flex-shrink-0">
-            <svg
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2.5"
-                className="w-3 h-3"
-                viewBox="0 0 24 24"
-            >
-                <path d="M20 6L9 17l-5-5" />
-            </svg>
-        </span>
-       {feature}
-    </p>
-        </div>
-    )
+interface PricingCardListItemsProps {
+  feature: string;
 }
+const PricingCardListItems: React.FC<PricingCardListItemsProps> = ({
+  feature,
+}) => {
+  return (
+    <div>
+      <p className="mb-6 flex items-center text-gray-600">
+        <span className="mr-2 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-blaze-orange text-white">
+          <svg
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2.5"
+            className="h-3 w-3"
+            viewBox="0 0 24 24"
+          >
+            <path d="M20 6L9 17l-5-5" />
+          </svg>
+        </span>
+        {feature}
+      </p>
+    </div>
+  );
+};
 
-export { PricingCardListItems }
+export { PricingCardListItems };
