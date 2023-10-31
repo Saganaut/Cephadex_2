@@ -1,10 +1,13 @@
-import React from 'react';
+import React from "react";
 
-const Card = ({children}) => {
-    return (
-        <div className="bg-mariana-blue  h-96 w-96 rounded-3xl text-white">
-           {children}
-        </div>
-    );
+interface CardProps {
+  children: React.ReactNode;
+}
+const Card: React.FC<CardProps> = ({ children }) => {
+  return (
+    <div className="h-96  w-96 rounded-3xl bg-mariana-blue text-white">
+      {children}
+    </div>
+  );
 };
-export {Card}
+export { Card };

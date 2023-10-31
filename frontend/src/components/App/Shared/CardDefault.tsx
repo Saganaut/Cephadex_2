@@ -1,19 +1,19 @@
-import React from "react";
 import { Card } from "@app/Shared/Card";
+import React from "react";
 
-const CardDefault = ({ data }) => {
+const CardDefault: React.FC = ({ data }) => {
   return (
     <>
       <Card>
-        <div className="bg-mariana-blue rounded-3xl h-full w-full p-4 hover:bg-color-2">
-          <div className="flex justify-between items-center mb-4">
+        <div className="h-full w-full rounded-3xl bg-mariana-blue p-4 hover:bg-color-2">
+          <div className="mb-4 flex items-center justify-between">
             <h1 className="text-lg">{data.name}</h1>
             <div>...</div>
           </div>
-          <div className="flex items-center mb-4">
+          <div className="mb-4 flex items-center">
             <div className="mr-4">
               <svg
-                className="w-10 h-10 text-purple-400" /* Add the SVG path for the "Deck" icon here */
+                className="h-10 w-10 text-purple-400" /* Add the SVG path for the "Deck" icon here */
               ></svg>
             </div>
             <h2 className="text-xl font-medium">{data.type}</h2>
@@ -32,7 +32,7 @@ const CardDefault = ({ data }) => {
               <h3 className="text-sm">New cards: 84</h3>
             </div>
           </div>
-          <p className="text-sm mt-4">Updated 2 days ago</p>
+          <p className="mt-4 text-sm">Updated 2 days ago</p>
         </div>
       </Card>
     </>
