@@ -8,10 +8,10 @@ import React, { type ReactElement } from "react";
 function LandingPage(): ReactElement {
   return (
     <div>
-      {/* <HeroSection /> */}
-      {/* <HowItWorksSection /> */}
-      {/* <FeaturesSection /> */}
-      {/* <TestimonialsSection /> */}
+      <HeroSection />
+      <HowItWorksSection />
+      <FeaturesSection />
+      <TestimonialsSection />
       <NewsletterSignUpSection />
     </div>
   );
