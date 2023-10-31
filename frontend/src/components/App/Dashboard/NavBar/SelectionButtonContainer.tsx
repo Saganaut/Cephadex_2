@@ -1,6 +1,5 @@
-import React from "react";
-import { useState } from "react";
 import { NavBarButton } from "@app/Dashboard/NavBar/NavBarButtons";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 const filterButtons = [
@@ -30,7 +29,7 @@ const filterButtons = [
   },
 ];
 
-const SelectionButtonContainer = () => {
+const SelectionButtonContainer: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = useState("");
 
   const cardsData = useSelector((state) => state.cards);
@@ -58,7 +57,7 @@ const SelectionButtonContainer = () => {
   });
 
   return (
-    <div className="row flex h-10  rounded-full bg-mariana-blue mx-2">
+    <div className="mx-2 flex h-10  flex-row rounded-full bg-mariana-blue">
       {filterButtonsWithCount.map((filter, index) => (
         <div
           key={index}

@@ -1,14 +1,14 @@
-import React from "react";
 import { Dropdown } from "@app/Shared/Dropdown";
+import React from "react";
 import { Link } from "react-router-dom";
 
-const CreateDropdown = () => {
+const CreateDropdown: React.FC = () => {
   return (
     <div>
       <Dropdown
         trigger={<button>Create</button>}
         content={
-          <div className="border rounded bg-white shadow-lg p-4 z-40">
+          <div className="z-40 rounded border bg-white p-4 shadow-lg">
             <Link to="/create-deck" className="text-black">
               Deck
             </Link>
