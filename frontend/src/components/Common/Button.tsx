@@ -1,18 +1,22 @@
 import React from "react";
 
-const StdButton = ({ label, onClick, disabled }) => {
+interface ButtonProps {
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
+}
+const StdButton: React.FC<ButtonProps> = ({ label, onClick, disabled }) => {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       className={` 
-        px-4 py-1 mr-5 mb-4 rounded-full text-white bg-electric-violet border-2 
-       text-lg cursor-pointer transform transition-transform 
-        hover:bg-blaze-orange hover:border-secondary-400 hover:scale-101 hover:shadow-md 
-        active:bg-primary-400 
+        hover:border-secondary-400 hover:scale-101 active:bg-primary-400 mb-4 mr-5 cursor-pointer rounded-full border-2 
+       bg-electric-violet px-4 py-1 text-lg 
+        text-white transition-transform hover:bg-blaze-orange hover:shadow-md 
         ${
-          disabled
-            ? "bg-grey-300 text-opacity-10 cursor-not-allowed shadow-none"
+          disabled === true
+            ? "bg-grey-300 cursor-not-allowed text-opacity-10 shadow-none"
             : ""
         }
       `}
@@ -22,19 +26,18 @@ const StdButton = ({ label, onClick, disabled }) => {
   );
 };
 
-const SignUpButton = ({ label, onClick, disabled }) => {
+const SignUpButton: React.FC<ButtonProps> = ({ label, onClick, disabled }) => {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       className={` 
-        px-4 py-1 mr-5 mb-4 rounded-full text-white bg-blaze-orange
-       text-lg cursor-pointer transform transition-transform 
-        hover:bg-blaze-orange-300 hover:scale-101 hover:shadow-md 
-        active:bg-primary-400 
+        hover:scale-101 active:bg-primary-400 mb-4 mr-5 cursor-pointer rounded-full bg-blaze-orange
+       px-4 py-1 text-lg text-white 
+        transition-transform hover:bg-blaze-orange-300 hover:shadow-md 
         ${
-          disabled
-            ? "bg-grey-300 text-opacity-10 cursor-not-allowed shadow-none"
+          disabled === true
+            ? "bg-grey-300 cursor-not-allowed text-opacity-10 shadow-none"
             : ""
         }
       `}
@@ -44,19 +47,22 @@ const SignUpButton = ({ label, onClick, disabled }) => {
   );
 };
 
-const HowItWorksButton = ({ label, onClick, disabled }) => {
+const HowItWorksButton: React.FC<ButtonProps> = ({
+  label,
+  onClick,
+  disabled,
+}) => {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       className={` 
-        px-4 py-1 mr-5 mb-4 rounded-full text-white bg-electric-violet border border-white
-       text-lg cursor-pointer transform transition-transform 
-        hover:bg-blaze-orange-300 hover:scale-101 hover:shadow-md 
-        active:bg-primary-400 
+        hover:scale-101 active:bg-primary-400 mb-4 mr-5 cursor-pointer rounded-full border border-white bg-electric-violet
+       px-4 py-1 text-lg text-white 
+        transition-transform hover:bg-blaze-orange-300 hover:shadow-md 
         ${
-          disabled
-            ? "bg-grey-300 text-opacity-10 cursor-not-allowed shadow-none"
+          disabled === true
+            ? "bg-grey-300 cursor-not-allowed text-opacity-10 shadow-none"
             : ""
         }
       `}
