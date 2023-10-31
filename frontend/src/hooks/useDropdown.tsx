@@ -1,16 +1,25 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-const useDropdown = () => {
+interface DropdownReturnType {
+  isOpen: boolean;
+  openDropdown: () => void;
+  closeDropdown: () => void;
+  toggleDropdown: () => void;
+}
+const useDropdown = (): DropdownReturnType => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const openDropdown = () => setIsOpen(true);
-  const closeDropdown = () => setIsOpen(false);
-  const toggleDropdown = () => setIsOpen(prev => !prev);
+  const openDropdown = (): void => {
+    setIsOpen(true);
+  };
+  const closeDropdown = (): void => {
+    setIsOpen(false);
+  };
+  const toggleDropdown = (): void => {
+    setIsOpen((prev) => !prev);
+  };
 
   return { isOpen, openDropdown, closeDropdown, toggleDropdown };
 };
 
 export { useDropdown };
-
-
-
