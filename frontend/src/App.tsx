@@ -1,10 +1,11 @@
 import "./styles/App.css";
-import React from "react";
 import "./styles/output.css";
-import { AppRoutes } from "./routes/AppRoutes";
+
+import { ContextWrapper } from "@contexts/ContextWrapper";
+import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import { ContextWrapper } from "./contexts/ContextWrapper";
+import { AppRoutes } from "./routes/AppRoutes";
 
 const App = () => {
   return (

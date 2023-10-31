@@ -29,6 +29,6 @@
       "@assets/*": ["assets/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.jsx"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.jsx","./tailwind.config.js"],
   "exclude": ["node_modules"]
 }
