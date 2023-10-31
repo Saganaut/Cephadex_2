@@ -1,8 +1,7 @@
-import React from "react";
-
 import { BlogContainer } from "@pages/Blog/BlogContainer";
+import React, { type ReactElement } from "react";
 
-function Blog() {
+function Blog(): ReactElement {
   return (
     <div>
       <BlogContainer />
