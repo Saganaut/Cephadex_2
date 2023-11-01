@@ -1,16 +1,23 @@
 import React from "react";
 
-const Infographic = ({ thumbnail, fullVersion }) => {
-  const downloadInfographic = () => {
+interface InfographicProps {
+  thumbnail: string;
+  fullVersion: string;
+}
+const Infographic: React.FC<InfographicProps> = ({
+  thumbnail,
+  fullVersion,
+}) => {
+  const downloadInfographic = (): void => {
     window.open(fullVersion, "_blank");
   };
 
   return (
-    <div className="infographic-item my-4 p-4 rounded-lg overflow-hidden shadow-lg transition-transform duration-500 hover:scale-101">
+    <div className="infographic-item hover:scale-101 my-4 overflow-hidden rounded-lg p-4 shadow-lg transition-transform duration-500">
       <img
         src={thumbnail}
         alt="Infographic Thumbnail"
-        className="w-full h-auto cursor-pointer transform hover:scale-110"
+        className="h-auto w-full cursor-pointer hover:scale-110"
         onClick={downloadInfographic}
       />
     </div>

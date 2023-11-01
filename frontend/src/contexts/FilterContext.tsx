@@ -1,13 +1,16 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 
-type FilterContextType = {
+interface FilterContextType {
   filter: string;
   setFilter: (value: string) => void;
-};
+}
 
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
 
-const FilterProvider = ({ children }) => {
+interface FilterProviderProps {
+  children: React.ReactNode;
+}
+const FilterProvider: React.FC<FilterProviderProps> = ({ children }) => {
   const [filter, setFilter] = useState("");
 
   return (
@@ -17,9 +20,9 @@ const FilterProvider = ({ children }) => {
   );
 };
 
-const useFilter = () => {
+const useFilter = (): FilterContextType => {
   const context = useContext(FilterContext);
-  if (!context) {
+  if (context == null) {
     throw new Error("useFilter must be used within a FilterProvider");
   }
   return context;

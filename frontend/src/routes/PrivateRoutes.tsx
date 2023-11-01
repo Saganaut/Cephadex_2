@@ -1,14 +1,14 @@
-import React from "react";
-import { Main } from "../components/App/Main/Main";
-import { Layout } from "../components/App/AppLayout";
-import { Extract } from "../components/App/Features/Extract/Extract";
-import { PublicLayout } from "@pages/Layout";
+import { Layout } from "@app/AppLayout";
+import { Extract } from "@app/Features/Extract/Extract";
+import { Main } from "@app/Main/Main";
 import Blog from "@pages/Blog/Blog";
-import { Pricing } from "@pages/Pricing/Pricing";
-import { Documentation } from "@pages/Documentation/Documentation";
-import { Terms } from "@pages/Terms/Terms";
-import { Legal } from "@pages/Legal/Legal";
 import { Contact } from "@pages/Contact/Contact";
+import { Documentation } from "@pages/Documentation/Documentation";
+import { PublicLayout } from "@pages/Layout";
+import { Legal } from "@pages/Legal/Legal";
+import { Pricing } from "@pages/Pricing/Pricing";
+import { Terms } from "@pages/Terms/Terms";
+import React from "react";
 
 const privateRoutePaths = [
   {

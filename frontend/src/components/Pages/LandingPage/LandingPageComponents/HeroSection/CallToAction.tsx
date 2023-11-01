@@ -1,29 +1,29 @@
-import React from "react";
-import { SignUpButton, HowItWorksButton } from "@common/Button";
-import { useModal } from "@contexts/ModalContext.js";
 import introVideo from "@assets/cephadex-intro-vid.mp4";
+import { HowItWorksButton, SignUpButton } from "@common/Button";
+import { useModal } from "@contexts/ModalContext.js";
+import React, { type ReactElement } from "react";
 
-const IntroVideo = () => {
+const IntroVideo = (): ReactElement => {
   return (
     <div>
-      <div className="rounded-xl overflow-hidden">
+      <div className="overflow-hidden rounded-xl">
         <video className="h-80 w-auto" controls>
           <source src={introVideo} type="video/mp4" />
         </video>
       </div>
       <div className="flex flex-row  px-2">
         <div className="basis-1/2">
-          <h2 className="text-gray-400 text-xs">So many options!</h2>
+          <h2 className="text-xs text-gray-400">So many options!</h2>
         </div>
         <div className="basis-1/2">
-          <h2 className="text-gray-400 text-xs">Over 60 000 cards created.</h2>
+          <h2 className="text-xs text-gray-400">Over 60 000 cards created.</h2>
         </div>
       </div>
     </div>
   );
 };
 
-const CallToAction = () => {
+const CallToAction = (): ReactElement => {
   const { openRegisterModal } = useModal();
 
   return (
@@ -33,7 +33,7 @@ const CallToAction = () => {
       </h1>
       <div className="text-white">
         <p>
-          Whether you're a teacher, student, content creator, or parent,
+          Whether you&apos;re a teacher, student, content creator, or parent,
           Cephadex is your platform for customized, effective learning. Join us
           and experience our innovative approach to education.
         </p>
@@ -45,7 +45,7 @@ const CallToAction = () => {
           }}
           label="Try it free today!"
         ></SignUpButton>
-        <HowItWorksButton label="How it works?"></HowItWorksButton>
+        <HowItWorksButton label="How it works?" onClick={() => {}} />
       </div>
     </div>
   );

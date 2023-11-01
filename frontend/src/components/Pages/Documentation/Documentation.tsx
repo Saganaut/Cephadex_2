@@ -1,12 +1,6 @@
-import React, {
-  useState,
-  useContext,
-  useEffect,
-  useCallback,
-  useMemo,
-} from "react";
 import { CollapsableCard } from "@pages/Documentation/CollapsableCard";
 import { CreateHowTo } from "@pages/Documentation/CreateHowTo";
+import React, { type ReactElement } from "react";
 
 const Guide = [
   {
@@ -19,17 +13,17 @@ const Guide = [
   },
 ];
 
-const Documentation = () => {
+const Documentation = (): ReactElement => {
   return (
     <>
-      <div className="container px-5 py-20 mx-auto">
-        <h1 className="flex justify-center text-5xl font-bold text-electric-violet p-3 ">
+      <div className="container mx-auto px-5 py-20">
+        <h1 className="flex justify-center p-3 text-5xl font-bold text-electric-violet ">
           Documentation
         </h1>
 
         <>
           {Guide.map((guide, index) => (
-            <div>
+            <div key={index}>
               <CollapsableCard
                 key={index}
                 title={guide.title}

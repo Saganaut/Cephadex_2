@@ -1,16 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom";
 import "./styles/index.css";
 import "./styles/output.css";
-import { App } from "./App";
-// import reportWebVitals from "@source/reportWebVitals";
 
-const rootElement = document.getElementById("root") as HTMLElement;
-const root = ReactDOM.createRoot(rootElement);
-root.render(
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+import { App } from "./App";
+
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
-
-// reportWebVitals();

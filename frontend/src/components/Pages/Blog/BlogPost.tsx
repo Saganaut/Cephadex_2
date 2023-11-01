@@ -1,8 +1,12 @@
+import { type Blog } from "@source/types/Globals";
 import React from "react";
 import { Link } from "react-router-dom";
 
-function BlogPost({ blog }) {
-  const scrollToTop = () => {
+interface BlogPostProps {
+  blog: Blog;
+}
+export const BlogPost: React.FC<BlogPostProps> = ({ blog }) => {
+  const scrollToTop = (): void => {
     window.scrollTo({
       top: 0,
       behavior: "smooth", // for smooth scrolling
@@ -10,16 +14,16 @@ function BlogPost({ blog }) {
   };
 
   return (
-    <div className="py-8 flex flex-wrap md:flex-nowrap">
-      <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-        <span className="font-semibold title-font text-gray-700">
+    <div className="flex flex-wrap py-8 md:flex-nowrap">
+      <div className="mb-6 flex shrink-0 flex-col md:mb-0 md:w-64">
+        <span className="title-font font-semibold text-gray-700">
           {blog.category}
         </span>
-        <span className="mt-1 text-gray-500 text-sm">{blog.time_created}</span>
+        <span className="mt-1 text-sm text-gray-500">{blog.time_created}</span>
       </div>
-      <div className="md:flex-grow">
+      <div className="md:grow">
         <Link to={`/blog/${blog.slug}`} onClick={scrollToTop}>
-          <h2 className="text-2xl font-medium text-gray-900 title-font mb-2">
+          <h2 className="title-font mb-2 text-2xl font-medium text-gray-900">
             {blog.title}
           </h2>
         </Link>
@@ -28,11 +32,11 @@ function BlogPost({ blog }) {
         <Link
           to={`/blog/${blog.slug}`}
           onClick={scrollToTop}
-          className="text-indigo-500 inline-flex items-center mt-4"
+          className="mt-4 inline-flex items-center text-indigo-500"
         >
           Learn More
           <svg
-            className="w-4 h-4 ml-2"
+            className="ml-2 h-4 w-4"
             viewBox="0 0 24 24"
             stroke="currentColor"
             strokeWidth={2}
@@ -47,6 +51,4 @@ function BlogPost({ blog }) {
       </div>
     </div>
   );
-}
-
-export { BlogPost };
+};

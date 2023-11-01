@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
 import { CardDefault } from "@app/Shared/CardDefault";
-import { CardProfile } from "@app/Shared/CardProfile";
-import { fetchAllQuizzes } from "@services/Api/Quiz/QuizApi";
-import { fetchAllDecks } from "@services/Api/Deck/DeckApi";
-import { setCards } from "@store/cardSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useFilter } from "@contexts/FilterContext";
 import { filterCards } from "@app/Shared/CardFilter";
+import { CardProfile } from "@app/Shared/CardProfile";
+import { useFilter } from "@contexts/FilterContext";
+import { fetchAllDecks } from "@services/Api/Deck/DeckApi";
+import { fetchAllQuizzes } from "@services/Api/Quiz/QuizApi";
+import { setCards } from "@store/cardSlice";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import React, { type ReactElement, useEffect, useRef, useState } from "react";
 
-const CardContainer = () => {
+const CardContainer = (): ReactElement => {
   const { filter } = useFilter();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const dispatch = useDispatch();
-  const cardsData = useSelector((state) => state.cards);
+  const dispatch = useAppDispatch();
+  const cardsData = useAppSelector((state) => state.cards);
   const filteredCardsData = filterCards(cardsData, filter);
 
   const cardsDataRef = useRef(cardsData);
@@ -23,7 +23,7 @@ const CardContainer = () => {
   }, [cardsData]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (): Promise<void> => {
       const [quizzes, decks] = await Promise.all([
         fetchAllQuizzes(),
         fetchAllDecks(),
@@ -32,7 +32,7 @@ const CardContainer = () => {
     };
 
     if (cardsDataRef.current.length === 0) {
-      fetchData();
+      void fetchData();
     }
   }, [dispatch]);
 
@@ -47,7 +47,7 @@ const CardContainer = () => {
     insertProfileAtIndex = 0;
   }
 
-  let orderedData = [...filteredCardsData];
+  const orderedData = [...filteredCardsData];
   orderedData.splice(insertProfileAtIndex, 0, { isProfile: true });
 
   return (
@@ -57,7 +57,7 @@ const CardContainer = () => {
           return (
             <div
               key="profile"
-              className="xl:w-1/4 lg:w-1/3 md:w-1/2 w-full p-4 flex justify-center items-center"
+              className="flex w-full items-center justify-center p-4 md:w-1/2 lg:w-1/3 xl:w-1/4"
             >
               <CardProfile />
             </div>
@@ -67,7 +67,7 @@ const CardContainer = () => {
           return (
             <div
               key={uniqueKey}
-              className="xl:w-1/4 lg:w-1/3 md:w-1/2 w-full p-4 flex justify-center items-center"
+              className="flex w-full items-center justify-center p-4 md:w-1/2 lg:w-1/3 xl:w-1/4"
             >
               <CardDefault data={card} />
             </div>

@@ -1,7 +1,6 @@
-import React from "react";
-import { useState } from "react";
 import { NavBarButton } from "@app/Dashboard/NavBar/NavBarButtons";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@store/hooks";
+import React, { useState } from "react";
 
 const filterButtons = [
   {
@@ -30,14 +29,14 @@ const filterButtons = [
   },
 ];
 
-const SelectionButtonContainer = () => {
+const SelectionButtonContainer: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = useState("");
 
-  const cardsData = useSelector((state) => state.cards);
+  const cardsData = useAppSelector((state) => state.cards);
   const cardCount = cardsData.length;
   const quizCount = cardsData.filter((card) => card.type === "Quiz").length;
   const deckCount = cardsData.filter((card) => card.type === "Deck").length;
-  const favCount = cardsData.filter((card) => card.fav === true).length;
+  const favCount = cardsData.filter((card) => card.fav).length;
 
   console.log("In Parent: ", setSelectedFilter);
 
@@ -58,7 +57,7 @@ const SelectionButtonContainer = () => {
   });
 
   return (
-    <div className="row flex h-10  rounded-full bg-mariana-blue mx-2">
+    <div className="mx-2 flex h-10  flex-row rounded-full bg-mariana-blue">
       {filterButtonsWithCount.map((filter, index) => (
         <div
           key={index}

@@ -1,6 +1,6 @@
 backend/backenv/
 frontend/node_modules/
-
+.idea
 
 
 backend/*.env

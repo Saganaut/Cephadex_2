@@ -1,27 +1,27 @@
-import React from 'react'
+import React from "react";
 
-const ButtonLink = ({children}) => {
+interface ButtonLinkProps {
+  children: React.ReactNode;
+}
+const ButtonLink: React.FC<ButtonLinkProps> = ({ children }) => {
   return (
     <div>
-    <div className="flex items-center  px-4 py-2 rounded-full bg-gray-200  hover:bg-electric-violet text-black text-sm hover:text-white">
+      <div className="flex items-center  rounded-full bg-gray-200 px-4 py-2  text-sm text-black hover:bg-electric-violet hover:text-white">
         {children}
-        </div>
-    </div>
-  )
-}
-
-const ButtonLinkSecondary = ({children}) => {
-    return (
-      <div>
-    <div className="flex items-center  px-4 py-2 rounded-full bg-aquamarine hover:bg-electric-violet text-black text-sm hover:text-white">
-          {children}
-          </div>
       </div>
-    )
-  }
+    </div>
+  );
+};
 
+const ButtonLinkSecondary: React.FC<ButtonLinkProps> = ({ children }) => {
+  return (
+    <div>
+      <div className="flex items-center  rounded-full bg-aquamarine px-4 py-2 text-sm text-black hover:bg-electric-violet hover:text-white">
+        {children}
+      </div>
+    </div>
+  );
+};
 
-
-
-export { ButtonLink }
-export { ButtonLinkSecondary }
+export { ButtonLink };
+export { ButtonLinkSecondary };

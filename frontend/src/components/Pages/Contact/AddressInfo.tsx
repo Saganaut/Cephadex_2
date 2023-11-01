@@ -1,6 +1,6 @@
-import React from "react";
+import React, { type ReactElement } from "react";
 
-const AddressInfo = () => {
+const AddressInfo = (): ReactElement => {
   return (
     <div>
       <iframe
@@ -15,9 +15,9 @@ const AddressInfo = () => {
         src="https://maps.google.com/maps?width=100%&height=600&hl=en&q=%C4%B0zmir+(My%20Business%20Name)&ie=UTF8&t=&z=14&iwloc=B&output=embed"
         style={{ filter: "grayscale(1) contrast(1.2) opacity(0.4)" }}
       />
-      <div className="bg-white relative flex flex-wrap py-6 rounded shadow-md">
-        <div className="lg:w-1/2 px-6">
-          <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs">
+      <div className="relative flex flex-wrap rounded bg-white py-6 shadow-md">
+        <div className="px-6 lg:w-1/2">
+          <h2 className="title-font text-xs font-semibold tracking-widest text-gray-900">
             Registered Office
           </h2>
           <p className="mt-1">
@@ -25,11 +25,11 @@ const AddressInfo = () => {
             Dublin Ireland
           </p>
         </div>
-        <div className="lg:w-1/2 px-6 mt-4 lg:mt-0">
-          <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs">
+        <div className="mt-4 px-6 lg:mt-0 lg:w-1/2">
+          <h2 className="title-font text-xs font-semibold tracking-widest text-gray-900">
             EMAIL
           </h2>
-          <a className="text-indigo-500 leading-relaxed">
+          <a className="leading-relaxed text-indigo-500">
             cephadex@cephadex.com
           </a>
         </div>

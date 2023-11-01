@@ -1,20 +1,20 @@
-import React from "react";
 import {
   CallToAction,
   IntroVideo,
 } from "@pages/LandingPage/LandingPageComponents/HeroSection/CallToAction";
+import React, { type ReactElement } from "react";
 
-const HeroSection = () => {
+const HeroSection = (): ReactElement => {
   return (
     <div
       style={{ height: "auto", minHeight: "calc(100vh - 120px)" }}
       className="bg-electric-violet p-10"
     >
-      <div className="flex flex-col-reverse lg:flex-row h-full">
-        <div className="flex justify-center items-center w-full h-auto lg:h-1/2 p-5">
+      <div className="flex h-full flex-col-reverse lg:flex-row">
+        <div className="flex h-auto w-full items-center justify-center p-5 lg:h-1/2">
           <IntroVideo />
         </div>
-        <div className="p-5 w-full h-auto lg:h-1/2 flex justify-center items-center">
+        <div className="flex h-auto w-full items-center justify-center p-5 lg:h-1/2">
           <CallToAction />
         </div>
       </div>

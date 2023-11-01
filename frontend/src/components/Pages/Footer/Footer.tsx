@@ -1,11 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { SignUpButton } from "@common/Button";
-
-import { useModal } from "@contexts/ModalContext";
 import cephaBanner from "@assets/cepha-banner-1.png";
+import { SignUpButton } from "@common/Button";
+import { useModal } from "@contexts/ModalContext";
+import React, { type ReactElement } from "react";
+import { Link } from "react-router-dom";
 
-const Footer = () => {
+const Footer = (): ReactElement => {
   const { openRegisterModal } = useModal();
 
   const newLocal = (
@@ -35,7 +34,7 @@ const Footer = () => {
       </li>
     </ul>
   );
-  const newLocal_1 = (
+  const newLocal1 = (
     <ul>
       <li>
         <h5>Resources</h5>
@@ -58,7 +57,7 @@ const Footer = () => {
     </ul>
   );
 
-  const newLocal_2 = (
+  const newLocal2 = (
     <ul>
       <li>
         <h5>About us</h5>
@@ -81,7 +80,7 @@ const Footer = () => {
     </ul>
   );
 
-  const newLocal_3 = (
+  const newLocal3 = (
     <ul>
       <li>
         <h5>Product</h5>
@@ -109,7 +108,7 @@ const Footer = () => {
     </ul>
   );
 
-  const newLocal_4 = (
+  const newLocal4 = (
     <svg viewBox="0 0 500 75" preserveAspectRatio="none">
       <path
         d="M0.00,49.98 C120.00,120.00 349.20,-50.00 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
@@ -121,22 +120,22 @@ const Footer = () => {
   return (
     <div className="bg-mariana-blue">
       <div>
-        {newLocal_4}
+        {newLocal4}
 
         <div className="bg-electric-violet">
-          <div className="p-5 flex flex-row">
+          <div className="flex flex-row p-5">
             <div className="hidden md:block md:w-1/2">
               <img className="h-10 w-auto" src={cephaBanner} alt="" />
             </div>
             <div className="md:w-1/2">
               <div className="flex flex-row flex-wrap p-3 ">
-                <div className="w-1/2 md:w-1/4 p-2">{newLocal_1}</div>
-                <div className="w-1/2 md:w-1/4 p-2">{newLocal_2}</div>
-                <div className="w-1/2 md:w-1/4 p-2">{newLocal_3}</div>
-                <div className="w-1/2 md:w-1/4 p-2">{newLocal}</div>
+                <div className="w-1/2 p-2 md:w-1/4">{newLocal1}</div>
+                <div className="w-1/2 p-2 md:w-1/4">{newLocal2}</div>
+                <div className="w-1/2 p-2 md:w-1/4">{newLocal3}</div>
+                <div className="w-1/2 p-2 md:w-1/4">{newLocal}</div>
               </div>
               <div className="flex flex-row p-3">
-                <div className="w-full hidden md:w-1/2  md:block">
+                <div className="hidden w-full md:block  md:w-1/2">
                   <h5 className="text-white ">Start your free trial</h5>
                 </div>
                 <div className="w-full md:w-1/2">
@@ -150,7 +149,7 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center items-center p-3">
+          <div className="flex items-center justify-center p-3">
             <p className="text-white">© 2022 Cephadex. All rights reserved.</p>
           </div>
         </div>

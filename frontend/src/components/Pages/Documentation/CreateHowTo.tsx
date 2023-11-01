@@ -1,6 +1,6 @@
-import React from "react";
+import React, { type ReactElement } from "react";
 
-const CreateHowTo = () => {
+const CreateHowTo = (): ReactElement => {
   return (
     <div>
       <p>Use this feature to:</p>{" "}
@@ -80,8 +80,8 @@ const CreateHowTo = () => {
             {" "}
             Once the process is launched you don’t have to remain on the page. A
             pop-up will appear notifying you when your deck is ready. If you go
-            to the decks page (or refresh the decks page), you'll see your deck
-            with the cards inside.{" "}
+            to the decks page (or refresh the decks page), you&apos;ll see your
+            deck with the cards inside.{" "}
           </small>{" "}
         </li>{" "}
         <li>
@@ -96,7 +96,8 @@ const CreateHowTo = () => {
           {" "}
           <small>
             {" "}
-            Please don't hesitate to give us feedback on the content created.{" "}
+            Please don&apos;t hesitate to give us feedback on the content
+            created.{" "}
           </small>{" "}
         </li>{" "}
       </ul>

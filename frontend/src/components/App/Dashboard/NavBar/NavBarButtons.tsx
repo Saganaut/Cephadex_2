@@ -1,13 +1,27 @@
-import React from "react";
 import { CreateDropdown } from "@app/Dashboard/NavBar/CreateDropdown";
-import { ButtonLink, ButtonLinkSecondary } from "@app/Shared/ButtonLink";
+import { ButtonLink } from "@app/Shared/ButtonLink";
 import { useFilter } from "@contexts/FilterContext";
+import React from "react";
 
-const NavBarButton = ({ filter, selectedFilter, setSelectedFilter }) => {
+interface NavBarButtonProps {
+  filter: {
+    name: string;
+    value: string;
+    count: string;
+    icon: string;
+  };
+  selectedFilter: string;
+  setSelectedFilter: React.Dispatch<React.SetStateAction<string>>;
+}
+const NavBarButton: React.FC<NavBarButtonProps> = ({
+  filter,
+  selectedFilter,
+  setSelectedFilter,
+}) => {
   const { setFilter } = useFilter();
   console.log("In NavBarButton: ", setSelectedFilter);
 
-  const handleButtonClick = () => {
+  const handleButtonClick: () => void = () => {
     setFilter(filter.value);
     console.log("filter value", filter.value);
     setSelectedFilter(filter.value);
@@ -16,7 +30,7 @@ const NavBarButton = ({ filter, selectedFilter, setSelectedFilter }) => {
   return (
     <div>
       <button
-        className={`h-10 w-24 px-2 py-2 text-sm flex items-center rounded-full ${
+        className={`flex h-10 w-24 items-center rounded-full p-2 text-sm${
           filter.value === selectedFilter ? "bg-blue-500 text-white" : ""
         }`}
         onClick={handleButtonClick}
@@ -28,7 +42,7 @@ const NavBarButton = ({ filter, selectedFilter, setSelectedFilter }) => {
   );
 };
 
-const NavBarButtonCreate = () => {
+const NavBarButtonCreate: React.FC = () => {
   return (
     <div>
       <ButtonLink>

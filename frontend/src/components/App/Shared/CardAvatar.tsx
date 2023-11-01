@@ -1,19 +1,19 @@
-import React from "react";
-import { useUser } from "@contexts/UserContext";
+// import { useUser } from "@contexts/UserContext";
+import React, { type ReactElement } from "react";
 
-const CardAvatar = () => {
-  const { user } = useUser();
+const CardAvatar = (): ReactElement => {
+  // const { user } = useUser();
 
   return (
     <>
       <img
         src="/assets/cephadex-logo-6.png"
         alt="Profile"
-        className="w-40 h-40 rounded-full bg-electric-violet-300 border-4 border-purple-600 p-1"
+        className="h-40 w-40 rounded-full border-4 border-purple-600 bg-electric-violet-300 p-1"
       />
-      <span className="absolute bottom-1  translate-y-1/2 translate-x-10  ">
+      <span className="absolute bottom-1  translate-x-10 translate-y-1/2  ">
         Edit
-        <svg className="w-5 h-5 text-white"></svg>
+        <svg className="h-5 w-5 text-white"></svg>
       </span>
     </>
   );

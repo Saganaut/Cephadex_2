@@ -26,9 +26,10 @@
       "@pages/*": ["components/Pages/*"],
       "@app/*": ["components/App/*"],
       "@extract/*": ["components/App/Extract*"],
-      "@assets/*": ["assets/*"]
+      "@assets/*": ["assets/*"],
+      "@types/*": ["types/*"],
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.jsx"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.jsx","./tailwind.config.js"],
   "exclude": ["node_modules"]
 }

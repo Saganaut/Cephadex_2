@@ -1,14 +1,14 @@
-import React from "react";
-import { ThemeToggle } from "@app/ThemeToggle";
 import { NavBarButtonCreate } from "@app/Dashboard/NavBar/NavBarButtons";
-import { NavBarUpgradeLink } from "@app/Dashboard/SideBar/SideBarLink";
 import { SelectionButtonContainer } from "@app/Dashboard/NavBar/SelectionButtonContainer";
+import { NavBarUpgradeLink } from "@app/Dashboard/SideBar/SideBarLink";
+import { ThemeToggle } from "@app/ThemeToggle";
+import React from "react";
 
-const NavBarApp = () => {
+const NavBarApp: React.FC = () => {
   return (
-    <header className="flex items-center absolute top-0 right-0 p-2 mt-4 rounded-bl-3xl  text-white -translate-x-1/2 left-1/2">
+    <header className="absolute left-1/2 right-0 top-0 mt-4 flex -translate-x-1/2 items-center  rounded-bl-3xl p-2 text-white">
       <nav>
-        <div className="row flex items-center">
+        <div className="flex flex-row items-center">
           <NavBarButtonCreate />
           <SelectionButtonContainer />
           <NavBarUpgradeLink />

@@ -1,48 +1,51 @@
-import React from "react";
 import { Infographic } from "@pages/Blog/Infographic";
+import { type Blog } from "@source/types/Globals";
+import React from "react";
 
-const SinglePost = ({ blog }) => {
+interface SinglePostProps {
+  blog: Blog;
+}
+const SinglePost: React.FC<SinglePostProps> = ({ blog }) => {
   return (
     <div>
-      <section className="text-gray-600 body-font">
-        <div className="container px-5 py-12 mx-auto flex flex-col">
-          <div className="lg:w-4/6 mx-auto">
-            <div className="rounded-lg overflow-hidden">
-              <h2 className="text-4xl font-semibold text-gray-800 my-2">
+      <section className="body-font text-gray-600">
+        <div className="container mx-auto flex flex-col px-5 py-12">
+          <div className="mx-auto lg:w-4/6">
+            <div className="overflow-hidden rounded-lg">
+              <h2 className="my-2 text-4xl font-semibold text-gray-800">
                 {blog.title}
               </h2>
             </div>
-            <div className="flex flex-col sm:flex-row mt-10">
-              <div className="sm:w-1/3 text-center sm:pr-8 sm:py-8">
-                <div className="w-20 h-20 rounded-full inline-flex items-center justify-center">
+            <div className="mt-10 flex flex-col sm:flex-row">
+              <div className="text-center sm:w-1/3 sm:py-8 sm:pr-8">
+                <div className="inline-flex h-20 w-20 items-center justify-center rounded-full">
                   <img
                     src={`https://cephadex.s3.eu-north-1.amazonaws.com/profile_pictures/${blog.avatar}`}
                     alt="avatar"
                   />
                 </div>
 
-                <div className="flex flex-col items-center text-center justify-center">
-                  <h2 className="font-medium title-font mt-4 text-gray-900 text-lg">
+                <div className="flex flex-col items-center justify-center text-center">
+                  <h2 className="title-font mt-4 text-lg font-medium text-gray-900">
                     {blog.author_name}
                   </h2>
-                  <div className="w-12 h-1 bg-indigo-500 rounded mt-2 mb-4" />
+                  <div className="mb-4 mt-2 h-1 w-12 rounded bg-indigo-500" />
                   <p className="text-base">{blog.summary}</p>
                   <div className="flex flex-col items-center">
-                    {blog.images &&
-                      blog.images.map((image, index) => (
-                        <div key={index}>
-                          <Infographic
-                            thumbnail={image.thumbnail_url}
-                            fullVersion={image.image_url}
-                          />
-                        </div>
-                      ))}
+                    {blog.images?.map((image, index) => (
+                      <div key={index}>
+                        <Infographic
+                          thumbnail={image.thumbnail_url}
+                          fullVersion={image.image_url}
+                        />
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
-              <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
+              <div className="mt-4 border-t border-gray-200 pt-4 text-center sm:mt-0 sm:w-2/3 sm:border-l sm:border-t-0 sm:py-8 sm:pl-8 sm:text-left">
                 <div
-                  className="leading-relaxed text-lg mb-4"
+                  className="mb-4 text-lg leading-relaxed"
                   dangerouslySetInnerHTML={{ __html: blog.content }}
                 />
               </div>
