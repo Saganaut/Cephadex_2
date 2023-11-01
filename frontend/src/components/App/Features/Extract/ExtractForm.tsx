@@ -1,6 +1,5 @@
 import React from "react";
 import { validationSchema } from "@app/Features/Extract/ExtractFormValidation";
-
 import { Formik, Form } from "formik";
 import { CardTypeSelector } from "@app/Features/Extract/CardTypeSelector";
 import { MultiOptionsContainer } from "@app/Features/Extract/MultiOptionsContainer";
@@ -43,12 +42,11 @@ const ExtractForm: React.FC<ExtractProps> = ({ customIsSelected }) => {
                   What type of cards would you like to create?
                 </div>
                 <CardTypeSelector />
+                <MultiOptionsContainer />
+                <AdvancedOptionsContainer />
               </div>
             )}
-            <div>
-              <MultiOptionsContainer />
-              <AdvancedOptionsContainer />
-            </div>
+            <div></div>
             <div className="flex justify-end">
               <ExtractSubmitButton />
             </div>
