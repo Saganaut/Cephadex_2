@@ -5,7 +5,7 @@ const CardDefault = ({ data }) => {
   return (
     <>
       <Card>
-        <div className="bg-mariana-blue rounded-3xl h-full w-full p-4 hover:bg-color-2">
+        <div className="bg-mariana-blue rounded-3xl h-full w-full p-4 hover:bg-tolopea">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-lg">{data.name}</h1>
             <div>...</div>

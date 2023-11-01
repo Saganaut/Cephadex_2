@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <div className="flex flex-col h-screen bg-light-color dark:bg-dark-color">
+      <div className="flex flex-col h-screen bg-light-color dark:bg-tolopea">
         {/* Navbar: keeping styling within the NavBarApp component */}
         <NavBarApp />
 
