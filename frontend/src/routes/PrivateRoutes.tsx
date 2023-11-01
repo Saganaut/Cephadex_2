@@ -1,13 +1,13 @@
 import { Layout } from "@app/AppLayout";
 import { Extract } from "@app/Features/Extract/Extract";
 import { Main } from "@app/Main/Main";
-import Blog from "@pages/Blog/Blog";
-import { Contact } from "@pages/Contact/Contact";
-import { Documentation } from "@pages/Documentation/Documentation";
-import { PublicLayout } from "@pages/Layout";
-import { Legal } from "@pages/Legal/Legal";
-import { Pricing } from "@pages/Pricing/Pricing";
-import { Terms } from "@pages/Terms/Terms";
+import AccountPage from "@pages/Account/AccountPage";
+// import Blog from "@pages/Blog/Blog";
+// import { Contact } from "@pages/Contact/Contact";
+// import { Documentation } from "@pages/Documentation/Documentation";
+// import { Legal } from "@pages/Legal/Legal";
+// import { Pricing } from "@pages/Pricing/Pricing";
+// import { Terms } from "@pages/Terms/Terms";
 import React from "react";
 
 const privateRoutePaths = [
@@ -16,6 +16,14 @@ const privateRoutePaths = [
     element: (
       <Layout>
         <Main />
+      </Layout>
+    ),
+  },
+  {
+    path: "/account",
+    element: (
+      <Layout>
+        <AccountPage />
       </Layout>
     ),
   },
