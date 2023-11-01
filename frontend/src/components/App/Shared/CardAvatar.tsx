@@ -1,8 +1,8 @@
-import { useUser } from "@contexts/UserContext";
+// import { useUser } from "@contexts/UserContext";
 import React, { type ReactElement } from "react";
 
 const CardAvatar = (): ReactElement => {
-  const { user } = useUser();
+  // const { user } = useUser();
 
   return (
     <>

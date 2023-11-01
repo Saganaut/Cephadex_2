@@ -1,6 +1,6 @@
 import { NavBarButton } from "@app/Dashboard/NavBar/NavBarButtons";
+import { useAppSelector } from "@store/hooks";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 
 const filterButtons = [
   {
@@ -32,11 +32,11 @@ const filterButtons = [
 const SelectionButtonContainer: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = useState("");
 
-  const cardsData = useSelector((state) => state.cards);
+  const cardsData = useAppSelector((state) => state.cards);
   const cardCount = cardsData.length;
   const quizCount = cardsData.filter((card) => card.type === "Quiz").length;
   const deckCount = cardsData.filter((card) => card.type === "Deck").length;
-  const favCount = cardsData.filter((card) => card.fav === true).length;
+  const favCount = cardsData.filter((card) => card.fav).length;
 
   console.log("In Parent: ", setSelectedFilter);
 

@@ -17,23 +17,23 @@ const CardProfile = (): ReactElement => {
           <div className="mb-2 flex flex-col items-center">
             <h1 className="text-2xl font-semibold">Hello! </h1>
             <h2 className="text-xl font-medium">
-              <span>{user.first_name}</span>
+              <span>{user?.first_name}</span>
               <span> </span>
-              <span>{user.last_name}</span>
+              <span>{user?.last_name}</span>
             </h2>
-            <p className="text-sm">{user.username}</p>
+            <p className="text-sm">{user?.username}</p>
           </div>
 
           <div className="mb-4 mt-6 flex items-center justify-center text-xl font-semibold text-black">
-            {user.remaining_credit} credits
+            {user?.remaining_credit} credits
           </div>
 
           <div className="flex justify-center">
             <div className="mx-1">
-              <h3 className="text-sm ">Decks ({user.quantity_decks})</h3>
+              <h3 className="text-sm ">Decks ({user?.quantity_decks})</h3>
             </div>
             <div className="mx-1">
-              <h3 className="text-sm ">Quizzes ({user.quantity_tests})</h3>
+              <h3 className="text-sm ">Quizzes ({user?.quantity_tests})</h3>
             </div>
           </div>
         </div>

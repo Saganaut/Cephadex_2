@@ -5,15 +5,15 @@ import { useFilter } from "@contexts/FilterContext";
 import { fetchAllDecks } from "@services/Api/Deck/DeckApi";
 import { fetchAllQuizzes } from "@services/Api/Quiz/QuizApi";
 import { setCards } from "@store/cardSlice";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
 import React, { type ReactElement, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 const CardContainer = (): ReactElement => {
   const { filter } = useFilter();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const dispatch = useDispatch();
-  const cardsData = useSelector((state) => state.cards);
+  const dispatch = useAppDispatch();
+  const cardsData = useAppSelector((state) => state.cards);
   const filteredCardsData = filterCards(cardsData, filter);
 
   const cardsDataRef = useRef(cardsData);
@@ -23,7 +23,7 @@ const CardContainer = (): ReactElement => {
   }, [cardsData]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (): Promise<void> => {
       const [quizzes, decks] = await Promise.all([
         fetchAllQuizzes(),
         fetchAllDecks(),
@@ -32,7 +32,7 @@ const CardContainer = (): ReactElement => {
     };
 
     if (cardsDataRef.current.length === 0) {
-      fetchData();
+      void fetchData();
     }
   }, [dispatch]);
 

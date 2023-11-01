@@ -1,7 +1,11 @@
 import { Card } from "@app/Shared/Card";
+import { type Card as CardType } from "@source/types/Globals";
 import React from "react";
 
-const CardDefault: React.FC = ({ data }) => {
+interface CardDefaultProps {
+  data: CardType;
+}
+const CardDefault: React.FC<CardDefaultProps> = ({ data }) => {
   return (
     <>
       <Card>

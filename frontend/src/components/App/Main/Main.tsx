@@ -1,11 +1,11 @@
 import { CardContainer } from "@app/Shared/CardContainer";
-import { useUser } from "@contexts/UserContext";
+// import { useUser } from "@contexts/UserContext";
 import React, { type ReactElement } from "react";
 
 const Main = (): ReactElement => {
-  const { user } = useUser();
+  // const { user } = useUser();
 
-  console.log(user["user-id"]);
+  // console.log(user["user-id"]);
 
   return (
     <div>
