@@ -18,6 +18,7 @@ export default defineConfig({
       "@app": path.resolve(__dirname, "src/components/App"),
       "@extract": path.resolve(__dirname, "src/components/App/Extract"),
       "@assets": path.resolve(__dirname, "src/assets"),
+      "@types": path.resolve(__dirname, "src/types"),
     },
   },
 });

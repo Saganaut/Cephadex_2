@@ -1,8 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+import { type Card } from "@source/types/Globals";
 
- const cardsSlice = createSlice({
-  name: 'cards',
-  initialState: [],
+const cardsSlice = createSlice({
+  name: "cards",
+  initialState: [] as Card[],
   reducers: {
     setCards: (state, action) => {
       return action.payload;
