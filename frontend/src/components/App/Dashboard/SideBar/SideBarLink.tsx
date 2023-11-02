@@ -1,4 +1,5 @@
 import { ButtonLink, ButtonLinkSecondary } from "@app/Shared/ButtonLink";
+import UpgradeIcon from "@assets/UpgradeIcon.svg";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -18,10 +19,12 @@ const SideBarLink: React.FC<SideBarLinkProps> = ({
     <>
       <Link to={href}>
         <ButtonLink>
-          <div className="mr-3 h-6 w-6 ">
-            <img src={img} alt={title} className="" />{" "}
+          <div className={"flex items-center gap-x-[10px] px-[8px] py-[6px]"}>
+            <img src={img} alt={title} className="h-[42px] w-[42px]" />
+            {isSidebarOpen && (
+              <span className="font-medium text-tolopea">{title}</span>
+            )}
           </div>
-          {isSidebarOpen && <span className="">{title}</span>}
         </ButtonLink>
       </Link>
     </>
@@ -38,10 +41,12 @@ const SideBarUpgradeLink: React.FC<SideBarUpgradeLinkProps> = ({
     <div>
       <Link to="/upgrade">
         <ButtonLinkSecondary>
-          <div className="mr-3 h-6 w-6">
-            <img src="/" alt="Upgrade" className="" />{" "}
-          </div>
-          {isSidebarOpen && <span className="">Upgrade</span>}
+          <img src={UpgradeIcon} alt="Upgrade" className="h-[42px] w-[42px]" />{" "}
+          {isSidebarOpen && (
+            <span className="ml-[10px] text-[14px] font-medium text-mariana-blue">
+              Upgrade
+            </span>
+          )}
         </ButtonLinkSecondary>
       </Link>
     </div>
@@ -53,10 +58,10 @@ const NavBarUpgradeLink: React.FC = () => {
     <div>
       <Link to="/upgrade">
         <ButtonLinkSecondary>
-          <div className="mr-3 h-6 w-6">
-            <img src="/" alt="Upgrade" className="" />{" "}
-          </div>
-          <span className="">Upgrade</span>
+          <img src={UpgradeIcon} alt="Upgrade" className="h-[42px] w-[42px]" />{" "}
+          <span className="ml-[10px] text-[14px] font-medium text-mariana-blue">
+            Upgrade
+          </span>
         </ButtonLinkSecondary>
       </Link>
     </div>
