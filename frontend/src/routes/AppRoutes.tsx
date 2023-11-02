@@ -8,7 +8,7 @@ import { publicRoutePaths } from "../routes/PublicRoutes";
 const AppRoutes = (): ReactElement => {
   const { user } = useUser();
 
-  const routesToRender = user ? privateRoutePaths : publicRoutePaths;
+  const routesToRender = !user ? privateRoutePaths : publicRoutePaths;
 
   return (
     <Routes>

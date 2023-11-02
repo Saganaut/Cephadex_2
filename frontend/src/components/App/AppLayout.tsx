@@ -1,24 +1,27 @@
-import React, { useState } from "react";
 import { NavBarApp } from "@components/App/Dashboard/NavBar/AppNavBar"; // Adjust with your actual import
 import { SideBarApp } from "@components/App/Dashboard/SideBar/SideBar"; // Adjust with your actual import
+import React, { useState } from "react";
 
-const Layout = ({ children }) => {
+interface LayoutProps {
+  children: React.ReactNode;
+}
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
 
   return (
     <>
-      <div className="flex flex-col h-screen bg-light-color dark:bg-tolopea">
+      <div className="bg-light-color flex h-screen flex-col dark:bg-tolopea">
         {/* Navbar: keeping styling within the NavBarApp component */}
         <NavBarApp />
 
         {/* Main content area */}
-        <div className="flex flex-grow overflow-hidden">
+        <div className="flex grow overflow-hidden">
           {/* Sidebar: You can control visibility with state and also keep internal styling within the SideBarApp component */}
           <div
             className={
               isSidebarOpen
-                ? "w-40 flex-shrink-0 transition-all duration-300"
-                : "w-20 flex-shrink-0 transition-all duration-300"
+                ? "w-[220px] shrink-0 transition-all duration-300"
+                : "w-[110px] shrink-0 transition-all duration-300"
             }
           >
             <SideBarApp
@@ -28,7 +31,7 @@ const Layout = ({ children }) => {
           </div>
 
           {/* Content area: this should grow or shrink based on the sidebar's state */}
-          <div className="flex-grow p-4  overflow-auto">{children}</div>
+          <div className="grow overflow-auto  p-4">{children}</div>
         </div>
       </div>{" "}
     </>
