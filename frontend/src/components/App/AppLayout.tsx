@@ -20,8 +20,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <div
             className={
               isSidebarOpen
-                ? "w-40 shrink-0 transition-all duration-300"
-                : "w-20 shrink-0 transition-all duration-300"
+                ? "w-[220px] shrink-0 transition-all duration-300"
+                : "w-[110px] shrink-0 transition-all duration-300"
             }
           >
             <SideBarApp
