@@ -16,7 +16,6 @@ const ContextWrapper: React.FC<ContextWrapperProps> = ({ children }) => {
       <Provider store={store}>
         <UserProvider>
           <GoogleOAuthProvider clientId="945000040547-5j6598rtn7ikp4n0h4npsrvbkdk0il5u.apps.googleusercontent.com">
-            {" "}
             <FilterProvider>
               <ModalProvider>{children}</ModalProvider>{" "}
             </FilterProvider>
