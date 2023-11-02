@@ -20,14 +20,14 @@ const MultiOptionsSelector: React.FC<MultiOptionsSelectorProps> = ({
   };
 
   return (
-    <div className="p-2 flex flex-wrap -mx-2 overflow-hidden">
+    <div className=" flex flex-wrap  overflow-hidden">
       {options.map((option) => (
         <div
           key={option}
-          className="px-4  overflow-hidden rounded-full sm:w-1/2 md:w-1/4 "
+          className=" px-2 overflow-hidden flex flex-center rounded-full sm:w-1/2 md:w-1/4 "
         >
-          <button
-            className={` border border-aquamarine overflow-hidden w-full flex justify-center items-center rounded-full px-8 py-2 mx-2 ${
+          <div
+            className={` border border-aquamarine  overflow-hidden w-full flex justify-center items-center rounded-full px-8 py-2  ${
               selected.includes(option)
                 ? "bg-aquamarine text-tolopea"
                 : "text-white"
@@ -35,7 +35,7 @@ const MultiOptionsSelector: React.FC<MultiOptionsSelectorProps> = ({
             onClick={() => toggleOption(option)}
           >
             {option}
-          </button>
+          </div>
         </div>
       ))}
     </div>

@@ -46,7 +46,6 @@ const ExtractForm: React.FC<ExtractProps> = ({ customIsSelected }) => {
                 <AdvancedOptionsContainer />
               </div>
             )}
-            <div></div>
             <div className="flex justify-end">
               <ExtractSubmitButton />
             </div>

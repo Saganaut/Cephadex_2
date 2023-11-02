@@ -5,9 +5,9 @@ const MultiOptionsContainer: React.FC = () => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   return (
-    <div className="p-4 rounded-xl min-h-full bg-mariana-blue py-2 h-auto">
-      <div className="flex justify-center mb-4">
-        <div className="text-aquamarine">Other options:</div>
+    <div className=" rounded-xl min-h-full bg-mariana-blue p-2 h-auto">
+      <div className="flex justify-center ">
+        <div className="text-aquamarine pb-4">Other options:</div>
       </div>
       <MultiOptionsSelector
         options={[

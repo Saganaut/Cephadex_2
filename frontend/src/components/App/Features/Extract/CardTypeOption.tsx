@@ -11,7 +11,7 @@ const CardTypeOption: React.FC<CardTypeSelectorProps> = ({ name }) => {
       <RadioGroup.Option value={name}>
         {({ checked }) => (
           <span
-            className={`border border-aquamarine   w-full flex justify-center items-center rounded-full px-8 py-2 mx-2 ${
+            className={`border border-aquamarine   w-full flex justify-center items-center rounded-full px-8 py-2 ${
               checked ? "bg-aquamarine text-tolopea" : "text-aquamarine "
             }`}
           >
