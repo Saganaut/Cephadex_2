@@ -7,7 +7,7 @@ import React from "react";
 
 const NavBarApp: React.FC = () => {
   return (
-    <header className="relative left-1/2 right-0 top-0 mt-[64px] w-full -translate-x-1/2 items-center  rounded-bl-3xl">
+    <header className="fixed left-1/2 right-0 top-0 mt-[64px] w-full -translate-x-1/2 items-center  rounded-bl-3xl">
       <div
         className={
           "ml-auto flex w-full max-w-[1250px] justify-between px-[60px]"
