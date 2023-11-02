@@ -1,0 +1,22 @@
+import axios from "axios";
+
+export const axiosPrivate = axios.create({
+  baseURL: "http://localhost:5000",
+});
+export const axiosPublic = axios.create({
+  baseURL: "http://localhost:5000",
+});
+axiosPublic.defaults.headers.common["Access-Control-Allow-Origin"] =
+  "http://localhost:5000";
+
+axiosPublic.defaults.headers.common["Access-Control-Allow-Methods"] =
+  "GET, POST, DELETE, UPDATE, PUT, PATCH";
+axiosPublic.defaults.headers.common["Access-Control-Allow-Credentials"] =
+  "true";
+axiosPrivate.defaults.headers.common["Access-Control-Allow-Origin"] =
+  "http://localhost:5000";
+
+axiosPrivate.defaults.headers.common["Access-Control-Allow-Methods"] =
+  "GET, POST, DELETE, UPDATE, PUT, PATCH";
+axiosPrivate.defaults.headers.common["Access-Control-Allow-Credentials"] =
+  "true";
