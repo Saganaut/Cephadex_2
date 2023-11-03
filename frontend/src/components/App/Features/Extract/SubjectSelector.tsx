@@ -1,6 +1,6 @@
 import React from "react";
 import { Dropdown } from "@common/Form/Dropdown";
-import { subjectList } from "@app/Features/Extract/SubjectList";
+import { subjectList } from "@source/components/App/Features/Extract/data/SubjectList";
 
 interface SubjectSelectorProps {
   value?: string;
@@ -11,7 +11,7 @@ interface SubjectSelectorProps {
 const SubjectSelector: React.FC<SubjectSelectorProps> = () => {
   return (
     <div className=" w-full max-w-sm">
-      <Dropdown label={"Subject"} options={subjectList} />
+      <Dropdown name="subjectField" label={"Subject"} options={subjectList} />
     </div>
   );
 };

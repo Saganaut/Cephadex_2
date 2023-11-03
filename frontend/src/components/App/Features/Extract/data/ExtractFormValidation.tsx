@@ -45,15 +45,34 @@ const validationSchema = Yup.object()
     subjectField: Yup.string(),
     existingDeckField: Yup.mixed(),
     languageField: Yup.mixed(),
+    eitherTextOrFileOrUrlError: Yup.string().test(
+      "either-text-or-file-or-url",
+      "You must provide exactly one input: a file, a link, or some text to process",
+      function (value) {
+        const { textField, fileField, linkField } = this.parent;
+        const filledInputs = [textField, fileField, linkField].filter(Boolean);
+        return filledInputs.length === 1;
+      }
+    ),
+    eitherNameOrExistingDeckError: Yup.string().test(
+      "either-name-or-existing-deck",
+      "Please either provide a name for a new deck or choose an existing deck",
+      function (value) {
+        const { nameField, existingDeckField } = this.parent;
+        return !!(nameField || existingDeckField);
+      }
+    ),
   })
   .test(
     "either-text-or-file-or-url",
-    "You must provide a fail, a link or some text to process",
+    "You must provide exactly one input: a file, a link, or some text to process",
     (value) => {
-      return !!(value.textField || value.fileField || value.linkField);
+      const inputs = [value.textField, value.fileField, value.linkField];
+      const filledInputs = inputs.filter(Boolean);
+      console.log("filledInputs", filledInputs);
+      return filledInputs.length === 1;
     }
   )
-
   .test(
     "either-name-or-existing-deck",
     "Please either provide a name for a new deck or choose an existing deck",

@@ -7,6 +7,7 @@ interface TextAreaFieldProps {
   onBlur: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   placeholder: string;
   label?: string;
+  type?: string;
 }
 const TextAreaField: React.FC<TextAreaFieldProps> = ({
   name,
@@ -19,7 +20,7 @@ const TextAreaField: React.FC<TextAreaFieldProps> = ({
   return (
     <div>
       <textarea
-        className="focus:shadow-outline w-full appearance-none rounded border bg-mariana-blue px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+        className="focus:shadow-outline w-full appearance-none rounded-2xl border bg-tolopea px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
         placeholder={placeholder}
         rows={4}
         onBlur={onBlur}

@@ -28,7 +28,7 @@ const CardTypeSelector = () => {
 
   return (
     <>
-      <div className="rounded-3xl min-h-full bg-mariana-blue h-auto p-2">
+      <div className="rounded-3xl min-h-full bg-mariana-blue h-auto p-4">
         <RadioGroup value={card} onChange={(value: CardType) => setCard(value)}>
           <RadioGroup.Label>
             {" "}
@@ -147,7 +147,10 @@ const CardTypeSelector = () => {
       </div>{" "}
       <div>
         <div className="flex justify-center">
-          <button onClick={() => setShowExpanded((prev) => !prev)}>
+          <button
+            type="button"
+            onClick={() => setShowExpanded((prev) => !prev)}
+          >
             {showExpanded ? (
               <ChevronUpIcon
                 className="h-[46px] w-[65px] text-aquamarine"

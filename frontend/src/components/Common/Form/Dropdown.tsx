@@ -1,19 +1,29 @@
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 import React, { Fragment, useState } from "react";
+import { useField, useFormikContext } from "formik";
 
 interface DropdownProps {
-  label: string;
-  options: Array<{ label: string; value: string | number }>;
+  label?: string;
+  options: Array<{ label: string; value: string | number }> | Array<any>;
   value: string;
+  name?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ label, options }) => {
-  const [selected, setSelected] = useState(options[0]);
+const Dropdown: React.FC<DropdownProps> = ({
+  label,
+  options,
+  onBlur,
+  name,
+}) => {
+  const [selected, setSelected] = useState(
+    options[0] || { label: "", value: "" }
+  );
   const [query, setQuery] = useState("");
-
+  const [field, meta, helpers] = useField(name);
+  const { setFieldValue } = useFormikContext();
   const filteredOptions =
     query === ""
       ? options
@@ -39,9 +49,12 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options }) => {
               displayValue={(option: { value: number; label: string }) =>
                 option.label
               }
-              onChange={(event) => {
-                setQuery(event.target.value);
+              onChange={(option) => {
+                setSelected(option);
+                setFieldValue(name, option); // Use setFieldValue to update Formik state
               }}
+              onBlur={onBlur}
+              name={name}
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronDownIcon

@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { FormikProps } from "formik";
-import { TextAreaField } from "@app/Shared/InputField";
-import { FileInputField } from "@app/Shared/FileInputField";
-import { SelectField } from "@app/Shared/SelectField";
-import { languages } from "@app/Features/Extract/Languages";
-import { InputField } from "@common/Form/InputField";
-import { InputErrorMessage } from "@common/Form/InputErrorMessage";
-import { Dropdown } from "@common/Form/Dropdown";
-
 import { useSelector } from "react-redux";
 import { fetchAllDecks } from "@services/Api/Deck/DeckApi";
+import { FormikProps } from "formik";
+import { InputField } from "@common/Form/InputField";
+import { TextAreaField } from "@common/Form/TextAreaField";
+import { InputErrorMessage } from "@common/Form/InputErrorMessage";
+import { Dropdown } from "@common/Form/Dropdown";
+import { FileInputField } from "@common/Form/FileInputField";
+import { languages } from "@source/components/App/Features/Extract/data/Languages";
+
 interface FormValues {
   nameField: string;
   fileField: File | null;
@@ -28,28 +27,49 @@ interface SelectionAndOutputContainerProps {
 const SelectionAndOutputContainer: React.FC<
   SelectionAndOutputContainerProps
 > = ({ formik }) => {
+  console.log("rendering SelectAndOutputContainer");
   const cardsData = useSelector((state) => state.cards);
   const [deckCards, setDeckCards] = useState([]);
 
   useEffect(() => {
+    console.log("useEffect in SelectionAndOutputContainer");
     const fetchData = async () => {
       if (cardsData.length === 0) {
         const decks = await fetchAllDecks();
-        setDeckCards(decks);
+        const filteredDecks = decks
+          .filter((card) => card.type === "Deck")
+          .map((deck) => ({ value: deck.id, label: deck.name }));
+        setDeckCards(filteredDecks);
       } else {
         const filteredDecks = cardsData
-          .filter((card) => card.type === "deck")
-          .map((deck) => ({ id: deck.id, name: deck.name }));
+          .filter((card) => card.type === "Deck")
+          .map((deck) => ({ value: deck.id, label: deck.name }));
         setDeckCards(filteredDecks);
       }
     };
     fetchData();
-  }, [cardsData]);
-
+  }, []);
   return (
     <>
       {" "}
       <div id="extract-selection" className="my-2">
+        <InputErrorMessage
+          error={
+            !!formik.errors.eitherNameOrExistingDeckError &&
+            formik.touched.nameField &&
+            formik.touched.existingDeckField
+          }
+          errorMessage={formik.errors.eitherNameOrExistingDeckError || ""}
+        />
+        <InputErrorMessage
+          error={
+            !!formik.errors.eitherTextOrFileOrUrlError &&
+            (formik.touched.textField ||
+              formik.touched.linkField ||
+              formik.touched.fileField)
+          }
+          errorMessage={formik.errors.eitherTextOrFileOrUrlError || ""}
+        />
         <div className=" w-full">
           <h3>*Title</h3>
           <InputField
@@ -77,11 +97,6 @@ const SelectionAndOutputContainer: React.FC<
             error={!!(formik.errors.fileField && formik.touched.fileField)}
             errorMessage={formik.errors.fileField || ""}
           />
-          {/* {formik.errors.fileField && formik.touched.fileField && (
-            <div className="text-red-500 mb-4 mt-10">
-              {formik.errors.fileField}
-            </div>
-          )} */}
         </div>
         <div className="mb-1">
           <h3>Insert a link</h3>
@@ -94,7 +109,7 @@ const SelectionAndOutputContainer: React.FC<
             type="text"
           />
           <InputErrorMessage
-            error={!!(formik.errors.fileField && formik.touched.linkField)}
+            error={!!(formik.errors.linkField && formik.touched.linkField)}
             errorMessage={formik.errors.linkField || ""}
           />
         </div>
@@ -134,23 +149,13 @@ const SelectionAndOutputContainer: React.FC<
         </div>
         <div className="mb-5">
           <h3>Add to an existing deck</h3>
-          <SelectField
-            name="existingDeckField"
-            value={formik.values.existingDeckField}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            list={deckCards}
-          />
+          {deckCards.length > 0 && (
+            <Dropdown name="existingDeckField" label="" options={deckCards} />
+          )}
         </div>
         <div className="mb-5">
           <h3>Choose language</h3>
-          <Dropdown
-            label="languageField"
-            value={formik.values.languageField}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            options={languages}
-          />
+          <Dropdown label="" options={languages} name="languageField" />
         </div>
       </div>
     </>

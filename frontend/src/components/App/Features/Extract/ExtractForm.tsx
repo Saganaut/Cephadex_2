@@ -1,5 +1,5 @@
 import React from "react";
-import { validationSchema } from "@app/Features/Extract/ExtractFormValidation";
+import { validationSchema } from "@source/components/App/Features/Extract/data/ExtractFormValidation";
 import { Formik, Form } from "formik";
 import { CardTypeSelector } from "@app/Features/Extract/CardTypeSelector";
 import { MultiOptionsContainer } from "@app/Features/Extract/MultiOptionsContainer";
@@ -27,6 +27,8 @@ const ExtractForm: React.FC<ExtractProps> = ({ customIsSelected }) => {
           cardTypeField: "",
           multiOptionsField: "",
           detailField: "",
+          eitherTextOrFileOrUrlError: "",
+          eitherNameOrExistingDeckError: "",
         }}
         validationSchema={validationSchema}
         validateOnBlur={true}
@@ -37,6 +39,8 @@ const ExtractForm: React.FC<ExtractProps> = ({ customIsSelected }) => {
       >
         {(formik) => (
           <Form>
+            {console.log("Form errors:", formik.errors)}
+
             {customIsSelected ? (
               <SelectionAndOutputContainer formik={formik} />
             ) : (
