@@ -1,11 +1,9 @@
-import {
-  SideBarLink,
-  SideBarUpgradeLink,
-} from "@app/Dashboard/SideBar/SideBarLink";
 import CephadexLogoWhite from "@assets/CephadexLogoWhite.svg";
 import DeckIcon from "@assets/DeckIcon.svg";
 import QuizIcon from "@assets/QuizIcon.svg";
+import UpgradeIcon from "@assets/UpgradeIcon.svg";
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/solid";
+import { IconButton } from "@pages/Account/IconButton";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -75,14 +73,37 @@ const SideBarApp: React.FC<SideBarAppProps> = ({
           <ChevronDoubleLeftIcon className={"h-[16px] w-[16px] text-black"} />
         </button>
 
-        <nav className="mt-5 px-4">
+        <nav className={"flex w-full flex-col items-center px-2"}>
           {LINKS.map((link, index) => (
-            <div className="py-2" key={index}>
-              <SideBarLink isSidebarOpen={isSidebarOpen} {...link} />
+            <div
+              className={`${
+                isSidebarOpen ? "w-full" : "w-[60px]"
+              } py-2 transition-all duration-300`}
+              key={index}
+            >
+              <IconButton
+                collapse={!isSidebarOpen}
+                theme={"white"}
+                icon={link.img}
+                onClick={() => {}}
+                ariaLabel={link.title}
+                to={link.href}
+              />
             </div>
           ))}
-          <div className="mt-20">
-            <SideBarUpgradeLink isSidebarOpen={isSidebarOpen} />
+          <div
+            className={`${
+              isSidebarOpen ? "w-full" : "w-[60px]"
+            } mt-20 transition-all duration-300`}
+          >
+            <IconButton
+              collapse={!isSidebarOpen}
+              theme={"cyan"}
+              icon={UpgradeIcon}
+              onClick={() => {}}
+              ariaLabel={"Upgrade"}
+              to={"/upgrade"}
+            />
           </div>
         </nav>
       </div>
