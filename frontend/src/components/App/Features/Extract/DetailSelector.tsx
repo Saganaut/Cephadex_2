@@ -1,39 +1,24 @@
 import React from "react";
-import { SelectField } from "@app/Shared/SelectField";
+import { Dropdown } from "@common/Form/Dropdown";
 
-const subjectList: string[] = [
-  "Math",
-  "English",
-  "Science",
-  "History",
-  "Geography",
-  "Art",
-  "Music",
-  "Physical Education",
-  "Social Studies",
+const detail: Array<{ value: number; label: string }> = [
+  { value: -1, label: "" },
+  { value: 0, label: "Low" },
+  { value: 1, label: "Medium" },
+  { value: 2, label: "High" },
 ];
 
 interface DetailSelectorProps {
-  name: string;
-  list: string[];
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   onBlur?: (event: React.FocusEvent<HTMLSelectElement>) => void;
 }
 
-const DetailSelector: React.FC = () => {
+const DetailSelector: React.FC<DetailSelectorProps> = () => {
   return (
-    <div>
-      Choose a subject
-      <SelectField
-        name="SubjectSelect"
-        // value={formik.values.existingDeckField}
-        // onChange={formik.handleChange}
-        // onBlur={formik.handleBlur}
-        list={subjectList}
-      />
+    <div className=" w-full max-w-sm">
+      <Dropdown label="Detail" options={detail} />
     </div>
   );
 };
-
 export { DetailSelector };

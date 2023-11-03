@@ -23,7 +23,7 @@ const InputField: React.FC<InputFieldProps> = ({
       <p className={"pb-2 text-[20px] font-medium text-white"}>{label}</p>
       <input
         autoComplete={"off"}
-        className="w-full max-w-[650px] appearance-none rounded-[18px] border bg-transparent px-[18px]  py-[20px] text-[18px] leading-tight text-aquamarine shadow placeholder:text-aquamarine/30 focus:outline-none"
+        className="w-full appearance-none rounded-[18px] border bg-transparent px-[18px]  py-[20px] text-[18px] leading-tight text-aquamarine shadow placeholder:text-aquamarine/30 focus:outline-none"
         type={type}
         placeholder={placeholder}
         onBlur={onBlur}

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { FormikProps } from "formik";
-import { InputField, TextAreaField } from "@app/Shared/InputField";
+import { TextAreaField } from "@app/Shared/InputField";
 import { FileInputField } from "@app/Shared/FileInputField";
 import { SelectField } from "@app/Shared/SelectField";
 import { languages } from "@app/Features/Extract/Languages";
+import { InputField } from "@common/Form/InputField";
+import { InputErrorMessage } from "@common/Form/InputErrorMessage";
+import { Dropdown } from "@common/Form/Dropdown";
 
 import { useSelector } from "react-redux";
 import { fetchAllDecks } from "@services/Api/Deck/DeckApi";
@@ -46,8 +49,8 @@ const SelectionAndOutputContainer: React.FC<
   return (
     <>
       {" "}
-      <div id="extract-selection" className="my-5">
-        <div className="mb-5">
+      <div id="extract-selection" className="my-2">
+        <div className=" w-full">
           <h3>*Title</h3>
           <InputField
             name="nameField"
@@ -57,25 +60,30 @@ const SelectionAndOutputContainer: React.FC<
             placeholder="Name of the deck, like Chemistry - Chapter 22: long"
             type="text"
           />
+          <InputErrorMessage />
         </div>
         {formik.errors.nameField && (
           <div className="text-red-500 mb-4 mt-10">Name error</div>
         )}
 
-        <div className="mb-5">
-          <h3 className="mb-5">*Either upload a file</h3>
+        <div className="mb-1">
+          <h3 className="mb-2">*Either upload a file</h3>
           <FileInputField
             formik={formik}
             name="fileField"
             onBlur={formik.handleBlur}
           />
-          {formik.errors.fileField && formik.touched.fileField && (
+          <InputErrorMessage
+            error={!!(formik.errors.fileField && formik.touched.fileField)}
+            errorMessage={formik.errors.fileField || ""}
+          />
+          {/* {formik.errors.fileField && formik.touched.fileField && (
             <div className="text-red-500 mb-4 mt-10">
               {formik.errors.fileField}
             </div>
-          )}
+          )} */}
         </div>
-        <div className="mb-5">
+        <div className="mb-1">
           <h3>Insert a link</h3>
           <InputField
             name="linkField"
@@ -85,9 +93,10 @@ const SelectionAndOutputContainer: React.FC<
             placeholder="Insert a wikipedia, youtube, or other URL"
             type="text"
           />
-          {formik.errors.linkField && formik.touched.linkField ? (
-            <div className="text-red-500">{formik.errors.linkField}</div>
-          ) : null}
+          <InputErrorMessage
+            error={!!(formik.errors.fileField && formik.touched.linkField)}
+            errorMessage={formik.errors.linkField || ""}
+          />
         </div>
         <div className="mb-5">
           <h3>*Description</h3>
@@ -135,12 +144,12 @@ const SelectionAndOutputContainer: React.FC<
         </div>
         <div className="mb-5">
           <h3>Choose language</h3>
-          <SelectField
-            name="languageField"
+          <Dropdown
+            label="languageField"
             value={formik.values.languageField}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            list={languages}
+            options={languages}
           />
         </div>
       </div>

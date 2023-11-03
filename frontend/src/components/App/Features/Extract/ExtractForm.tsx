@@ -24,6 +24,9 @@ const ExtractForm: React.FC<ExtractProps> = ({ customIsSelected }) => {
           subjectField: "",
           existingDeckField: "",
           languageField: "",
+          cardTypeField: "",
+          multiOptionsField: "",
+          detailField: "",
         }}
         validationSchema={validationSchema}
         validateOnBlur={true}
@@ -42,8 +45,10 @@ const ExtractForm: React.FC<ExtractProps> = ({ customIsSelected }) => {
                   What type of cards would you like to create?
                 </div>
                 <CardTypeSelector />
-                <MultiOptionsContainer />
-                <AdvancedOptionsContainer />
+                <div className="grid grid-cols-1 gap-y-5 mt-5">
+                  <MultiOptionsContainer />
+                  <AdvancedOptionsContainer />
+                </div>
               </div>
             )}
             <div className="flex justify-end">

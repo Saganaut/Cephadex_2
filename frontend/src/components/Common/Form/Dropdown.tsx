@@ -4,7 +4,10 @@ import React, { Fragment, useState } from "react";
 
 interface DropdownProps {
   label: string;
-  options: Array<{ value: number; label: string }>;
+  options: Array<{ label: string; value: string | number }>;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ label, options }) => {
@@ -32,7 +35,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options }) => {
         <div className="relative mt-1">
           <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-transparent text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input
-              className="w-full rounded-[18px]  border-[1px] border-white bg-transparent px-[18px] py-[20px] text-[18px] font-medium leading-5 text-aquamarine focus:outline-none focus:outline-0 focus:ring-0"
+              className="w-full rounded-[18px]  border-[1px] border-black-white bg-transparent px-[18px] py-[20px] text-[18px] font-medium leading-5 text-aquamarine focus:outline-none focus:outline-0 focus:ring-0"
               displayValue={(option: { value: number; label: string }) =>
                 option.label
               }

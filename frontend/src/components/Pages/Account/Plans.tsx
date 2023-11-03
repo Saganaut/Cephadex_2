@@ -1,5 +1,5 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
-import { Button } from "@pages/Account/Button";
+import { Button } from "@source/components/Common/Form/Button";
 import React, { type ReactElement } from "react";
 
 const Plans = (): ReactElement => {

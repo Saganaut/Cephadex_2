@@ -14,6 +14,7 @@ const GoogleLoginButton = () => {
       const response = await sendGoogleSignInToken(credentialResponse);
 
       if (response.data.status === "success") {
+        console.log("handleGoogleLogin Response", response.data);
         // Update the user context with the user data from the response
         setUserData(response.data.user);
         const userData = response.data["user"];

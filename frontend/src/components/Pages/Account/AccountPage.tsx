@@ -1,10 +1,10 @@
 import UserAvatar from "@assets/UserAvatar.svg";
 import { validationSchema } from "@pages/Account/AccountFormValidation";
-import { Dropdown } from "@pages/Account/Dropdown";
-import { InputErrorMessage } from "@pages/Account/InputErrorMessage";
-import { InputField } from "@pages/Account/InputField";
+import { Dropdown } from "@common/Form/Dropdown";
+import { InputErrorMessage } from "@common/Form/InputErrorMessage";
+import { InputField } from "@common/Form/InputField";
 import { Plans } from "@pages/Account/Plans";
-import { PreferencesSelect } from "@pages/Account/PreferencesSelect";
+import { PreferencesSelect } from "@common/Form/PreferencesSelect";
 import { Form, Formik } from "formik";
 import React, { type ReactElement } from "react";
 

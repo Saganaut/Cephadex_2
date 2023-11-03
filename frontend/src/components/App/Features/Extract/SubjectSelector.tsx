@@ -1,37 +1,17 @@
 import React from "react";
-import { SelectField } from "@app/Shared/SelectField";
+import { Dropdown } from "@common/Form/Dropdown";
+import { subjectList } from "@app/Features/Extract/SubjectList";
 
-const subjectList: string[] = [
-  "Math",
-  "English",
-  "Science",
-  "History",
-  "Geography",
-  "Art",
-  "Music",
-  "Physical Education",
-  "Social Studies",
-];
-
-interface SelectFieldProps {
-  name: string;
-  list: string[];
+interface SubjectSelectorProps {
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   onBlur?: (event: React.FocusEvent<HTMLSelectElement>) => void;
 }
 
-const SubjectSelector: React.FC = () => {
+const SubjectSelector: React.FC<SubjectSelectorProps> = () => {
   return (
-    <div>
-      Choose a subject
-      <SelectField
-        name="SubjectSelect"
-        // value={formik.values.existingDeckField}
-        // onChange={formik.handleChange}
-        // onBlur={formik.handleBlur}
-        list={subjectList}
-      />
+    <div className=" w-full max-w-sm">
+      <Dropdown label={"Subject"} options={subjectList} />
     </div>
   );
 };

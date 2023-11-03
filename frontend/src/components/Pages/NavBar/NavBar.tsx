@@ -5,7 +5,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import React, { type ReactElement } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import cephaBanner from "@assets/cepha-banner-1.png";
 const NavBar = (): ReactElement => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { openSignInModal } = useModal();
@@ -19,11 +19,7 @@ const NavBar = (): ReactElement => {
         <div className="flex lg:flex-1">
           <Link to="/#">
             <span className="sr-only">Cephadex</span>
-            <img
-              className="h-10 w-auto"
-              src="/assets/cepha-banner-1.png"
-              alt=""
-            />
+            <img className="h-10 w-auto" src={cephaBanner} alt="" />
           </Link>
         </div>
         <div className="flex lg:hidden">
