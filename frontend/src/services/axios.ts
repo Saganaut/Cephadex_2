@@ -17,6 +17,6 @@ axiosPrivate.defaults.headers.common["Access-Control-Allow-Origin"] =
   "http://localhost:5000";
 
 axiosPrivate.defaults.headers.common["Access-Control-Allow-Methods"] =
-  "GET, POST, DELETE, UPDATE, PUT, PATCH";
+  "GET, POST, DELETE, UPDATE, PUT, PATCH,OPTIONS";
 axiosPrivate.defaults.headers.common["Access-Control-Allow-Credentials"] =
   "true";
