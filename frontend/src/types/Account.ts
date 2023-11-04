@@ -2,8 +2,8 @@ export interface SubscriptionPlan {
   id: number;
   name: string;
   description: string;
-  limit-count: number;
-  limit-time-period: number;
+  "limit-count": number;
+  "limit-time-period": number;
   price: number;
   duration: number;
 }

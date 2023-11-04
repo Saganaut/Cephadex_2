@@ -13,3 +13,44 @@ export interface UserSettings {
   "srs-setting-3": boolean | null;
   "srs-setting-4": boolean | null;
 }
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  "email-confirmed-at": string | null;
+  first_name: string;
+  last_name: string;
+  external_id: string | null;
+  external_type: string | null;
+  "time-created": string;
+  "time-accessed": string;
+  account_type: string;
+  account_status: string;
+  "account-expiration": string | null;
+  "account-expiration-reason": string | null;
+  gender: string | null;
+  pic: string | null;
+  contacted_email: boolean;
+  dob: string | null;
+  timezone: string | null;
+  "subscription-plan": string | null;
+  "subscription-start-date": string | null;
+  "subscription-end-date": string | null;
+  "latest-roll-over": string | null;
+  role: string | null;
+  "stripe-customer-id": string | null;
+  guest: boolean;
+  "used-trial": boolean;
+  "member-since": string;
+  "quantity-decks": number;
+  "quantity-cards": number;
+  "quantity-tests": number;
+  "quantity-files": number;
+  "quantity-groups": number;
+  "quantity-decks-public": number;
+  "quantity-cards-mastered": number;
+  "quantity-cards-learning": number;
+  "quantity-cards-new": number;
+  "remaining-credit": number;
+  "roll-over-date": number;
+}
