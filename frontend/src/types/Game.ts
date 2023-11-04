@@ -34,5 +34,5 @@ export interface GameAnswer {
   "game-id": number;
   round: number;
   "user-id": number;
-  is_correct: boolean;
+  "is-correct": boolean;
 }
