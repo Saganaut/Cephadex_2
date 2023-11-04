@@ -1,12 +1,12 @@
+import React, { type ReactElement } from "react";
+import { Form, Formik } from "formik";
 import UserAvatar from "@assets/UserAvatar.svg";
-import { validationSchema } from "@pages/Account/AccountFormValidation";
 import { Dropdown } from "@common/Form/Dropdown";
 import { InputErrorMessage } from "@common/Form/InputErrorMessage";
 import { InputField } from "@common/Form/InputField";
-import { Plans } from "@pages/Account/Plans";
 import { PreferencesSelect } from "@common/Form/PreferencesSelect";
-import { Form, Formik } from "formik";
-import React, { type ReactElement } from "react";
+import { validationSchema } from "@pages/Account/AccountFormValidation";
+import { Plans } from "@pages/Account/Plans";
 
 const roles: Array<{ value: number; label: string }> = [
   { value: 0, label: "None" },

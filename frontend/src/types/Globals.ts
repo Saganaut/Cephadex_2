@@ -1,3 +1,7 @@
+import { Deck } from "./Deck";
+import { Quiz } from "./Quiz";
+import { Group } from "./Group";
+import { DeckFiles } from "./Deck";
 export interface Blog {
   id: number;
   title: string;
@@ -5,15 +9,31 @@ export interface Blog {
   summary: string;
   content: string;
   category: string;
-  time_created: string;
+  "time-created": string;
   avatar: string;
-  author_name: string;
-  images: Array<{ thumbnail_url: string; image_url: string }>;
+  "author-name": string;
+  images: Array<{ "thumbnail-url": string; "image-url": string }>;
 }
-export interface Card {
-  type: "Quiz" | "Deck";
-  fav: boolean;
-  name: string;
-  isProfile: boolean;
+export type DashboardCard = Deck | Quiz | Group | DeckFiles;
+
+export interface Feedback {
   id: number;
+  name: string;
+  email: string;
+  message: string;
+  "time-created": string;
+  "type-feedback": string;
+}
+
+export interface JobNotification {
+  id: number;
+  "user-id": number;
+  slug: string;
+  state: string;
+  complete: boolean;
+  notified: boolean;
+  "time-created": string;
+  cost: number;
+  "input-details": string;
+  "extract-type": string;
 }

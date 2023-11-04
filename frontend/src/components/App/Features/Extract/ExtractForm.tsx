@@ -39,8 +39,6 @@ const ExtractForm: React.FC<ExtractProps> = ({ customIsSelected }) => {
       >
         {(formik) => (
           <Form>
-            {console.log("Form errors:", formik.errors)}
-
             {customIsSelected ? (
               <SelectionAndOutputContainer formik={formik} />
             ) : (
