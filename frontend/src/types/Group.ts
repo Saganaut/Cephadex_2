@@ -9,6 +9,7 @@ export interface Group {
   avatar: string | null;
   "is-private": boolean;
   fav: boolean | null;
+  type: "Group";
 }
 
 export interface GroupInvite {

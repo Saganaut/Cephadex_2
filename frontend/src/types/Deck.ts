@@ -13,13 +13,14 @@ export interface SharedDecks {
 
 export interface DeckFiles {
   id: number;
-  "file-name": string;
+  name: string;
   "file-path": string | null;
   "file-type": string | null;
   "file-size": number | null;
   "create-type": string | null;
   "time-created": string;
   fav: boolean | null;
+  type: "File";
 }
 
 export interface DeckAttributes {
@@ -59,6 +60,7 @@ export interface Deck {
   "share-date": string | null;
   "share-id": number | null;
   fav: boolean | null;
+  type: "Deck";
 }
 
 export interface DeckPublic {

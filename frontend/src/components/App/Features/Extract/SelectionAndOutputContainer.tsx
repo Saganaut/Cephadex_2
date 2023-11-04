@@ -9,6 +9,7 @@ import { Dropdown } from "@common/Form/Dropdown";
 import { FileInputField } from "@common/Form/FileInputField";
 import { languages } from "@source/components/App/Features/Extract/data/Languages";
 import { DashboardCardsState } from "../../../../types/Globals";
+import { Deck } from "../../../../types/Deck";
 interface FormValues {
   nameField: string;
   fileField: File | null;
@@ -23,7 +24,10 @@ interface FormValues {
 interface SelectionAndOutputContainerProps {
   formik: FormikProps<FormValues>;
 }
-
+type DeckOption = {
+  value: number;
+  label: string;
+};
 const SelectionAndOutputContainer: React.FC<
   SelectionAndOutputContainerProps
 > = ({ formik }) => {
@@ -31,7 +35,7 @@ const SelectionAndOutputContainer: React.FC<
   const cardsData = useSelector(
     (state: { dashboardCards: DashboardCardsState }) => state.dashboardCards
   );
-  const [deckCards, setDeckCards] = useState([]);
+  const [deckCards, setDeckCards] = React.useState<DeckOption[]>([]);
 
   useEffect(() => {
     console.log("useEffect in SelectionAndOutputContainer");
@@ -39,8 +43,8 @@ const SelectionAndOutputContainer: React.FC<
       if (cardsData.length === 0) {
         const decks = await fetchAllDecks();
         const filteredDecks = decks
-          .filter((card) => card.type === "Deck")
-          .map((deck) => ({ value: deck.id, label: deck.name }));
+          .filter((deck: Deck) => deck.type === "Deck")
+          .map((deck: Deck) => ({ value: deck.id, label: deck.name }));
         setDeckCards(filteredDecks);
       } else {
         const filteredDecks = cardsData
