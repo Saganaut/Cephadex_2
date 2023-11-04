@@ -21,6 +21,7 @@ from pytesseract import image_to_string
 from models.storage.s3 import upload_to_s3
 import openai
 import tiktoken
+from pymediainfo import MediaInfo
 
 from models.models_ import Deck, Job, JobNotification, DeckFiles
 from tools.lists import DECK_NAMES
@@ -96,11 +97,11 @@ class Extractor:
         self.deck_description = data.get("deck_description")
         self.existing_deck = data.get("existing_deck")
         self.new_deck_name = data.get("new_deck_name")
-        self.file_data: Optional[str] = data.get("file_path")
+        self.file_path: Optional[str] = data.get("file_path")
         self.text_data: Optional[str] = data.get("text_input")
         self.link_data: Optional[str] = data.get("link_input")
         self.user_id: Optional[str] = data.get("user_id")
-        self.slug: str = self.user_id + dt.datetime.now(dt.timezone.utc).isoformat()
+        self.slug: str = str(self.user_id) + dt.datetime.now(dt.timezone.utc).isoformat()
         self.extension: str = None
         self.text: str = None
         self.tokens: int = None
@@ -109,7 +110,7 @@ class Extractor:
     def __repr__(self):
         return (
             f"Extractor(prompt_options={self.prompt_options}, "
-            f"file_data={repr(self.file_data)}, "
+            f"file_data={repr(self.file_path)}, "
             f"text_data={repr(self.text_data)}, "
             f"link_data={repr(self.link_data)}, "
             f"slug={repr(self.slug)})"
@@ -118,7 +119,7 @@ class Extractor:
     @log_decorator
     def get_deck(self) -> tuple["Deck", bool]:
         """Retrieves the deck object and a boolean to determine whether a new deck was created"""
-        if self.existing_deck is not None:
+        if self.existing_deck not in  [None, ""]:
             deck = Deck.query.filter_by(id=self.existing_deck).first()
             self.deck = deck
             return deck, False
@@ -129,34 +130,42 @@ class Extractor:
             self.deck = deck
             return deck, True
 
+    def job_clean_up(self) -> None:
+        file_path = self.file_path
+        try:
+            os.remove(file_path)
+            print(f"File {file_path} has been deleted successfully")
+        except FileNotFoundError:
+            print(f"File {file_path} not found")
     @log_decorator
     def get_content(self) -> str:
         """Retrieves the text content from input, or in the case of an audio file the duration
         of the the file"""
-        if self.file_data:
-            extension = os.path.splitext(self.file_data.filename)[1].lower()
+        if self.file_path:
+            extension = os.path.splitext(self.file_path)[1].lower()
             self.extension = extension
             if extension in [".wav", ".mp3"]:
-                self.duration = get_audio_content(
-                    self.file_data, self.file_data.filename
-                )
+                self.duration = get_audio_content(self.file_path)
+                self.tokens = convert_time_to_tokens(self.duration)
                 if self.prompt_options["main_opt"] == "Mix":
                     self.prompt_options["main_opt"] = "Definitions"
                 return self.duration
             elif extension in [".pdf"]:
-                file_path = save_file_to_upload_folder(self.file_data)
-                self.text = clean_text(extract_from_pdf(file_path))
+                self.text = clean_text(extract_from_pdf(self.file_path))
                 self.type = "pdf"
-                os.remove(file_path)
+                os.remove(self.file_path)
             elif extension in [".pptx"]:
-                self.text = clean_text(extract_from_pptx(self.file_data))
+                self.text = clean_text(extract_from_pptx(self.file_path))
                 self.type = "pptx"
+                os.remove(self.file_path)
             elif extension in [".docx"]:
-                self.text = clean_text(extract_from_docx(self.file_data))
+                self.text = clean_text(extract_from_docx(self.file_path))
                 self.type = "docx"
+                os.remove(self.file_path)
             elif extension in [".txt"]:
                 self.text = self.extract_from_txt()
                 self.type = "txt"
+                os.remove(self.file_path)
             else:
                 raise UnsupportedFileError
         elif self.text_data:
@@ -225,17 +234,17 @@ class Extractor:
     @log_decorator
     def audio_job_creator(self) -> None:
         """renames and stores the audio file"""
-        upload_folder = UPLOAD_FOLDER
-        random_string = "".join(random.choices("0123456789", k=5))
-        original_filename = self.file_data.filename
-        filename, extension = os.path.splitext(original_filename)
-        new_filename = f"{filename}_{random_string}{extension}"
-        new_filename_secure = secure_filename(new_filename)
-        os.makedirs(upload_folder, exist_ok=True)
-        file_path = os.path.join(upload_folder, new_filename_secure)
-        self.file_data.save(file_path)
-        self.file_data = None
-        self.extract_audio(file_path)
+        # upload_folder = UPLOAD_FOLDER
+        # random_string = "".join(random.choices("0123456789", k=5))
+        # original_filename = self.file_data.filename
+        # filename, extension = os.path.splitext(original_filename)
+        # new_filename = f"{filename}_{random_string}{extension}"
+        # new_filename_secure = secure_filename(new_filename)
+        # os.makedirs(upload_folder, exist_ok=True)
+        # file_path = os.path.join(upload_folder, new_filename_secure)
+        # self.file_data.save(file_path)
+        # self.file_data = None
+        self.extract_audio(self.file_path)
 
     @log_decorator
     def job_creator(self, prompt: str) -> None:
@@ -332,26 +341,19 @@ class Extractor:
 @log_decorator
 def tokens_general(data) -> int:
     """Counts tokens from given data with a file path."""
-
     file_path = data.get("file_path")
-
     if file_path:
         with open(file_path, "rb") as file_data:  # 'rb' mode for reading in binary
             extension = os.path.splitext(file_path)[1].lower()
-
             if extension in [".wav", ".mp3"]:
                 duration = get_audio_content(file_data)
                 return convert_time_to_tokens(duration)
-
             elif extension in [".pdf"]:
                 text = clean_text(extract_from_pdf(file_data))
-
             elif extension in [".pptx"]:
                 text = clean_text(extract_from_pptx(file_data))
-
             elif extension in [".docx"]:
                 text = clean_text(extract_from_docx(file_data))
-
             elif extension in [".txt"]:
                 text = file_data.read().decode(
                     "utf-8"
@@ -388,10 +390,10 @@ def save_file_to_upload_folder(file: str) -> str:
 
 
 @log_decorator
-def get_audio_content(file_data: str, name: str) -> float:
-    """returns the duration of an audio file"""
-    duration = get_duration(file_data, name)
-    file_data.seek(0)
+def get_audio_content(file_path: str) -> float:
+    print("get audio content file_data shows up as?", file_path)
+    duration = get_duration(file_path)
+    # file_data.seek(0)
     return duration
 
 
@@ -428,10 +430,10 @@ def extract_from_pdf(file_data: str, n: int = 3) -> str:
 
 
 @log_decorator
-def extract_from_pptx(file_data: str) -> Optional[str]:
+def extract_from_pptx(file_path: str) -> Optional[str]:
     """extracts text from a pptx file"""
     try:
-        prs = Presentation(file_data)
+        prs = Presentation(file_path)
         text_runs = []
         for slide in prs.slides:
             for shape in slide.shapes:
@@ -446,9 +448,9 @@ def extract_from_pptx(file_data: str) -> Optional[str]:
 
 
 @log_decorator
-def extract_from_docx(file_data: str) -> Optional[str]:
+def extract_from_docx(file_path: str) -> Optional[str]:
     try:
-        text = docx2txt.process(file_data)
+        text = docx2txt.process(file_path)
         text = text.replace("\n", " ")
         return text
     except FileNotFoundError as e:
@@ -458,10 +460,10 @@ def extract_from_docx(file_data: str) -> Optional[str]:
 
 
 @log_decorator
-def extract_from_txt(file_data: str) -> str:
+def extract_from_txt(file_path: str) -> str:
     """extracts text from a text file"""
     try:
-        return pathlib.Path(file_data).read_text()
+        return pathlib.Path(file_path).read_text()
     except Exception as e:
         raise ExtractionError(f"Failed to extract data: {e}") from e
 
@@ -699,23 +701,37 @@ def extract_content(soup: BeautifulSoup) -> str:
 
 ## returns duration in seconds
 @log_decorator
-def get_duration(file, name: str) -> float:
-    """gets duration of audio file"""
-    file_data = file.read()
-    temp_filename = f"temp_audio_file{name}"
-    with open(temp_filename, "wb") as temp_file:
-        temp_file.write(file_data)
-    logger.info(f"get duration of audio file {temp_filename}")
-    info = mediainfo(temp_filename)
+def get_duration(file_path: str) -> float:
+    print("get duration file is showing up as?", file_path)
+    logger.info(f"get duration of audio file {file_path}")
     try:
-        duration = float(info["duration"])
+        info = MediaInfo.parse(file_path)
+        print(info)
+        for track in info.tracks:
+            if track.track_type == 'Audio':
+                duration = float(track.duration)  # Duration in milliseconds
+                return duration / 1000 
     except Exception as e:
         logging.error("An error occurred when trying to get duration of audio file", e)
         raise AudioError from e
-    time_base = float(info["time_base"].split("/")[1])
-    duration = float(info["duration_ts"]) / time_base
-    os.remove(temp_filename)
-    return duration
+
+
+    """gets duration of audio file"""
+    # file_data = file.read()
+    # temp_filename = f"temp_audio_file{name}"
+    # with open(temp_filename, "wb") as temp_file:
+    #     temp_file.write(file_data)
+    # logger.info(f"get duration of audio file {temp_filename}")
+    # info = mediainfo(temp_filename)
+    # try:
+    #     duration = float(info["duration"])
+    # except Exception as e:
+    #     logging.error("An error occurred when trying to get duration of audio file", e)
+    #     raise AudioError from e
+    # time_base = float(info["time_base"].split("/")[1])
+    # duration = float(info["duration_ts"]) / time_base
+    # os.remove(temp_filename)
+    # return duration
 
 
 def convert_time_to_tokens(time: float) -> float:

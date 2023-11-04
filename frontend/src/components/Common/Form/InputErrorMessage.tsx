@@ -1,13 +1,13 @@
 import React from "react";
 
 interface InputErrorMessageProps {
-  error: boolean;
-  errorMessage: string;
+  error?: boolean;
+  errorMessage?: string;
 }
 
 const InputErrorMessage: React.FC<InputErrorMessageProps> = ({
   errorMessage,
-  error,
+  error = false,
 }) => {
   return (
     <div

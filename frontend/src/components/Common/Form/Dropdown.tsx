@@ -7,7 +7,7 @@ interface DropdownProps {
   label?: string;
   options: Array<{ label: string; value: string | number }> | Array<any>;
   value: string;
-  name?: string;
+  name: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -18,12 +18,13 @@ const Dropdown: React.FC<DropdownProps> = ({
   onBlur,
   name,
 }) => {
-  const [selected, setSelected] = useState(
-    options[0] || { label: "", value: "" }
-  );
+  // const [selected, setSelected] = useState(
+  //   options[0] || { label: "", value: "" }
+  // );
   const [query, setQuery] = useState("");
   const [field, meta, helpers] = useField(name);
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue, values } = useFormikContext();
+  const selected = values[name];
   const filteredOptions =
     query === ""
       ? options
@@ -41,7 +42,14 @@ const Dropdown: React.FC<DropdownProps> = ({
         {label} - {selected.label}
       </p>
 
-      <Combobox value={selected} onChange={setSelected}>
+      <Combobox
+        value={selected}
+        onChange={(option) => {
+          console.log("Combobox change detected:", name, option);
+          // setSelected(option); // Update local state
+          setFieldValue(name, option); // Update Formik state
+        }}
+      >
         <div className="relative mt-1">
           <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-transparent text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input
@@ -49,10 +57,6 @@ const Dropdown: React.FC<DropdownProps> = ({
               displayValue={(option: { value: number; label: string }) =>
                 option.label
               }
-              onChange={(option) => {
-                setSelected(option);
-                setFieldValue(name, option); // Use setFieldValue to update Formik state
-              }}
               onBlur={onBlur}
               name={name}
             />
@@ -87,6 +91,11 @@ const Dropdown: React.FC<DropdownProps> = ({
                       }`
                     }
                     value={option}
+                    onChange={() => {
+                      console.log("option selected is", name, option);
+                      setSelected(option);
+                      setFieldValue(name, option);
+                    }}
                   >
                     {({ selected, active }) => (
                       <>

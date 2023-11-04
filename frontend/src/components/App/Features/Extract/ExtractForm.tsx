@@ -6,7 +6,7 @@ import { MultiOptionsContainer } from "@app/Features/Extract/MultiOptionsContain
 import { AdvancedOptionsContainer } from "@app/Features/Extract/AdvancedOptionsContainer";
 import { ExtractSubmitButton } from "@app/Features/Extract/ExtractSubmitButton";
 import { SelectionAndOutputContainer } from "@app/Features/Extract/SelectionAndOutputContainer";
-
+import { extract } from "@services/Api/Deck/CreateApi";
 interface ExtractProps {
   customIsSelected: boolean;
 }
@@ -24,8 +24,8 @@ const ExtractForm: React.FC<ExtractProps> = ({ customIsSelected }) => {
           subjectField: "",
           existingDeckField: "",
           languageField: "",
-          cardTypeField: "",
-          multiOptionsField: "",
+          cardTypeField: "Mix",
+          multiOptionsField: [],
           detailField: "",
           eitherTextOrFileOrUrlError: "",
           eitherNameOrExistingDeckError: "",
@@ -35,6 +35,7 @@ const ExtractForm: React.FC<ExtractProps> = ({ customIsSelected }) => {
         onSubmit={(values) => {
           console.log("submit ----------------------------------");
           console.log(values);
+          extract(values);
         }}
       >
         {(formik) => (

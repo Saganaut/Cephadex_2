@@ -3,6 +3,7 @@ import { useState } from "react";
 import { RadioGroup } from "@headlessui/react";
 import { CardTypeOption } from "@app/Features/Extract/CardTypeOption";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
+import { FormikContextType, useFormikContext } from "formik";
 
 type CardType =
   | "Mix"
@@ -21,15 +22,31 @@ type CardType =
   | "Turn to notes "
   | "Custom";
 
-const CardTypeSelector = () => {
-  let [card, setCard] = useState<CardType>("Mix");
+interface CardTypeValues {
+  cardTypeField: string;
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLSelectElement>) => void;
+}
+
+const CardTypeSelector: React.FC = () => {
+  // let [card, setCard] = useState<CardType>("Mix");
 
   const [showExpanded, setShowExpanded] = useState(false);
+  const formik: FormikContextType<CardTypeValues> = useFormikContext();
+  const card = formik.values.cardTypeField as CardType;
 
   return (
     <>
       <div className="rounded-3xl min-h-full bg-mariana-blue h-auto p-4">
-        <RadioGroup value={card} onChange={(value: CardType) => setCard(value)}>
+        <RadioGroup
+          name="cardTypeField"
+          value={card}
+          onChange={(value: CardType) => {
+            formik.setFieldValue("cardTypeField", value);
+          }}
+          onBlur={formik.handleBlur}
+        >
           <RadioGroup.Label>
             {" "}
             <div className="flex justify-center p-2 pb-4">

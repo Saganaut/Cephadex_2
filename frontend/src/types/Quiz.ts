@@ -20,7 +20,7 @@ export interface Quiz {
   "deck-id": number;
   "share-id": number | null;
   fav: boolean | null;
-  type: string | null;
+  type: "Quiz";
 }
 
 export interface QuestionResult {

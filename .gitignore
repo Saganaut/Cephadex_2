@@ -1,5 +1,6 @@
 backend/backenv/
 frontend/node_modules/
+backend/uploaded_files
 .idea
 
 

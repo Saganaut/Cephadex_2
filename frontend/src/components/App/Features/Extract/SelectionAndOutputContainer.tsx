@@ -10,6 +10,8 @@ import { FileInputField } from "@common/Form/FileInputField";
 import { languages } from "@source/components/App/Features/Extract/data/Languages";
 import { DashboardCardsState } from "../../../../types/Globals";
 import { Deck } from "../../../../types/Deck";
+import { Formik, Form, Field, useFormikContext } from "formik";
+
 interface FormValues {
   nameField: string;
   fileField: File | null;
@@ -19,6 +21,9 @@ interface FormValues {
   subjectField: string;
   existingDeckField: string;
   languageField: string;
+  eitherNameOrExistingDeckError: string;
+  eitherTextOrFileOrUrlError: string;
+  tagField: string;
 }
 
 interface SelectionAndOutputContainerProps {
@@ -55,6 +60,9 @@ const SelectionAndOutputContainer: React.FC<
     };
     fetchData();
   }, []);
+  const formikContext = useFormikContext();
+  console.log("Formik context:", formikContext);
+
   return (
     <>
       {" "}
@@ -120,7 +128,7 @@ const SelectionAndOutputContainer: React.FC<
           />
         </div>
         <div className="mb-5">
-          <h3>*Description</h3>
+          <h3>Paste some text</h3>
 
           <TextAreaField
             name="textField"
@@ -132,13 +140,13 @@ const SelectionAndOutputContainer: React.FC<
           />
         </div>
         <div className="mb-5">
-          <h3>Subject</h3>
+          <h3>Tags</h3>
           <InputField
-            name="subjectField"
-            value={formik.values.subjectField}
+            name="tagField"
+            value={formik.values.tagField}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="Set a subject"
+            placeholder="Add some tags"
             type="text"
           />
         </div>
@@ -150,18 +158,32 @@ const SelectionAndOutputContainer: React.FC<
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             type="text"
-            placeholder="Add a description so you and others can identify what it's for easily"
+            placeholder="Add a description"
           />
         </div>
         <div className="mb-5">
           <h3>Add to an existing deck</h3>
           {deckCards.length > 0 && (
-            <Dropdown name="existingDeckField" label="" options={deckCards} />
+            <Dropdown
+              name="existingDeckField"
+              label=""
+              options={deckCards}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.existingDeckField}
+            />
           )}
         </div>
         <div className="mb-5">
           <h3>Choose language</h3>
-          <Dropdown label="" options={languages} name="languageField" />
+          <Dropdown
+            label=""
+            options={languages}
+            name="languageField"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.languageField}
+          />
         </div>
       </div>
     </>

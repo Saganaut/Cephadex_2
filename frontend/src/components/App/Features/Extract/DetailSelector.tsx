@@ -1,5 +1,6 @@
 import React from "react";
 import { Dropdown } from "@common/Form/Dropdown";
+import { FormikContextType, useFormikContext } from "formik";
 
 const detail: Array<{ value: number; label: string }> = [
   { value: -1, label: "" },
@@ -8,16 +9,26 @@ const detail: Array<{ value: number; label: string }> = [
   { value: 2, label: "High" },
 ];
 
-interface DetailSelectorProps {
+interface DetailFormValues {
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   onBlur?: (event: React.FocusEvent<HTMLSelectElement>) => void;
+  detailField: string;
 }
 
-const DetailSelector: React.FC<DetailSelectorProps> = () => {
+const DetailSelector: React.FC = () => {
+  const formik: FormikContextType<DetailFormValues> = useFormikContext();
+
   return (
     <div className=" w-full max-w-sm">
-      <Dropdown label="Detail" options={detail} />
+      <Dropdown
+        name="detailField"
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        label="Detail"
+        value={formik.values.detailField}
+        options={detail}
+      />
     </div>
   );
 };

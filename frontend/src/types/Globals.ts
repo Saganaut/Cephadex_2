@@ -15,7 +15,7 @@ export interface Blog {
   images: Array<{ "thumbnail-url": string; "image-url": string }>;
 }
 export type DashboardCard = Deck | Quiz | Group | DeckFiles;
-export type DashboardCards = DashboardCard[];
+export type DashboardCardsState = DashboardCard[];
 
 export interface Feedback {
   id: number;
