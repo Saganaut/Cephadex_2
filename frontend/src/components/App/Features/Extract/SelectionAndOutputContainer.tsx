@@ -8,7 +8,7 @@ import { InputErrorMessage } from "@common/Form/InputErrorMessage";
 import { Dropdown } from "@common/Form/Dropdown";
 import { FileInputField } from "@common/Form/FileInputField";
 import { languages } from "@source/components/App/Features/Extract/data/Languages";
-
+import { DashboardCardsState } from "../../../../types/Globals";
 interface FormValues {
   nameField: string;
   fileField: File | null;
@@ -28,7 +28,9 @@ const SelectionAndOutputContainer: React.FC<
   SelectionAndOutputContainerProps
 > = ({ formik }) => {
   console.log("rendering SelectAndOutputContainer");
-  const cardsData = useSelector((state) => state.cards);
+  const cardsData = useSelector(
+    (state: { dashboardCards: DashboardCardsState }) => state.dashboardCards
+  );
   const [deckCards, setDeckCards] = useState([]);
 
   useEffect(() => {

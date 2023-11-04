@@ -4,16 +4,16 @@ import { CardProfile } from "@app/Shared/CardProfile";
 import { useFilter } from "@contexts/FilterContext";
 import { fetchAllDecks } from "@services/Api/Deck/DeckApi";
 import { fetchAllQuizzes } from "@services/Api/Quiz/QuizApi";
-import { setCards } from "@store/cardSlice";
+import { setDashboardCards } from "@source/store/dashboardCardSlice";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import React, { type ReactElement, useEffect, useRef, useState } from "react";
 
-const CardContainer = (): ReactElement => {
+const DashboardCardContainer = (): ReactElement => {
   const { filter } = useFilter();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const dispatch = useAppDispatch();
-  const cardsData = useAppSelector((state) => state.cards);
+  const cardsData = useAppSelector((state) => state.dashboardCards);
   const filteredCardsData = filterCards(cardsData, filter);
 
   const cardsDataRef = useRef(cardsData);
@@ -28,7 +28,7 @@ const CardContainer = (): ReactElement => {
         fetchAllQuizzes(),
         fetchAllDecks(),
       ]);
-      dispatch(setCards([...quizzes, ...decks]));
+      dispatch(setDashboardCards([...quizzes, ...decks]));
     };
 
     if (cardsDataRef.current.length === 0) {
@@ -78,4 +78,4 @@ const CardContainer = (): ReactElement => {
   );
 };
 
-export { CardContainer };
+export { DashboardCardContainer };
