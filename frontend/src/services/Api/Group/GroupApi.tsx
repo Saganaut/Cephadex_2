@@ -27,22 +27,26 @@ const deleteGroup = async (groupId) => {
       return false;
     }
   } catch (error) {
-    error.log(error);
+    console.error(error);
   }
 };
 
 const fetchAllGroups = async () => {
   try {
-    const response = await axios.get("http://localhost:5000/api/groups", {
-      withCredentials: true,
-    });
+    const response = await axios.get(
+      "http://localhost:5000/group_bp/api_0/groups",
+      {
+        withCredentials: true,
+      }
+    );
+    console.log("fetchAllGroups response:", response);
     if (response.data.status === "success") {
       return response.data.groups;
     } else {
       return false;
     }
   } catch (error) {
-    error.log(error);
+    console.error(error);
   }
 };
 
@@ -58,7 +62,7 @@ const approveGroup = async (groupId) => {
       return false;
     }
   } catch (error) {
-    error.log(error);
+    console.error(error);
   }
 };
 
@@ -74,7 +78,7 @@ const rejectGroup = async (groupId) => {
       return false;
     }
   } catch (error) {
-    error.log(error);
+    console.error(error);
   }
 };
 
@@ -108,7 +112,7 @@ const inviteUsersToGroup = async (groupId, data) => {
       return false;
     }
   } catch (error) {
-    error.log(error);
+    console.error(error);
   }
 };
 
@@ -125,7 +129,7 @@ const updateMemberPermissions = async (groupId, data) => {
       return false;
     }
   } catch (error) {
-    error.log(error);
+    console.error(error);
   }
 };
 
@@ -141,7 +145,7 @@ const removeMemberFromGroup = async (groupId, userId) => {
       return false;
     }
   } catch (error) {
-    error.log(error);
+    console.error(error);
   }
 };
 
@@ -157,7 +161,7 @@ const removeDeckFromGroup = async (groupId, deckId) => {
       return false;
     }
   } catch (error) {
-    error.log(error);
+    console.error(error);
   }
 };
 
@@ -173,7 +177,7 @@ const fetchGroupsDecks = async (groupId) => {
       return false;
     }
   } catch (error) {
-    error.log(error);
+    console.error(error);
   }
 };
 
@@ -190,7 +194,7 @@ const addDeckToGroup = async (groupId, data) => {
       return false;
     }
   } catch (error) {
-    error.log(error);
+    console.error(error);
   }
 };
 

@@ -4,6 +4,8 @@ import { CardProfile } from "@app/Shared/CardProfile";
 import { useFilter } from "@contexts/FilterContext";
 import { fetchAllDecks } from "@services/Api/Deck/DeckApi";
 import { fetchAllQuizzes } from "@services/Api/Quiz/QuizApi";
+import { fetchAllGroups } from "@services/Api/Group/GroupApi";
+
 import { setDashboardCards } from "@source/store/dashboardCardSlice";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import React, { type ReactElement, useEffect, useRef, useState } from "react";
@@ -25,11 +27,12 @@ const DashboardCardContainer = (): ReactElement => {
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
-      const [quizzes, decks] = await Promise.all([
+      const [quizzes, decks, groups] = await Promise.all([
         fetchAllQuizzes(),
         fetchAllDecks(),
+        fetchAllGroups(),
       ]);
-      dispatch(setDashboardCards([...quizzes, ...decks]));
+      dispatch(setDashboardCards([...quizzes, ...decks, ...groups]));
     };
 
     if (cardsDataRef.current.length === 0) {

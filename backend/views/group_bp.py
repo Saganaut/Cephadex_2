@@ -550,7 +550,6 @@ def get_groups_for_user(user_id):
         )
         .join(user_group_association, Group.id == user_group_association.c.group_id)
         .filter(user_group_association.c.user_id == user_id)
-        .options(contains_eager(Group))
     )
     results = query.all()
     groups_info = [
