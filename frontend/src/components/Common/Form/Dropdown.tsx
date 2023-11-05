@@ -1,16 +1,30 @@
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 import React, { Fragment, useState } from "react";
+import { useField, useFormikContext } from "formik";
 
 interface DropdownProps {
-  label: string;
-  options: Array<{ value: number; label: string }>;
+  label?: string;
+  options: Array<{ label: string; value: string | number }> | Array<any>;
+  value: string;
+  name: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ label, options }) => {
-  const [selected, setSelected] = useState(options[0]);
+const Dropdown: React.FC<DropdownProps> = ({
+  label,
+  options,
+  onBlur,
+  name,
+}) => {
+  // const [selected, setSelected] = useState(
+  //   options[0] || { label: "", value: "" }
+  // );
   const [query, setQuery] = useState("");
-
+  const [field, meta, helpers] = useField(name);
+  const { setFieldValue, values } = useFormikContext();
+  const selected = values[name];
   const filteredOptions =
     query === ""
       ? options
@@ -28,17 +42,23 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options }) => {
         {label} - {selected.label}
       </p>
 
-      <Combobox value={selected} onChange={setSelected}>
+      <Combobox
+        value={selected}
+        onChange={(option) => {
+          console.log("Combobox change detected:", name, option);
+          // setSelected(option); // Update local state
+          setFieldValue(name, option); // Update Formik state
+        }}
+      >
         <div className="relative mt-1">
           <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-transparent text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input
-              className="w-full rounded-[18px]  border-[1px] border-white bg-transparent px-[18px] py-[20px] text-[18px] font-medium leading-5 text-aquamarine focus:outline-none focus:outline-0 focus:ring-0"
+              className="w-full rounded-[18px]  border-[1px] border-black-white bg-transparent px-[18px] py-[20px] text-[18px] font-medium leading-5 text-aquamarine focus:outline-none focus:outline-0 focus:ring-0"
               displayValue={(option: { value: number; label: string }) =>
                 option.label
               }
-              onChange={(event) => {
-                setQuery(event.target.value);
-              }}
+              onBlur={onBlur}
+              name={name}
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronDownIcon
@@ -71,6 +91,11 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options }) => {
                       }`
                     }
                     value={option}
+                    onChange={() => {
+                      console.log("option selected is", name, option);
+                      setSelected(option);
+                      setFieldValue(name, option);
+                    }}
                   >
                     {({ selected, active }) => (
                       <>

@@ -4,7 +4,7 @@ import UpgradeIcon from "@assets/UpgradeIcon.svg";
 import Avatar from "@assets/UserAvatar.svg";
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/solid";
 import { IconButton } from "@pages/Account/IconButton";
-import { PreferencesSelect } from "@pages/Account/PreferencesSelect";
+import { PreferencesSelect } from "@common/Form/PreferencesSelect";
 import React from "react";
 import { useLocation } from "react-router-dom";
 

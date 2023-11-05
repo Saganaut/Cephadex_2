@@ -4,7 +4,6 @@ import { Route, Routes } from "react-router-dom";
 
 import { privateRoutePaths } from "../routes/PrivateRoutes";
 import { publicRoutePaths } from "../routes/PublicRoutes";
-
 const AppRoutes = (): ReactElement => {
   const { user } = useUser();
 

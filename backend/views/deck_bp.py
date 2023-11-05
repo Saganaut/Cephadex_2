@@ -481,7 +481,7 @@ def share_deck(deck_id):
 # @log_decorator
 def get_cards(deck_id):
     deck = Deck.query.get_or_404(deck_id)
-    if current_user != deck.user_id:
+    if current_user.id != deck.user_id:
         return jsonify({"error": "Deck not assigned to user"}), 403
     query = Card.query.filter(Card.decks_backref.any(id=deck_id)).all()
     card_list = []

@@ -1,4 +1,4 @@
-import { CardContainer } from "@app/Shared/CardContainer";
+import { DashboardCardContainer } from "@source/components/App/Main/DashboardCardContainer";
 // import { useUser } from "@contexts/UserContext";
 import React, { type ReactElement } from "react";
 
@@ -18,7 +18,7 @@ const Main = (): ReactElement => {
               </h1>
             </div>
           </div>
-          <CardContainer />
+          <DashboardCardContainer />
         </div>
       </section>
     </div>

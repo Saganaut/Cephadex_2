@@ -12,11 +12,10 @@ class DeckFiles(db.Model):
     create_type = db.Column(db.String(50))
     time_created = db.Column(db.DateTime, default=datetime.utcnow)
     fav = db.Column(db.Boolean, default = False)
-
     def to_dict(self):
         return {
             "id": self.id,
-            "file-name": self.file_name,
+            "name": self.file_name,
             "file-path": self.file_path,
             "file-type": self.file_type,
             "file-size": self.file_size,

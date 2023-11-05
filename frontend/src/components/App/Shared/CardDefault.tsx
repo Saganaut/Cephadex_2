@@ -1,5 +1,5 @@
-import { Card } from "@app/Shared/Card";
-import { type Card as CardType } from "@source/types/Globals";
+import { CardStructure } from "@source/components/App/Shared/CardStructure";
+import { type Card as CardType } from "@source/types/Deck";
 import React from "react";
 
 interface CardDefaultProps {
@@ -8,7 +8,7 @@ interface CardDefaultProps {
 const CardDefault: React.FC<CardDefaultProps> = ({ data }) => {
   return (
     <>
-      <Card>
+      <CardStructure>
         <div className="h-full w-full rounded-3xl bg-mariana-blue p-4 hover:bg-tolopea">
           <div className="mb-4 flex items-center justify-between">
             <h1 className="text-lg">{data.name}</h1>
@@ -38,7 +38,7 @@ const CardDefault: React.FC<CardDefaultProps> = ({ data }) => {
           </div>
           <p className="mt-4 text-sm">Updated 2 days ago</p>
         </div>
-      </Card>
+      </CardStructure>
     </>
   );
 };

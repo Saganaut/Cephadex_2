@@ -1,7 +1,7 @@
-import { useModal } from "@contexts/ModalContext";
-import { useUser } from "@contexts/UserContext";
-import { type CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { sendGoogleSignInToken } from "@services/Auth";
+import { useUser } from "@contexts/UserContext";
+import { useModal } from "@contexts/ModalContext";
+import { type CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import React, { type ReactElement } from "react";
 
 const GoogleLoginButton = (): ReactElement => {
@@ -13,8 +13,10 @@ const GoogleLoginButton = (): ReactElement => {
   ): Promise<void> => {
     try {
       const response = await sendGoogleSignInToken(credentialResponse);
-      console.log("response", response);
-      if (response.status === "authenticated") {
+
+      if (response.data.status === "success") {
+        console.log("handleGoogleLogin Response", response.data);
+
         // Update the user context with the user data from the response
         setUserData(response.user);
         closeSignInModal();

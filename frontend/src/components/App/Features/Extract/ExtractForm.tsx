@@ -1,12 +1,12 @@
 import React from "react";
-import { validationSchema } from "@app/Features/Extract/ExtractFormValidation";
+import { validationSchema } from "@source/components/App/Features/Extract/data/ExtractFormValidation";
 import { Formik, Form } from "formik";
 import { CardTypeSelector } from "@app/Features/Extract/CardTypeSelector";
 import { MultiOptionsContainer } from "@app/Features/Extract/MultiOptionsContainer";
 import { AdvancedOptionsContainer } from "@app/Features/Extract/AdvancedOptionsContainer";
 import { ExtractSubmitButton } from "@app/Features/Extract/ExtractSubmitButton";
 import { SelectionAndOutputContainer } from "@app/Features/Extract/SelectionAndOutputContainer";
-
+import { extract } from "@services/Api/Deck/CreateApi";
 interface ExtractProps {
   customIsSelected: boolean;
 }
@@ -24,12 +24,18 @@ const ExtractForm: React.FC<ExtractProps> = ({ customIsSelected }) => {
           subjectField: "",
           existingDeckField: "",
           languageField: "",
+          cardTypeField: "Mix",
+          multiOptionsField: [],
+          detailField: "",
+          eitherTextOrFileOrUrlError: "",
+          eitherNameOrExistingDeckError: "",
         }}
         validationSchema={validationSchema}
         validateOnBlur={true}
         onSubmit={(values) => {
           console.log("submit ----------------------------------");
           console.log(values);
+          extract(values);
         }}
       >
         {(formik) => (
@@ -42,8 +48,10 @@ const ExtractForm: React.FC<ExtractProps> = ({ customIsSelected }) => {
                   What type of cards would you like to create?
                 </div>
                 <CardTypeSelector />
-                <MultiOptionsContainer />
-                <AdvancedOptionsContainer />
+                <div className="grid grid-cols-1 gap-y-5 mt-5">
+                  <MultiOptionsContainer />
+                  <AdvancedOptionsContainer />
+                </div>
               </div>
             )}
             <div className="flex justify-end">

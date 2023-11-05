@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { ExtractForm } from "@app/Features/Extract/ExtractForm";
 import { SelectionButtonContainer } from "@app/Features/Extract/ExtractSelectionButtonContainer";
-
+// custom is selected does the opposite of what it should, the name should be custom is not selected
 const Extract: React.FC = () => {
-  const [customIsSelected, setCustomIsSelected] = useState(false);
+  const [customIsSelected, setCustomIsSelected] = useState(true);
   const toggleCustomSelection = () => {
     setCustomIsSelected(!customIsSelected);
   };

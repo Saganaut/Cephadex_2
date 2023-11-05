@@ -10,7 +10,7 @@ const SelectionButtonContainer: React.FC<ExtractProps> = ({
   toggleCustomSelection,
 }) => {
   return (
-    <div className="row flex h-10  justify-between rounded-full bg-mariana-blue ">
+    <div className="row flex  w-min-min justify-between bg-mariana-blue rounded-full border-2 border-mariana-blue ">
       <ExtractSelectionButton
         customIsSelected={customIsSelected}
         toggleCustomSelection={toggleCustomSelection}

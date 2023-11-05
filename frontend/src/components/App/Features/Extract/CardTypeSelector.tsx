@@ -2,6 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { RadioGroup } from "@headlessui/react";
 import { CardTypeOption } from "@app/Features/Extract/CardTypeOption";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
+import { FormikContextType, useFormikContext } from "formik";
+
 type CardType =
   | "Mix"
   | "Definitions"
@@ -19,44 +22,60 @@ type CardType =
   | "Turn to notes "
   | "Custom";
 
-const CardTypeSelector = () => {
-  let [card, setCard] = useState<CardType>("Mix");
+interface CardTypeValues {
+  cardTypeField: string;
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLSelectElement>) => void;
+}
+
+const CardTypeSelector: React.FC = () => {
+  // let [card, setCard] = useState<CardType>("Mix");
 
   const [showExpanded, setShowExpanded] = useState(false);
+  const formik: FormikContextType<CardTypeValues> = useFormikContext();
+  const card = formik.values.cardTypeField as CardType;
 
   return (
     <>
-      <div className="rounded-xl min-h-full bg-mariana-blue h-auto">
-        <RadioGroup value={card} onChange={(value: CardType) => setCard(value)}>
+      <div className="rounded-3xl min-h-full bg-mariana-blue h-auto p-4">
+        <RadioGroup
+          name="cardTypeField"
+          value={card}
+          onChange={(value: CardType) => {
+            formik.setFieldValue("cardTypeField", value);
+          }}
+          onBlur={formik.handleBlur}
+        >
           <RadioGroup.Label>
             {" "}
-            <div className="flex justify-center p-2">
+            <div className="flex justify-center p-2 pb-4">
               <div className=" text-aquamarine">
                 Select one option from the list below
               </div>
             </div>
           </RadioGroup.Label>
           <div className="grid lg:grid-cols-4  w-full md:grid-cols-2 sm:grid-cols-1 gap-0">
-            <div className="rounded-full w-full px-2 py-4">
+            <div className="rounded-full w-full px-2 ">
               <CardTypeOption name="Mix" />
             </div>
 
-            <div className=" w-full   rounded-full px-2 py-4 ">
+            <div className=" w-full   rounded-full px-2  ">
               <CardTypeOption name="Definitions" />
             </div>
 
-            <div className=" w-full  rounded-full px-2 py-4">
+            <div className=" w-full  rounded-full px-2 ">
               <CardTypeOption name="Fill in the blanks" />
             </div>
 
-            <div className="rounded-full px-2 py-4">
+            <div className="rounded-full px-2 ">
               <CardTypeOption name="Multiple choice" />
             </div>
 
             <div
               className={`${
                 showExpanded ? "" : "hidden"
-              } rounded-full px-2 py-4 expanded`}
+              } rounded-full px-2  expanded`}
             >
               <CardTypeOption name="Translate" />
             </div>
@@ -64,7 +83,7 @@ const CardTypeSelector = () => {
             <div
               className={`${
                 showExpanded ? "" : "hidden"
-              } rounded-full px-2 py-4 expanded`}
+              } rounded-full px-2  expanded`}
             >
               <CardTypeOption name="Formulas" />
             </div>
@@ -72,7 +91,7 @@ const CardTypeSelector = () => {
               <div
                 className={`${
                   showExpanded ? "" : "hidden"
-                } rounded-full px-2 py-4 expanded`}
+                } rounded-full px-2  expanded`}
               >
                 <CardTypeOption name="Theories" />
               </div>
@@ -80,63 +99,63 @@ const CardTypeSelector = () => {
             <div
               className={`${
                 showExpanded ? "" : "hidden"
-              } rounded-full px-2 py-4 expanded`}
+              } rounded-full px-2  expanded`}
             >
               <CardTypeOption name="Rhyme" />
             </div>
             <div
               className={`${
                 showExpanded ? "" : "hidden"
-              } rounded-full px-2 py-4 expanded`}
+              } rounded-full px-2  expanded`}
             >
               <CardTypeOption name="Comprehension" />
             </div>
             <div
               className={`${
                 showExpanded ? "" : "hidden"
-              } rounded-full px-2 py-4 expanded`}
+              } rounded-full px-2  expanded`}
             >
               <CardTypeOption name="Vocab builder" />
             </div>
             <div
               className={`${
                 showExpanded ? "" : "hidden"
-              } rounded-full px-2 py-4 expanded`}
+              } rounded-full px-2  expanded`}
             >
               <CardTypeOption name="Explain" />
             </div>
             <div
               className={`${
                 showExpanded ? "" : "hidden"
-              } rounded-full px-2 py-4 expanded`}
+              } rounded-full px-2  expanded`}
             >
               <CardTypeOption name="Discuss" />
             </div>
             <div
               className={`${
                 showExpanded ? "" : "hidden"
-              } rounded-full px-2 py-4 expanded`}
+              } rounded-full px-2  expanded`}
             >
               <CardTypeOption name="Transcribe" />
             </div>
             <div
               className={`${
                 showExpanded ? "" : "hidden"
-              } rounded-full px-2 py-4 expanded`}
+              } rounded-full px-2  expanded`}
             >
               <CardTypeOption name="Summarize" />
             </div>
             <div
               className={`${
                 showExpanded ? "" : "hidden"
-              } rounded-full px-2 py-4 expanded`}
+              } rounded-full px-2  expanded`}
             >
               <CardTypeOption name="Turn to notes" />
             </div>
             <div
               className={`${
                 showExpanded ? "" : "hidden"
-              } rounded-full px-2 py-4 expanded`}
+              } rounded-full px-2  expanded`}
             >
               <CardTypeOption name="Custom" />
             </div>
@@ -144,9 +163,24 @@ const CardTypeSelector = () => {
         </RadioGroup>
       </div>{" "}
       <div>
-        <button onClick={() => setShowExpanded((prev) => !prev)}>
-          {showExpanded ? "Hide Expanded" : "Show Expanded"}
-        </button>
+        <div className="flex justify-center">
+          <button
+            type="button"
+            onClick={() => setShowExpanded((prev) => !prev)}
+          >
+            {showExpanded ? (
+              <ChevronUpIcon
+                className="h-[46px] w-[65px] text-aquamarine"
+                aria-hidden="true"
+              />
+            ) : (
+              <ChevronDownIcon
+                className="h-[46px] w-[65px] text-aquamarine"
+                aria-hidden="true"
+              />
+            )}
+          </button>
+        </div>
       </div>
     </>
   );
