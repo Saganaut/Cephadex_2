@@ -12,13 +12,15 @@ const PreferencesSelect: React.FC<PreferencesSelectProps> = ({
   const [activeIndex, setActiveIndex] = useState(0);
   return (
     <div>
-      <h1
-        className={
-          "pb-[24px] pt-[50px] text-[24px] font-semibold text-blaze-orange"
-        }
-      >
-        {label}
-      </h1>
+      {label !== "" && (
+        <h1
+          className={
+            "pb-[24px] pt-[50px] text-[24px] font-semibold text-blaze-orange"
+          }
+        >
+          {label}
+        </h1>
+      )}
 
       <div
         className={

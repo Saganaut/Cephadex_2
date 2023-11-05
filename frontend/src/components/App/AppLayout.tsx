@@ -12,10 +12,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <>
       <ErrorBoundary>
-        <div className="bg-light-color flex h-screen flex-col dark:bg-tolopea">
+        <div className="flex h-screen flex-col dark:bg-tolopea">
           {/* Navbar: keeping styling within the NavBarApp component */}
-          <NavBarApp />
 
+          <NavBarApp isSidebarOpen={isSidebarOpen} />
           {/* Main content area */}
           <div className="flex grow overflow-hidden">
             {/* Sidebar: You can control visibility with state and also keep internal styling within the SideBarApp component */}
@@ -35,7 +35,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             {/* Content area: this should grow or shrink based on the sidebar's state */}
             <div className="grow overflow-auto  p-4">{children}</div>
           </div>
-        </div>{" "}
+        </div>
       </ErrorBoundary>
     </>
   );

@@ -1,40 +1,75 @@
 import { NavBarButtonCreate } from "@app/Dashboard/NavBar/NavBarButtons";
-import { NavBarUpgradeLink } from "@app/Dashboard/SideBar/SideBarLink";
 import { ThemeToggle } from "@app/ThemeToggle";
+import UpgradeIcon from "@assets/UpgradeIcon.svg";
 import Avatar from "@assets/UserAvatar.svg";
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/solid";
+import { IconButton } from "@pages/Account/IconButton";
+import { PreferencesSelect } from "@pages/Account/PreferencesSelect";
 import React from "react";
+import { useLocation } from "react-router-dom";
 
-const NavBarApp: React.FC = () => {
+interface NavBarAppProps {
+  isSidebarOpen: boolean;
+}
+
+const options = [
+  {
+    label: "All",
+    value: "all",
+  },
+  {
+    label: "Decks",
+    value: "decks",
+  },
+  {
+    label: "Quizzes",
+    value: "quizzes",
+  },
+  {
+    label: "Saved",
+    value: "saved",
+  },
+];
+const NavBarApp: React.FC<NavBarAppProps> = ({ isSidebarOpen }) => {
+  const { pathname } = useLocation();
+
   return (
-    <header className="relative left-1/2 right-0 top-0 mt-[64px] w-full -translate-x-1/2 items-center  rounded-bl-3xl">
-      <div
-        className={
-          "ml-auto flex w-full max-w-[1250px] justify-between px-[60px]"
-        }
-      >
+    <header
+      className={` ${
+        isSidebarOpen ? "w-[calc(100vw-220px)]" : "w-[calc(100vw-110px)]"
+      }  fixed right-0 top-0 z-[20] mt-[64px] transition-all duration-300`}
+    >
+      <div className={"ml-auto flex w-full justify-between px-[60px]"}>
         {/*   LEFT  */}
         <div className={"flex items-center gap-x-[54px]"}>
-          <button
-            className={
-              "flex items-center gap-x-[10px] rounded-full bg-electric-violet p-[8px]"
-            }
-          >
-            <div
-              className={
-                "flex h-[42px] w-[42px] items-center justify-center rounded-full bg-gray-200"
-              }
-            >
-              <ChevronDoubleLeftIcon className={"h-[24px] w-[24px]"} />
-            </div>
-            <span className={"pr-4 text-white"}>Go Back</span>
-          </button>
-
-          <NavBarButtonCreate />
+          {pathname === "/account" ? (
+            <>
+              <IconButton
+                collapse={false}
+                theme={"white"}
+                icon={<ChevronDoubleLeftIcon />}
+                onClick={() => {}}
+                ariaLabel={"Go Back"}
+                to={"/"}
+              />
+              <NavBarButtonCreate />
+            </>
+          ) : (
+            <>
+              <PreferencesSelect label={""} options={options} />
+            </>
+          )}
         </div>
         {/*   RIGHT */}
         <div className={"flex items-center gap-x-[54px]"}>
-          <NavBarUpgradeLink />
+          <IconButton
+            collapse={false}
+            theme={"cyan"}
+            icon={UpgradeIcon}
+            onClick={() => {}}
+            ariaLabel={"Upgrade"}
+            to={"/upgrade"}
+          />
           <ThemeToggle />
           <img src={Avatar} alt="avatar-img" className={"h-[44px] w-[44px]"} />
         </div>
