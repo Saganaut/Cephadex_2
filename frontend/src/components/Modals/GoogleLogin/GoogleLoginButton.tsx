@@ -17,8 +17,6 @@ const GoogleLoginButton = (): ReactElement => {
       if (response.status === "authenticated") {
         // Update the user context with the user data from the response
         setUserData(response.user);
-        const userData = response.user;
-        setUserData(userData);
         closeSignInModal();
         console.log("Login successful:", response.user);
       } else {
@@ -37,9 +35,11 @@ const GoogleLoginButton = (): ReactElement => {
   return (
     <div>
       <GoogleLogin
-        onSuccess={handleGoogleLogin} // Use the async function as the callback
+        onSuccess={(credentialResponse) => {
+          void handleGoogleLogin(credentialResponse);
+        }}
         onError={() => {
-          console.log("Login Failed");
+          console.error("Login Failed with error");
         }}
         useOneTap
       />

@@ -1,12 +1,10 @@
 // fetch user settings
 // log out
+import { axiosPrivate } from "@services/axios";
 import axios from "axios";
 
 const fetchUserSettings = async () => {
-  const response = await axios.get(
-    "http://localhost:5000/user_bp/api_0/user/settings",
-    { withCredentials: true }
-  );
+  const response = await axiosPrivate.get("/user_bp/api_0/user/settings");
   try {
     if (response.status === 200) {
       return response.data.settings;

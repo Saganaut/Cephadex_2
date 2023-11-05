@@ -19,13 +19,6 @@ const sendGoogleSignInToken = async (
       {
         credential: credentialResponse.credential,
         clientId: credentialResponse.clientId,
-      },
-      {
-        withCredentials: true,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-        },
       }
     );
 
