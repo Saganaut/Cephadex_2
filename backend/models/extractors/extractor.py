@@ -78,7 +78,7 @@ class Extractor:
     def __init__(self, db_session: "Session", data: dict):
         self.db_session: "Session" = db_session
         options = {
-            "main_opt": data.get("prompt"),
+            "main_opt": data.get("main_opt"),
             "subject_opt": data.get("subject"),
             "trans_opt": data.get("languages"),
             "lang_opt": data.get("main_lang"),
@@ -764,9 +764,10 @@ def divide_audio(
             output_file = f"{random_string}_segment_{start_time}.mp3"
             logger.info(output_file)
             segment.export((output_file), format="mp3")
-            upload_to_s3("cephadex", "audio_segments", output_file)
 
             if os.path.getsize(output_file) > min_segment_size_MB * 1024 * 1024:
+                upload_to_s3("cephadex", "audio_segments", output_file)
+
                 segment_paths.append(str(output_file))
             else:
                 os.remove(output_file)

@@ -9,6 +9,7 @@ import AccountPage from "@pages/Account/AccountPage";
 // import { Pricing } from "@pages/Pricing/Pricing";
 // import { Terms } from "@pages/Terms/Terms";
 import React from "react";
+import { Deck } from "@app/Features/Deck/Deck";
 
 const privateRoutePaths = [
   {
@@ -32,6 +33,14 @@ const privateRoutePaths = [
     element: (
       <Layout>
         <Extract />
+      </Layout>
+    ),
+  },
+  {
+    path: "/deck/:deckId",
+    element: (
+      <Layout>
+        <Deck />
       </Layout>
     ),
   },

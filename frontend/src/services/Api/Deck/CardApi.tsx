@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const getCardsFromDeck = async (deckId) => {
+const fetchCardsFromDeck = async (deckId) => {
   try {
     const response = await axios.get(
-      `http://localhost:5000/deck_bp/api_0/decks/${deckId}/cards`,
+      `http://localhost:5000/deck_bp/api_0/deck/${deckId}/cards`,
       { withCredentials: true }
     );
-
+    console.log("fetchCardsFromDeck response:", response);
     if (response.data.status === "success") {
       return response.data.cards;
     } else {
@@ -92,4 +92,4 @@ export { regenerateDefinition };
 export { editCard };
 export { createCard };
 export { deleteCard };
-export { getCardsFromDeck };
+export { fetchCardsFromDeck };

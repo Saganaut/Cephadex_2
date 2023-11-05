@@ -1,4 +1,4 @@
-import { Card } from "@app/Shared/Card";
+import { CardStructure } from "@source/components/App/Shared/CardStructure";
 import { CardAvatar } from "@app/Shared/CardAvatar";
 import { useUser } from "@contexts/UserContext";
 import React, { type ReactElement } from "react";
@@ -9,7 +9,7 @@ const CardProfile = (): ReactElement => {
   console.log("user settings", userSettings);
   return (
     <>
-      <Card>
+      <CardStructure>
         <div className="h-full w-full rounded-3xl bg-blaze-orange p-4">
           <div className="relative -top-3 -mb-12 flex -translate-y-1/2 flex-col items-center justify-center">
             <CardAvatar />
@@ -37,7 +37,7 @@ const CardProfile = (): ReactElement => {
             </div>
           </div>
         </div>
-      </Card>
+      </CardStructure>
     </>
   );
 };

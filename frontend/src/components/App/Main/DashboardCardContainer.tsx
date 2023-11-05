@@ -7,6 +7,7 @@ import { fetchAllQuizzes } from "@services/Api/Quiz/QuizApi";
 import { setDashboardCards } from "@source/store/dashboardCardSlice";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import React, { type ReactElement, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const DashboardCardContainer = (): ReactElement => {
   const { filter } = useFilter();
@@ -65,12 +66,15 @@ const DashboardCardContainer = (): ReactElement => {
         } else {
           const uniqueKey = card.type + card.id;
           return (
-            <div
+            <Link
               key={uniqueKey}
+              to={`/${card.type}/${card.id}`}
               className="flex w-full items-center justify-center p-4 md:w-1/2 lg:w-1/3 xl:w-1/4"
             >
-              <CardDefault data={card} />
-            </div>
+              <>
+                <CardDefault data={card} />
+              </>
+            </Link>
           );
         }
       })}

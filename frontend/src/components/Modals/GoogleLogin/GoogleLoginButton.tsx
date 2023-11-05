@@ -1,8 +1,8 @@
 import React from "react";
 import { GoogleLogin } from "@react-oauth/google";
-import { sendGoogleSignInToken } from "../../../services/Auth";
-import { useUser } from "../../../contexts/UserContext";
-import { useModal } from "../../../contexts/ModalContext";
+import { sendGoogleSignInToken } from "@services/Auth";
+import { useUser } from "@contexts/UserContext";
+import { useModal } from "@contexts/ModalContext";
 
 const GoogleLoginButton = () => {
   const { setUserData } = useUser();
