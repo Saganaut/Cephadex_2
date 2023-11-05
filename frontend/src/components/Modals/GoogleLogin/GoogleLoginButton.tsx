@@ -1,16 +1,8 @@
-<<<<<<< HEAD
-import React from "react";
-import { GoogleLogin } from "@react-oauth/google";
 import { sendGoogleSignInToken } from "@services/Auth";
 import { useUser } from "@contexts/UserContext";
 import { useModal } from "@contexts/ModalContext";
-=======
-import { useModal } from "@contexts/ModalContext";
-import { useUser } from "@contexts/UserContext";
 import { type CredentialResponse, GoogleLogin } from "@react-oauth/google";
-import { sendGoogleSignInToken } from "@services/Auth";
 import React, { type ReactElement } from "react";
->>>>>>> origin/dev_aziz
 
 const GoogleLoginButton = (): ReactElement => {
   const { setUserData } = useUser();
