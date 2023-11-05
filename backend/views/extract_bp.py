@@ -65,7 +65,7 @@ def prepare_extractor_data(form_data: ImmutableMultiDict, file: Optional[object]
         "link_input": form_data.get("linkField"),
         "user_id": current_user.id,  
     }
-    
+    print(data)
     return data
 
 def save_file(file) -> str:

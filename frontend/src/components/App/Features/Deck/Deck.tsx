@@ -14,8 +14,7 @@ import {
 } from "@services/Api/Deck/CardApi";
 import { type Card } from "@source/types/Deck";
 import { type Deck } from "@source/types/Deck";
-// fetchCardsFromDeck takes an id and returns a list of cards
-import { FlashCard } from "@app/Features/Deck/Flashcard";
+import { FlashCard } from "@app/Features/Deck/FlashCard";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 
 const Deck = (): ReactElement => {

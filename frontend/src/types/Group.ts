@@ -3,13 +3,15 @@ export interface Group {
   name: string;
   description: string | null;
   "group-type": number;
-  "time-created": number;
-  "time-updated": number;
+  "time-created": string;
+  "time-updated": string;
   "creator-id": number;
   avatar: string | null;
   "is-private": boolean;
   fav: boolean | null;
   type: "Group";
+  role: string;
+  permissions: string;
 }
 
 export interface GroupInvite {

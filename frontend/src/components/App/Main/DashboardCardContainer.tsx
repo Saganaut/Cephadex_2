@@ -68,6 +68,7 @@ const DashboardCardContainer = (): ReactElement => {
           );
         } else {
           const uniqueKey = card.type + card.id;
+          console.log(card, uniqueKey);
           return (
             <Link
               key={uniqueKey}

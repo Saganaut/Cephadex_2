@@ -10,6 +10,7 @@ import AccountPage from "@pages/Account/AccountPage";
 // import { Terms } from "@pages/Terms/Terms";
 import React from "react";
 import { Deck } from "@app/Features/Deck/Deck";
+import { Groups } from "@app/Features/Groups/Groups";
 
 const privateRoutePaths = [
   {
@@ -41,6 +42,14 @@ const privateRoutePaths = [
     element: (
       <Layout>
         <Deck />
+      </Layout>
+    ),
+  },
+  {
+    path: "/group",
+    element: (
+      <Layout>
+        <Groups />
       </Layout>
     ),
   },

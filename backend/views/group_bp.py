@@ -554,10 +554,11 @@ def get_groups_for_user(user_id):
     results = query.all()
     groups_info = [
         {
-            "group": group.to_dict(),
+            **group.to_dict(),
             "role": role,
             "permissions": permissions,
         }
         for group, role, permissions in results
     ]
+    print(groups_info)
     return groups_info

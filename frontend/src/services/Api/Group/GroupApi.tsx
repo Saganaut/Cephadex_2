@@ -41,7 +41,10 @@ const fetchAllGroups = async () => {
     );
     console.log("fetchAllGroups response:", response);
     if (response.data.status === "success") {
-      return response.data.groups;
+      return response.data["groups"].map((group) => ({
+        ...group,
+        type: "Group",
+      }));
     } else {
       return false;
     }
