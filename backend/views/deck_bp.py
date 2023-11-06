@@ -68,10 +68,13 @@ deck_bp = Blueprint(
 # @log_decorator
 def get_decks():
     query = Deck.query.filter(Deck.user_id == current_user.id)
-    decks = []
-    for deck in query:
-        decks.append(deck.to_dict())
-    return jsonify({"status": "success", "decks": decks}), 200
+    if query:
+        decks = []
+        for deck in query:
+            decks.append(deck.to_dict())
+        return jsonify({"status": "success", "decks": decks}), 200
+    else:
+        return jsonify({"status": "failure", "message": "No decks found"}), 200
 
 
 ## update deck.favs to true

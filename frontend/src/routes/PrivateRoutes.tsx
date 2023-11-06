@@ -11,7 +11,7 @@ import AccountPage from "@pages/Account/AccountPage";
 import React from "react";
 import { Deck } from "@app/Features/Deck/Deck";
 import { Groups } from "@app/Features/Groups/Groups";
-
+import { Play } from "@app/Features/Play/Play";
 const privateRoutePaths = [
   {
     path: "/",
@@ -46,10 +46,18 @@ const privateRoutePaths = [
     ),
   },
   {
-    path: "/group",
+    path: "/groups",
     element: (
       <Layout>
         <Groups />
+      </Layout>
+    ),
+  },
+  {
+    path: "/play",
+    element: (
+      <Layout>
+        <Play />
       </Layout>
     ),
   },

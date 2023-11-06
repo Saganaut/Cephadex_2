@@ -56,7 +56,7 @@ const fetchAllGroups = async () => {
 const approveGroup = async (groupId) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/group_bp/api_0/group/<int:group_id>/invitation",
+      `http://localhost:5000/group_bp/api_0/group/${groupId}/invitation`,
       { withCredentials: true }
     );
     if (response.data.status === "success") {
@@ -72,7 +72,7 @@ const approveGroup = async (groupId) => {
 const rejectGroup = async (groupId) => {
   try {
     const response = await axios.delete(
-      "http://localhost:5000/group_bp/api_0/group/<int:group_id>/invitation",
+      `http://localhost:5000/group_bp/api_0/group/${groupId}/invitation`,
       { withCredentials: true }
     );
     if (response.data.status === "success") {
@@ -88,7 +88,7 @@ const rejectGroup = async (groupId) => {
 const fetchAllUsersInvitedToGroup = async (groupId) => {
   try {
     const response = await axios.get(
-      "http://localhost:5000/group_bp/api_0/group/<int:group_id>/invitaitons/all",
+      `http://localhost:5000/group_bp/api_0/group/${groupId}/invitaitons/all`,
       { withCredentials: true }
     );
     if (response.data.status === "success") {
@@ -102,7 +102,7 @@ const fetchAllUsersInvitedToGroup = async (groupId) => {
 const inviteUsersToGroup = async (groupId, data) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/group_bp/api_0/group/<int:group_id>/invite",
+      `http://localhost:5000/group_bp/api_0/group/${groupId}/invite`,
       data,
       { withCredentials: true }
     );
@@ -138,7 +138,7 @@ const updateMemberPermissions = async (groupId, data) => {
 
 const removeMemberFromGroup = async (groupId, userId) => {
   const response = await axios.delete(
-    `http://localhost:5000/group_bp/api_0/group/$groupId/member/$userId)`,
+    `http://localhost:5000/group_bp/api_0/group/${groupId}/member/${userId})`,
     { withCredentials: true }
   );
   try {

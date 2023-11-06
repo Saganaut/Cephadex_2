@@ -1,5 +1,3 @@
-// fetch user settings
-// log out
 import axios from "axios";
 
 const fetchUserSettings = async () => {

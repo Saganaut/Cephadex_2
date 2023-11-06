@@ -2,22 +2,44 @@ import { CardDefault } from "@app/Shared/CardDefault";
 import { filterCards } from "@app/Shared/CardFilter";
 import { CardProfile } from "@app/Shared/CardProfile";
 import { useFilter } from "@contexts/FilterContext";
-import { fetchAllDecks } from "@services/Api/Deck/DeckApi";
-import { fetchAllQuizzes } from "@services/Api/Quiz/QuizApi";
-import { fetchAllGroups } from "@services/Api/Group/GroupApi";
-
-import { setDashboardCards } from "@source/store/dashboardCardSlice";
+import { fetchDecksThunk } from "@services/Api/Deck/DeckApiThunks";
+import { fetchGroupsThunk } from "@services/Api/Group/GroupApiThunks";
+import { fetchQuizzesThunk } from "@services/Api/Quiz/QuizApiThunks";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import React, { type ReactElement, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { type Deck } from "@source/types/Deck";
+import { type Group } from "@source/types/Group";
+import { type Quiz } from "@source/types/Quiz";
 
 const DashboardCardContainer = (): ReactElement => {
   const { filter } = useFilter();
-
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const dispatch = useAppDispatch();
+
+  const quizzes = useAppSelector((state) => state.quizzes);
+  const decks = useAppSelector((state) => state.decks);
+  const groups = useAppSelector((state) => state.groups);
+  // const filteredCardsData = filterCards(cardsData, filter);
+  const [filteredCardsData, setFilteredCardsData] = useState<
+    Array<Group | Deck | Quiz>
+  >([]);
+
+  useEffect(() => {
+    // Dispatching thunks instead of direct API calls
+    dispatch(fetchQuizzesThunk());
+    dispatch(fetchDecksThunk());
+    dispatch(fetchGroupsThunk());
+  }, [dispatch]);
+
+  useEffect(() => {
+    // This effect updates the filteredCardsData whenever quizzes, decks, or groups change
+    const combinedData = [...quizzes.quizzes, ...decks.decks, ...groups.groups];
+    const filteredData = filterCards(combinedData, filter);
+    setFilteredCardsData(filteredData);
+  }, [quizzes, decks, groups, filter]);
+
   const cardsData = useAppSelector((state) => state.dashboardCards);
-  const filteredCardsData = filterCards(cardsData, filter);
 
   const cardsDataRef = useRef(cardsData);
 
@@ -25,20 +47,20 @@ const DashboardCardContainer = (): ReactElement => {
     cardsDataRef.current = cardsData;
   }, [cardsData]);
 
-  useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      const [quizzes, decks, groups] = await Promise.all([
-        fetchAllQuizzes(),
-        fetchAllDecks(),
-        fetchAllGroups(),
-      ]);
-      dispatch(setDashboardCards([...quizzes, ...decks, ...groups]));
-    };
+  // useEffect(() => {
+  //   const fetchData = async (): Promise<void> => {
+  //     const [quizzes, decks, groups] = await Promise.all([
+  //       fetchAllQuizzes(),
+  //       fetchAllDecks(),
+  //       fetchAllGroups(),
+  //     ]);
+  //     dispatch(setDashboardCards([...quizzes, ...decks, ...groups]));
+  //   };
 
-    if (cardsDataRef.current.length === 0) {
-      void fetchData();
-    }
-  }, [dispatch]);
+  //   if (cardsDataRef.current.length === 0) {
+  //     void fetchData();
+  //   }
+  // }, [dispatch]);
 
   let insertProfileAtIndex;
   if (windowWidth >= 1280) {
@@ -68,7 +90,6 @@ const DashboardCardContainer = (): ReactElement => {
           );
         } else {
           const uniqueKey = card.type + card.id;
-          console.log(card, uniqueKey);
           return (
             <Link
               key={uniqueKey}

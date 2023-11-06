@@ -63,6 +63,12 @@ def options_accept():
     print("called options")
     return "", 200
 
+@user_bp.route("/api_0/user", methods=["GET"])
+def get_user():
+    if current_user.is_authenticated:
+        return {"status": "success", "user": current_user.to_dict()}, 200
+    else:
+        return {"status": "not authenticated"}, 401
 
 @user_bp.route("/api_0/auth/google-sign-in", methods=["POST", "GET", "PATCH", "PUT"])
 def google_sign_in():
@@ -92,7 +98,7 @@ def google_sign_in():
         if "quiz_result_id" in session:
             return found_quiz_result_id_in_session()
 
-        return jsonify({"status": "authenticated", "user": current_user.to_dict()}), 200
+        return jsonify({"status": "success", "user": current_user.to_dict()}), 200
     except ValueError as e:
         logger.error(f"Value error in google sign in {e}")
         return jsonify({"error": str(e)}), 400
@@ -581,10 +587,13 @@ def allowed_file(filename):
 @user_bp.route("/api_0/user/settings", methods=["GET"])
 def get_user_settings():
     user_settings = UserSettings.query.filter_by(user=current_user.id).first()
-    print(user_settings)
-    user_settings = user_settings.to_dict()
-    print(user_settings)
-    return jsonify({"status": "success", "settings": user_settings}), 200
+    if user_settings:
+        print(user_settings)
+        user_settings = user_settings.to_dict()
+        print(user_settings)
+        return jsonify({"status": "success", "settings": user_settings}), 200
+    else:
+        return jsonify({"status": "failure", "message": "no user settings found"}), 200
 
 
 @user_bp.route("/user_bp/api_0/user/settings", methods=["PATCH"])

@@ -1,30 +1,43 @@
-import React, {
-  type ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { fetchAllGroups } from "@source/services/Api/Group/GroupApi";
+import { type Group } from "@source/types/Group";
+import { GroupCard } from "./GroupCard";
 
 const Groups = (): ReactElement => {
-  const dashboardCardsData = useAppSelector((state) => state.dashboardCards);
+  const dispatch = useAppDispatch();
+  const groupsData = useAppSelector((state) =>
+    state.dashboardCards.filter((card) => card.type === "Group")
+  ) as Group[];
+  const [groupCards, setGroupCards] = useState<Group[]>([]);
 
-  const groups = dashboardCardsData.filter((card) => card.type === "Group");
+  useEffect(() => {
+    const fetchData = async () => {
+      if (groupsData.length === 0) {
+        const groups = await fetchAllGroups();
+        setGroupCards(groups);
+      } else {
+        setGroupCards(groupsData);
+      }
+    };
+
+    fetchData();
+  }, [groupsData, dispatch]);
 
   return (
-    <div>
-      <div className="flex flex-wrap">
-        {groups == null ? (
+    <>
+      <div className="flex flex-wrap mt-40">
+        {groupCards.length === 0 ? (
           <div>Loading...</div>
         ) : (
-          groups.map((card, index) => (
-            <div key={index} className="m-2">
-              <GroupCard card={card} />
+          groupCards.map((group) => (
+            <div key={group.id} className="m-2">
+              <GroupCard group={group} />
             </div>
           ))
         )}
       </div>
-    </div>
+    </>
   );
 };
 

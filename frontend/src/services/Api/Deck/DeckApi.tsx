@@ -12,7 +12,7 @@ const searchPublicDeck = async (data) => {
       return false;
     }
   } catch (error) {
-    error.log(error);
+    console.error(error);
   }
 };
 

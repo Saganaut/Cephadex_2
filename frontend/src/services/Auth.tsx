@@ -29,7 +29,7 @@ const sendGoogleSignInToken = async (
       }
     );
 
-    if (response.data.status === "authenticated") {
+    if (response.data.status === "success") {
       console.log("Login successful:", response.data);
       return response.data;
     } else {

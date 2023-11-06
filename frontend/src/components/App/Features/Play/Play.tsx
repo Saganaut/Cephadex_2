@@ -6,7 +6,7 @@ import React, {
 } from "react";
 
 const Play = (): ReactElement => {
-  return <div></div>;
+  return <div>Play</div>;
 };
 
 export { Play };
