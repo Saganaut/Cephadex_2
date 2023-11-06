@@ -1,13 +1,14 @@
+import { type User, type UserSettings } from "@customTypes//User";
 import { fetchUserSettings } from "@services/Api/User/UserApi";
 import { checkUserAuth } from "@services/CheckUserAuth";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 interface UserContextProps {
-  user: any;
-  setUserData: (userData: any) => void;
+  user: User | null;
+  setUserData: (userData: User) => void;
   clearUserData: () => void;
-  userSettings: any;
-  setUserSettingsData: (settingsData: any) => void;
+  userSettings: UserSettings | null;
+  setUserSettingsData: (settingsData: UserSettings) => void;
 }
 const UserContext = createContext<UserContextProps | null>(null);
 
@@ -15,16 +16,16 @@ interface UserProviderProps {
   children: React.ReactNode;
 }
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [userSettings, setUserSettings] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [userSettings, setUserSettings] = useState<UserSettings | null>(null);
 
   const setUserSettingsData = (
-    settingsData: React.SetStateAction<null>
+    settingsData: React.SetStateAction<UserSettings | null>
   ): void => {
     setUserSettings(settingsData);
   };
 
-  const setUserData = (userData: React.SetStateAction<null>): void => {
+  const setUserData = (userData: React.SetStateAction<User | null>): void => {
     console.log("entered setUserData");
     console.log(userData);
     setUser(userData);
@@ -45,13 +46,13 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const fetchUser = async (): Promise<void> => {
-      const user = await checkUserAuth();
-      if (user !== false) {
-        setUser(user);
+      const checkUserAuthResponse = await checkUserAuth();
+      if (checkUserAuthResponse.isLoggedIn) {
+        setUser(checkUserAuthResponse.user);
       }
-      const user_settings = await fetchUserSettings();
-      if (user_settings !== false) {
-        setUserSettings(user_settings);
+      const userSettingsResponse = await fetchUserSettings();
+      if (userSettingsResponse.isLoggedIn) {
+        setUserSettings(userSettingsResponse.userSettings);
       }
     };
 
