@@ -4,10 +4,11 @@ import { Route, Routes } from "react-router-dom";
 
 import { privateRoutePaths } from "../routes/PrivateRoutes";
 import { publicRoutePaths } from "../routes/PublicRoutes";
+
 const AppRoutes = (): ReactElement => {
   const { user } = useUser();
 
-  const routesToRender = user ? privateRoutePaths : publicRoutePaths;
+  const routesToRender = user !== null ? privateRoutePaths : publicRoutePaths;
 
   return (
     <Routes>

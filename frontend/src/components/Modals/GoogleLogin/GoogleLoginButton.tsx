@@ -1,7 +1,7 @@
-import { sendGoogleSignInToken } from "@services/Auth";
-import { useUser } from "@contexts/UserContext";
 import { useModal } from "@contexts/ModalContext";
+import { useUser } from "@contexts/UserContext";
 import { type CredentialResponse, GoogleLogin } from "@react-oauth/google";
+import { sendGoogleSignInToken } from "@services/Auth";
 import React, { type ReactElement } from "react";
 
 const GoogleLoginButton = (): ReactElement => {
@@ -13,20 +13,21 @@ const GoogleLoginButton = (): ReactElement => {
   ): Promise<void> => {
     try {
       const response = await sendGoogleSignInToken(credentialResponse);
-
-      if (response.data.status === "success") {
-        console.log("handleGoogleLogin Response", response.data);
+      if (response.status === "authenticated") {
+        console.log("handleGoogleLogin Response", response.user);
 
         // Update the user context with the user data from the response
         setUserData(response.user);
         closeSignInModal();
-        console.log("Login successful:", response.user);
+        console.log("Login successful:", response.status);
       } else {
         console.error("Login failed:", response);
       }
     } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       setUserData({
-        "user-id": "0",
+        id: 0,
         username: "guest",
         email: "XXXXXXXXXXXXXXX",
       });

@@ -1,4 +1,5 @@
 import { Layout } from "@app/AppLayout";
+import { Deck } from "@app/Features/Deck/Deck";
 import { Extract } from "@app/Features/Extract/Extract";
 import { Main } from "@app/Main/Main";
 import AccountPage from "@pages/Account/AccountPage";
@@ -9,7 +10,6 @@ import AccountPage from "@pages/Account/AccountPage";
 // import { Pricing } from "@pages/Pricing/Pricing";
 // import { Terms } from "@pages/Terms/Terms";
 import React from "react";
-import { Deck } from "@app/Features/Deck/Deck";
 
 const privateRoutePaths = [
   {
