@@ -18,7 +18,6 @@ const DeckPage = (): ReactElement => {
   const dispatch = useAppDispatch();
   const deckCards = useAppSelector((state) => state.deckCards);
   const { deckId } = useParams<{ deckId: string }>();
-  // console.log("deckId", deckId);
   const decks = useAppSelector((state) => state.decks);
   const [deck, setDeck] = useState<Deck | undefined>(undefined);
 
@@ -38,10 +37,7 @@ const DeckPage = (): ReactElement => {
     const id = parseInt(deckId, 10);
     console.log("DeckId", id);
     if (!isNaN(id)) {
-      console.log("Fetching deck cards...");
       dispatch(fetchDeckCardsThunk(id));
-    } else {
-      console.error("Invalid 'deckId' from URL params:", deckId);
     }
   }, [dispatch, deckId]);
   console.log("DeckCards", deckCards);
@@ -50,7 +46,7 @@ const DeckPage = (): ReactElement => {
     <div className="mt-40">
       <div id="deck-info" className="text-white p-5">
         Deck info
-        {deck ? ( // Check if currentDeck is not undefined
+        {deck ? (
           <>
             <li>Name: {deck.name}</li>
             <li>Description: {deck.description}</li>

@@ -11,6 +11,8 @@ import { languages } from "@source/components/App/Features/Extract/data/Language
 import { DashboardCardsState } from "../../../../types/Globals";
 import { Deck } from "../../../../types/Deck";
 import { Formik, Form, Field, useFormikContext } from "formik";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { fetchDecksThunk } from "@services/Api/Deck/DeckApiThunks";
 
 interface FormValues {
   nameField: string;
@@ -37,31 +39,24 @@ const SelectionAndOutputContainer: React.FC<
   SelectionAndOutputContainerProps
 > = ({ formik }) => {
   console.log("rendering SelectAndOutputContainer");
-  const cardsData = useSelector(
-    (state: { dashboardCards: DashboardCardsState }) => state.dashboardCards
-  );
-  const [deckCards, setDeckCards] = React.useState<DeckOption[]>([]);
+
+  const dispatch = useAppDispatch();
+  const decks = useAppSelector((state) => state.decks);
 
   useEffect(() => {
-    console.log("useEffect in SelectionAndOutputContainer");
-    const fetchData = async () => {
-      if (cardsData.length === 0) {
-        const decks = await fetchAllDecks();
-        const filteredDecks = decks
-          .filter((deck: Deck) => deck.type === "Deck")
-          .map((deck: Deck) => ({ value: deck.id, label: deck.name }));
-        setDeckCards(filteredDecks);
-      } else {
-        const filteredDecks = cardsData
-          .filter((card) => card.type === "Deck")
-          .map((deck) => ({ value: deck.id, label: deck.name }));
-        setDeckCards(filteredDecks);
-      }
-    };
-    fetchData();
-  }, []);
-  const formikContext = useFormikContext();
-  console.log("Formik context:", formikContext);
+    dispatch(fetchDecksThunk());
+  }, [dispatch]);
+
+  const deckOptions: DeckOption[] = decks.decks.map((deck) => ({
+    value: deck.id,
+    label: deck.name,
+  }));
+
+  useEffect(() => {
+    if (deckOptions.length > 0 && !formik.values.existingDeckField) {
+      formik.setFieldValue("existingDeckField", deckOptions[0].value);
+    }
+  }, [deckOptions, formik.values.existingDeckField, formik.setFieldValue]);
 
   return (
     <>
@@ -163,11 +158,11 @@ const SelectionAndOutputContainer: React.FC<
         </div>
         <div className="mb-5">
           <h3>Add to an existing deck</h3>
-          {deckCards.length > 0 && (
+          {deckOptions.length > 0 && (
             <Dropdown
               name="existingDeckField"
               label=""
-              options={deckCards}
+              options={deckOptions}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.existingDeckField}
