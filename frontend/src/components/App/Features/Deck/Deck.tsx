@@ -1,13 +1,5 @@
 import React, { type ReactElement, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  fetchCardsFromDeck,
-  editCard,
-  createCard,
-  deleteCard,
-  regenerateDefinition,
-} from "@services/Api/Deck/CardApi";
-import { type Card } from "@source/types/Deck";
 import { type Deck } from "@source/types/Deck";
 import { FlashCard } from "@app/Features/Deck/FlashCard";
 import { useAppDispatch, useAppSelector } from "@store/hooks";

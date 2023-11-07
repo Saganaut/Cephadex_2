@@ -31,7 +31,7 @@ const userSettingsSlice = createSlice({
       })
       .addCase(fetchUserSettingsThunk.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.usersettings = action.payload;
       })
       .addCase(fetchUserSettingsThunk.rejected, (state, action) => {
         state.loading = false;

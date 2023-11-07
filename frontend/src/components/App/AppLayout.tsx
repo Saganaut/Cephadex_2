@@ -1,14 +1,21 @@
 import { NavBarApp } from "@components/App/Dashboard/NavBar/AppNavBar"; // Adjust with your actual import
 import { SideBarApp } from "@components/App/Dashboard/SideBar/SideBar"; // Adjust with your actual import
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ErrorBoundary } from "@utils/ErrorBoundary";
-
+import { useAppDispatch } from "@store/hooks";
+import { fetchUserThunk } from "@services/Api/User/UserApiThunks";
+import { fetchUserSettingsThunk } from "@services/Api/User/UserApiThunks";
 interface LayoutProps {
   children: React.ReactNode;
 }
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    dispatch(fetchUserThunk());
+    dispatch(fetchUserSettingsThunk());
+  }, [dispatch]);
   return (
     <>
       <ErrorBoundary>

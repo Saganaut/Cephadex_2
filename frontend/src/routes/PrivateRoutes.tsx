@@ -14,6 +14,7 @@ import { Groups } from "@app/Features/Groups/Groups";
 import { Play } from "@app/Features/Play/Play";
 import { Quizzes } from "@source/components/App/Features/Quizzes/Quizzes";
 import { Quiz } from "@app/Features/Quiz/Quiz";
+import { Study } from "@app/Features/Study/Study";
 
 const privateRoutePaths = [
   {
@@ -77,6 +78,14 @@ const privateRoutePaths = [
     element: (
       <Layout>
         <Quiz />
+      </Layout>
+    ),
+  },
+  {
+    path: "/study",
+    element: (
+      <Layout>
+        <Study />
       </Layout>
     ),
   },

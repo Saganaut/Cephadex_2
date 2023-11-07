@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "@store/hooks";
 
 import { fetchDecksThunk } from "@services/Api/Deck/DeckApiThunks";
 
-const Play = (): ReactElement => {
+const Study = (): ReactElement => {
   const decks = useAppSelector((state) => state.decks);
   const dispatch = useAppDispatch();
 
@@ -18,7 +18,8 @@ const Play = (): ReactElement => {
 
   return (
     <div className="text-white mt-40">
-      <h1 className="text-2xl my-10">Play</h1>
+      <h1 className="text-2xl my-10">Study</h1>
+
       {decks.decks.map((deck) => (
         <div key={deck.id}>{deck.name}</div>
       ))}
@@ -26,4 +27,4 @@ const Play = (): ReactElement => {
   );
 };
 
-export { Play };
+export { Study };

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { fetchAllDecks } from "@services/Api/Deck/DeckApi";
 import { FormikProps } from "formik";
 import { InputField } from "@common/Form/InputField";
 import { TextAreaField } from "@common/Form/TextAreaField";
@@ -8,9 +6,6 @@ import { InputErrorMessage } from "@common/Form/InputErrorMessage";
 import { Dropdown } from "@common/Form/Dropdown";
 import { FileInputField } from "@common/Form/FileInputField";
 import { languages } from "@source/components/App/Features/Extract/data/Languages";
-import { DashboardCardsState } from "../../../../types/Globals";
-import { Deck } from "../../../../types/Deck";
-import { Formik, Form, Field, useFormikContext } from "formik";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { fetchDecksThunk } from "@services/Api/Deck/DeckApiThunks";
 

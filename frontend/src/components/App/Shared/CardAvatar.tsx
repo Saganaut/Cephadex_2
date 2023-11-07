@@ -1,10 +1,7 @@
-// import { useUser } from "@contexts/UserContext";
 import React, { type ReactElement } from "react";
 import cephaAvatar from "@assets/cephadex-logo-6.png";
 
 const CardAvatar = (): ReactElement => {
-  // const { user } = useUser();
-
   return (
     <>
       <img
