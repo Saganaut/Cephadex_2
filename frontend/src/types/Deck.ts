@@ -123,3 +123,8 @@ export interface CardPublic {
   subject: string | null;
   topic: string | null;
 }
+
+export interface DeckCards {
+  "deck-id": number;
+  cards: Card[];
+}

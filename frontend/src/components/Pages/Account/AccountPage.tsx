@@ -12,6 +12,7 @@ const roles: Array<{ value: number; label: string }> = [
   { value: 0, label: "None" },
   { value: 1, label: "Student" },
   { value: 2, label: "Teacher" },
+  { value: 3, label: "Other" },
 ];
 const genders: Array<{ value: number; label: string }> = [
   { value: 0, label: "None" },

@@ -1,9 +1,4 @@
-import React, {
-  type ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { type ReactElement, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   fetchCardsFromDeck,
@@ -16,57 +11,71 @@ import { type Card } from "@source/types/Deck";
 import { type Deck } from "@source/types/Deck";
 import { FlashCard } from "@app/Features/Deck/FlashCard";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { fetchDeckCardsThunk } from "@source/services/Api/Deck/CardApiThunks";
+import { fetchDecksThunk } from "@services/Api/Deck/DeckApiThunks";
 
-const Deck = (): ReactElement => {
-  const dashboardCardsData = useAppSelector((state) => state.dashboardCards);
-
-  console.log("dashboardCardsData:", dashboardCardsData);
-  const [cards, setCards] = useState<Card[] | null>(null);
+const DeckPage = (): ReactElement => {
+  const dispatch = useAppDispatch();
+  const deckCards = useAppSelector((state) => state.deckCards);
   const { deckId } = useParams<{ deckId: string }>();
-  console.log("Deck id from useParams:", deckId);
-
-  const deckCard = dashboardCardsData.find(
-    (card) => card.type === "Deck" && card.id.toString() === deckId
-  );
+  // console.log("deckId", deckId);
+  const decks = useAppSelector((state) => state.decks);
+  const [deck, setDeck] = useState<Deck | undefined>(undefined);
 
   useEffect(() => {
-    const fetchCards = async (): Promise<void> => {
-      try {
-        const data = await fetchCardsFromDeck(deckId);
-        setCards(data);
-      } catch (error) {
-        console.error("failed to fetch cards data", error);
-      }
-    };
-    void fetchCards();
-  }, []);
-  console.log("cards:", cards);
+    dispatch(fetchDecksThunk());
+    if (decks) {
+      const id = parseInt(deckId, 10);
+      const foundDeck = decks.decks.find((d) => d.id === id);
+      setDeck(foundDeck);
+    }
+  }, [dispatch]);
+
+  console.log("Decks", decks);
+  useEffect(() => {
+    console.log("deckId is", deckId);
+
+    const id = parseInt(deckId, 10);
+    console.log("DeckId", id);
+    if (!isNaN(id)) {
+      console.log("Fetching deck cards...");
+      dispatch(fetchDeckCardsThunk(id));
+    } else {
+      console.error("Invalid 'deckId' from URL params:", deckId);
+    }
+  }, [dispatch, deckId]);
+  console.log("DeckCards", deckCards);
 
   return (
-    <div className="mt-50">
+    <div className="mt-40">
       <div id="deck-info" className="text-white p-5">
         Deck info
-        <li>Name: {deckCard.name}</li>
-        <li>Description:{deckCard.description}</li>
-        <li>Number of cards:{deckCard["qty-cards"]}</li>
-        <li>Cards due: {deckCard["qty-cards-due"]}</li>
-        <li>New cards: {deckCard["qty-cards-new"]}</li>
-        <li>Last accessed: {deckCard["access-date"]}</li>
-        <li>Creatded on: {deckCard["time-created"]}</li>
-        <li>Subject: {deckCard.subject}</li>
-        <li>Topc: {deckCard.topic}</li>
+        {deck ? ( // Check if currentDeck is not undefined
+          <>
+            <li>Name: {deck.name}</li>
+            <li>Description: {deck.description}</li>
+            <li>Number of cards:{deck["qty-cards"]}</li>
+            <li>Cards due: {deck["qty-cards-due"]}</li>
+            <li>Last accessed: {deck["access-date"]}</li>
+            <li>Creatded on: {deck["time-created"]}</li>
+            <li>Subject: {deck.subject}</li>
+            <li>Topc: {deck.topic}</li>
+          </>
+        ) : (
+          <div>Loading deck information...</div>
+        )}
       </div>
       <div id="deck-cards" className="text-white mt-5">
         CARDS
         <div className="flex flex-wrap">
-          {cards == null ? (
-            <div>Loading...</div>
-          ) : (
-            cards.map((card, index) => (
+          {deckCards && deckCards.deckCards && deckCards.deckCards.cards ? (
+            deckCards.deckCards.cards.map((card, index) => (
               <div key={index} className="m-2">
                 <FlashCard card={card} />
               </div>
             ))
+          ) : (
+            <div>Loading...</div>
           )}
         </div>
       </div>
@@ -74,4 +83,4 @@ const Deck = (): ReactElement => {
   );
 };
 
-export { Deck };
+export { DeckPage };

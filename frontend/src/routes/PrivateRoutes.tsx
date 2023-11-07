@@ -9,9 +9,12 @@ import AccountPage from "@pages/Account/AccountPage";
 // import { Pricing } from "@pages/Pricing/Pricing";
 // import { Terms } from "@pages/Terms/Terms";
 import React from "react";
-import { Deck } from "@app/Features/Deck/Deck";
+import { DeckPage } from "@app/Features/Deck/Deck";
 import { Groups } from "@app/Features/Groups/Groups";
 import { Play } from "@app/Features/Play/Play";
+import { Quizzes } from "@source/components/App/Features/Quizzes/Quizzes";
+import { Quiz } from "@app/Features/Quiz/Quiz";
+
 const privateRoutePaths = [
   {
     path: "/",
@@ -41,7 +44,7 @@ const privateRoutePaths = [
     path: "/deck/:deckId",
     element: (
       <Layout>
-        <Deck />
+        <DeckPage />
       </Layout>
     ),
   },
@@ -58,6 +61,22 @@ const privateRoutePaths = [
     element: (
       <Layout>
         <Play />
+      </Layout>
+    ),
+  },
+  {
+    path: "/quizzes",
+    element: (
+      <Layout>
+        <Quizzes />
+      </Layout>
+    ),
+  },
+  {
+    path: "/quiz/:quizId",
+    element: (
+      <Layout>
+        <Quiz />
       </Layout>
     ),
   },

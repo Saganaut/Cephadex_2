@@ -4,6 +4,8 @@ import decksReducer from "./decksSlice";
 import quizzesReducer from "./quizzesSlice";
 import groupsReducer from "./groupsSlice";
 import userReducer from "./userSlice";
+import userSettingsReducer from "./userSettingsSlice";
+import deckCardsReducer from "./deckCardsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +14,8 @@ export const store = configureStore({
     quizzes: quizzesReducer,
     groups: groupsReducer,
     user: userReducer,
+    userSettings: userSettingsReducer,
+    deckCards: deckCardsReducer,
   },
   devTools: process.env.NODE_ENV !== "production",
 });
