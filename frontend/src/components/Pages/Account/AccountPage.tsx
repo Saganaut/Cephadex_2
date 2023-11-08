@@ -1,12 +1,13 @@
-import React, { type ReactElement } from "react";
-import { Form, Formik } from "formik";
 import UserAvatar from "@assets/UserAvatar.svg";
 import { Dropdown } from "@common/Form/Dropdown";
 import { InputErrorMessage } from "@common/Form/InputErrorMessage";
 import { InputField } from "@common/Form/InputField";
 import { PreferencesSelect } from "@common/Form/PreferencesSelect";
+import { useUser } from "@contexts/UserContext";
 import { validationSchema } from "@pages/Account/AccountFormValidation";
 import { Plans } from "@pages/Account/Plans";
+import { Form, Formik } from "formik";
+import React, { type ReactElement } from "react";
 
 const roles: Array<{ value: number; label: string }> = [
   { value: 0, label: "None" },
@@ -35,10 +36,13 @@ const options = [
   },
 ];
 function AccountPage(): ReactElement {
+  const { user } = useUser();
+  if (user == null) return <div>loading...</div>;
+  console.log(user);
   return (
     <div>
       {/*   Content */}
-      <div className={"w-full pl-[60px] pt-[200px]  "}>
+      <div className={"w-full"}>
         <h1 className={"text-[24px] font-semibold text-blaze-orange"}>
           Account Information
         </h1>
@@ -47,9 +51,11 @@ function AccountPage(): ReactElement {
         {/*   Form */}
         <Formik
           initialValues={{
-            nameField: "",
-            emailField: "",
-            usernameField: "",
+            nameField: user["first-name"] ?? "",
+            emailField: user.email ?? "",
+            usernameField: user.username ?? "",
+            roleField: user.gender ?? "",
+            genderField: user.gender ?? "",
           }}
           validationSchema={validationSchema}
           validateOnBlur={true}
@@ -108,10 +114,24 @@ function AccountPage(): ReactElement {
                 </div>
 
                 <div>
-                  <Dropdown label={"Gender"} options={genders} />
+                  <Dropdown
+                    name={"genderField"}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.genderField}
+                    label={"Gender"}
+                    options={genders}
+                  />
                 </div>
                 <div>
-                  <Dropdown label={"Role"} options={roles} />
+                  <Dropdown
+                    name={"roleField"}
+                    value={formik.values.roleField}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    label={"Role"}
+                    options={roles}
+                  />
                 </div>
               </div>
             </Form>
