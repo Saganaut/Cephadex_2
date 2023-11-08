@@ -35,7 +35,7 @@ const options = [
     value: "none",
   },
 ];
-function AccountPage(): ReactElement {
+function Account(): ReactElement {
   const { user } = useUser();
   if (user == null) return <div>loading...</div>;
   console.log(user);
@@ -147,4 +147,4 @@ function AccountPage(): ReactElement {
     </div>
   );
 }
-export default AccountPage;
+export default Account;

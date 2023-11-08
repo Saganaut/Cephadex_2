@@ -2,7 +2,8 @@ import { Layout } from "@app/AppLayout";
 import { Deck } from "@app/Features/Deck/Deck";
 import { Extract } from "@app/Features/Extract/Extract";
 import { Main } from "@app/Main/Main";
-import AccountPage from "@pages/Account/AccountPage";
+import Account from "@pages/Account";
+import Study from "@pages/Study";
 // import Blog from "@pages/Blog/Blog";
 // import { Contact } from "@pages/Contact/Contact";
 // import { Documentation } from "@pages/Documentation/Documentation";
@@ -24,7 +25,7 @@ const privateRoutePaths = [
     path: "/account",
     element: (
       <Layout>
-        <AccountPage />
+        <Account />
       </Layout>
     ),
   },
@@ -41,6 +42,14 @@ const privateRoutePaths = [
     element: (
       <Layout>
         <Deck />
+      </Layout>
+    ),
+  },
+  {
+    path: "/study",
+    element: (
+      <Layout>
+        <Study />
       </Layout>
     ),
   },
