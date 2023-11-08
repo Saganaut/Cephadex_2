@@ -11,8 +11,10 @@ import { Link } from "react-router-dom";
 import { type Deck } from "@source/types/Deck";
 import { type Group } from "@source/types/Group";
 import { type Quiz } from "@source/types/Quiz";
+import { logger } from "@source/Lib/utils/Logger";
 
 const DashboardCardContainer = (): ReactElement => {
+  logger.log("DashboardCardContainer");
   const { filter } = useFilter();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const dispatch = useAppDispatch();
@@ -22,7 +24,7 @@ const DashboardCardContainer = (): ReactElement => {
   const [filteredCardsData, setFilteredCardsData] = useState<
     Array<Group | Deck | Quiz>
   >([]);
-
+  // logger.log("filteredCardsData", "DashboardCardContainer", filteredCardsData);
   useEffect(() => {
     dispatch(fetchQuizzesThunk());
     dispatch(fetchDecksThunk());

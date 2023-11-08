@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logger } from "@source/Lib/utils/Logger";
 
 const createGroup = async () => {
   try {
@@ -11,7 +12,7 @@ const createGroup = async () => {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    logger.error("An error occured in createGroup:", error);
   }
 };
 
@@ -27,7 +28,7 @@ const deleteGroup = async (groupId) => {
       return false;
     }
   } catch (error) {
-    console.error(error);
+    logger.error("An error occured in deleteGroup:", error);
   }
 };
 
@@ -39,7 +40,6 @@ const fetchAllGroups = async () => {
         withCredentials: true,
       }
     );
-    console.log("fetchAllGroups response:", response);
     if (response.data.status === "success") {
       return response.data["groups"].map((group) => ({
         ...group,
@@ -49,7 +49,7 @@ const fetchAllGroups = async () => {
       return false;
     }
   } catch (error) {
-    console.error(error);
+    logger.error("An error occured in fetchAllGroups:", error);
   }
 };
 
@@ -65,7 +65,7 @@ const approveGroup = async (groupId) => {
       return false;
     }
   } catch (error) {
-    console.error(error);
+    logger.error("An error occured in approveGroup:", error);
   }
 };
 
@@ -81,7 +81,7 @@ const rejectGroup = async (groupId) => {
       return false;
     }
   } catch (error) {
-    console.error(error);
+    logger.error("An error occured in rejectGroup:", error);
   }
 };
 
@@ -96,7 +96,9 @@ const fetchAllUsersInvitedToGroup = async (groupId) => {
     } else {
       return false;
     }
-  } catch (error) {}
+  } catch (error) {
+    logger.error("An error occured in fetchAllUsersInvitedToGroup:", error);
+  }
 };
 
 const inviteUsersToGroup = async (groupId, data) => {
@@ -115,7 +117,7 @@ const inviteUsersToGroup = async (groupId, data) => {
       return false;
     }
   } catch (error) {
-    console.error(error);
+    logger.error("An error occured in inviteUsersToGroup:", error);
   }
 };
 
@@ -132,7 +134,7 @@ const updateMemberPermissions = async (groupId, data) => {
       return false;
     }
   } catch (error) {
-    console.error(error);
+    logger.error("An error occured in updateMemberPermissions:", error);
   }
 };
 
@@ -148,7 +150,7 @@ const removeMemberFromGroup = async (groupId, userId) => {
       return false;
     }
   } catch (error) {
-    console.error(error);
+    logger.error("An error occured in removeMemberFromGroup:", error);
   }
 };
 
@@ -164,7 +166,7 @@ const removeDeckFromGroup = async (groupId, deckId) => {
       return false;
     }
   } catch (error) {
-    console.error(error);
+    logger.error("An error occured in removeDeckFromGroup:", error);
   }
 };
 
@@ -180,7 +182,7 @@ const fetchGroupsDecks = async (groupId) => {
       return false;
     }
   } catch (error) {
-    console.error(error);
+    logger.error("An error occured in fetchGroupsDecks:", error);
   }
 };
 
@@ -197,7 +199,7 @@ const addDeckToGroup = async (groupId, data) => {
       return false;
     }
   } catch (error) {
-    console.error(error);
+    logger.error("An error occured in addDeckToGroup:", error);
   }
 };
 
@@ -212,7 +214,9 @@ const saveDeckFromGroup = async (groupId, deckId) => {
     } else {
       return false;
     }
-  } catch (error) {}
+  } catch (error) {
+    logger.error("An error occured in saveDeckFromGroup:", error);
+  }
 };
 
 export { saveDeckFromGroup };

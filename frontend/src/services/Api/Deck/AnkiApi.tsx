@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logger } from "@source/Lib/utils/Logger";
 
 const importFromAnki = async () => {
   try {
@@ -12,7 +13,7 @@ const importFromAnki = async () => {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 
@@ -29,7 +30,7 @@ const exportToAnki = async (deckId) => {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 

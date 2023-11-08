@@ -8,6 +8,7 @@ import { FileInputField } from "@common/Form/FileInputField";
 import { languages } from "@source/components/App/Features/Extract/data/Languages";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { fetchDecksThunk } from "@services/Api/Deck/DeckApiThunks";
+import { logger } from "@source/Lib/utils/Logger";
 
 interface FormValues {
   nameField: string;
@@ -33,8 +34,7 @@ type DeckOption = {
 const SelectionAndOutputContainer: React.FC<
   SelectionAndOutputContainerProps
 > = ({ formik }) => {
-  console.log("rendering SelectAndOutputContainer");
-
+  logger.log("SelectionAndOutputContainer");
   const dispatch = useAppDispatch();
   const decks = useAppSelector((state) => state.decks);
 

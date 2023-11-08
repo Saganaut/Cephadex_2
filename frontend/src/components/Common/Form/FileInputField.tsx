@@ -7,17 +7,11 @@ const FileInputField = ({ formik, name, onBlur }) => {
   const fileInputRef = useRef(null);
 
   const handleChangeInFile = (e) => {
-    console.log("HANDLING CHANGE IN FILE");
     if (e.target.files.length > 0) {
       const selectedFile = e.target.files[0];
-      console.log("Selected file is:", selectedFile);
-      console.log("Selected file name is:", name);
       setSelectedFileName(selectedFile.name);
       setFieldValue(name, selectedFile);
       setFieldTouched(name, true);
-      console.log("Updated formik values:", formik.values);
-      console.log("Updated formik touched fields:", formik.touched);
-      console.log("Updated formik errors:", formik.errors);
       setFieldValue(name, selectedFile, () => {
         setFieldTouched(name, true, () => {
           formik.validateField(name);

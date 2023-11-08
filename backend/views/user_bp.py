@@ -33,7 +33,8 @@ from models.storage.s3 import upload_to_s3, delete_s3_object_in_folder
 from models.helpers.log_decorators import log_decorator
 from models.user.sub_handler import StripeEventHandler
 from flask_login import login_user, logout_user, current_user
-
+from flask import make_response
+import time
 
 logger = logging.getLogger("flask_app")
 
@@ -42,15 +43,23 @@ user_bp = Blueprint(
 )
 
 
-@user_bp.route("/api_0/auth/logout", methods=["GET"])
+@user_bp.route("/api_0/auth/logout", methods=["DELETE"])
 def logout_current_user():
-    logout_user()
-    return jsonify({"status": "success", "message": "Logged out"}), 200
-
+    print("logging out route")    
+    try:
+        logout_user()
+        session.clear()
+        response = make_response(jsonify({"status": "success", "message": "Logged out"}))
+        response.set_cookie('session', '', expires=0)
+        return response
+    except Exception as e:
+        app.logger.error(f'Error during logout: {e}', exc_info=True)
+        return jsonify({"error": "An unexpected error occurred"}), 500
 
 @user_bp.route("/api_0/auth/status", methods=["GET"])
 def user_status():
     print("checking status")
+    print(session)
     print(current_user)
     if current_user.is_authenticated:
         return {"status": "success", "user": current_user.to_dict()}, 200
@@ -60,8 +69,16 @@ def user_status():
 
 @user_bp.route("/api_0/auth/google-sign-in", methods=["OPTIONS"])
 def options_accept():
-    print("called options")
-    return "", 200
+    start_time = time.time()
+    print("called options", start_time)
+    if request.method == "OPTIONS":
+        response = make_response()
+
+        # response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173'
+        # response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        # response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        # response.headers['Access-Control-Allow-Credentials'] = 'true'
+        return response, 200
 
 @user_bp.route("/api_0/user", methods=["GET"])
 def get_user():
@@ -72,12 +89,17 @@ def get_user():
 
 @user_bp.route("/api_0/auth/google-sign-in", methods=["POST", "GET", "PATCH", "PUT"])
 def google_sign_in():
+    start_time = time.time()
+    print(start_time)
+    print("entered google sign in")
     data = request.get_json()
     credential = data.get("credential")
+    print(credential)
     try:
         idinfo = id_token.verify_oauth2_token(
             credential, requests.Request(), AUTH2_CLIENT_ID
         )
+        print(idinfo)
     except ValueError as e:
         logger.error(f"Value error in google sign in, invalid token {e}")
         return jsonify({"error": "Invalid token"}), 400
@@ -85,23 +107,31 @@ def google_sign_in():
         user_id = idinfo["sub"]
         if not (user := User.query.filter_by(external_id=user_id).first()):
             return handle_new_user(idinfo)
-
         login_user(user)
+        print(current_user.id)
         session["user_id"] = user.id  # Or another form of identification
         session.modified = True
-        if "shared_deck_id" in session:
-            return found_shared_deck_id_in_session()
-        if "game_id" in session:
-            return found_game_id_in_session()
-        if "shared_quiz_id" in session:
-            return found_quiz_id_in_session()
-        if "quiz_result_id" in session:
-            return found_quiz_result_id_in_session()
-
-        return jsonify({"status": "success", "user": current_user.to_dict()}), 200
+        response = jsonify({"status": "success", "user": current_user.to_dict()})
+        # response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173'
+        print(response.data)
+        print(response.headers)
+        # response.headers.add('Access-Control-Allow-Credentials', 'true')
+        return response, 200
     except ValueError as e:
         logger.error(f"Value error in google sign in {e}")
         return jsonify({"error": str(e)}), 400
+
+
+
+        # if "shared_deck_id" in session:
+        #     return found_shared_deck_id_in_session()
+        # if "game_id" in session:
+        #     return found_game_id_in_session()
+        # if "shared_quiz_id" in session:
+        #     return found_quiz_id_in_session()
+        # if "quiz_result_id" in session:
+        #     return found_quiz_result_id_in_session()
+
 
 
 def handle_new_user(idinfo):
@@ -482,11 +512,12 @@ def unsubscribe_from_newsletter():
         return jsonify({"status": "failure", "message": "You are not subscribed!"}), 200
 
 
-@user_bp.route("/api_0/logout", methods=["GET", "POST"])
+@user_bp.route("/api_0/logout", methods=["DELETE"])
 @log_decorator
 def logout():
     logout_user()
     session.clear()
+    print("loging user out and clearing session")
     return jsonify({"status": "success", "message": "You have been logged out."}), 200
 
 

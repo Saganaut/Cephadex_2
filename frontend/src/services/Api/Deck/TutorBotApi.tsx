@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logger } from "@source/Lib/utils/Logger";
 
 const tutorExplain = async (cardId) => {
   try {
@@ -12,7 +13,7 @@ const tutorExplain = async (cardId) => {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    logger.error("An error occured in tutorExplain", error);
   }
 };
 
@@ -28,7 +29,7 @@ const tutorWrong = async (cardId) => {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    logger.error("An error occured in tutorWrong", error);
   }
 };
 
@@ -45,7 +46,7 @@ const tutorQuestion = async (cardId, data) => {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    logger.error("An error occured in tutorQuestion", error);
   }
 };
 

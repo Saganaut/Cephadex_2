@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { logger } from "@source/Lib/utils/Logger";
 
 export const fetchQuizzesThunk = createAsyncThunk(
   "quizzes/fetchQuizzes",
@@ -11,8 +12,7 @@ export const fetchQuizzesThunk = createAsyncThunk(
       );
 
       if (response.data.status === "success") {
-        console.log(response.data);
-        return response.data["Quizzes"].map((quiz) => ({
+        return response.data["quizzes"].map((quiz) => ({
           ...quiz,
           type: "Quiz",
         }));
@@ -20,7 +20,7 @@ export const fetchQuizzesThunk = createAsyncThunk(
         return rejectWithValue(response.data);
       }
     } catch (error) {
-      console.error("An error occurred while fetching Quizzes:", error);
+      logger.error("An error occured in fetchQuizzesThunk:", error);
       return rejectWithValue(error.response.data);
     }
   }

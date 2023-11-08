@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { logger } from "@source/Lib/utils/Logger";
 
 export const fetchDecksThunk = createAsyncThunk(
   "decks/fetchDecks",
@@ -11,7 +12,6 @@ export const fetchDecksThunk = createAsyncThunk(
       );
 
       if (response.data.status === "success") {
-        console.log(response.data);
         return response.data["decks"].map((deck) => ({
           ...deck,
           type: "Deck",
@@ -20,7 +20,7 @@ export const fetchDecksThunk = createAsyncThunk(
         return rejectWithValue(response.data);
       }
     } catch (error) {
-      console.error("An error occurred while fetching decks:", error);
+      logger.error("An error occurred while fetching decks:", error);
       return rejectWithValue(error.response.data);
     }
   }

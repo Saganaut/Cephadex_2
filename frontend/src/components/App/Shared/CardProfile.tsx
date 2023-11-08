@@ -1,12 +1,12 @@
 import { CardStructure } from "@source/components/App/Shared/CardStructure";
 import { CardAvatar } from "@app/Shared/CardAvatar";
-import { useUser } from "@contexts/UserContext";
 import React, { type ReactElement } from "react";
+import { useSelector } from "react-redux";
 
 const CardProfile = (): ReactElement => {
-  const { user } = useUser();
-  const { userSettings } = useUser();
-  console.log("user settings", userSettings);
+  const user = useSelector((state) => state.user.user);
+
+  const userSettings = useSelector((state) => state.userSettings.usersettings);
   return (
     <>
       <CardStructure>

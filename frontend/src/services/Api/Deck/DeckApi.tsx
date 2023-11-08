@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logger } from "@source/Lib/utils/Logger";
 
 const searchPublicDeck = async (data) => {
   const response = await axios.post(
@@ -12,7 +13,7 @@ const searchPublicDeck = async (data) => {
       return false;
     }
   } catch (error) {
-    console.error(error);
+    logger.error(error);
   }
 };
 
@@ -24,13 +25,12 @@ const fetchAllDecks = async () => {
     );
 
     if (response.data.status === "success") {
-      console.log(response.data);
       return response.data["decks"].map((deck) => ({ ...deck, type: "Deck" }));
     } else {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while sending token to backend:", error);
+    logger.error("An error occurred while sending token to backend:", error);
   }
 };
 
@@ -47,7 +47,7 @@ const setDeckAsFavorite = async (deckId) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while sending token to backend:", error);
+    logger.error("An error occurred while sending token to backend:", error);
   }
 };
 
@@ -64,7 +64,7 @@ const removeDeckAsFavorite = async (deckId) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while sending token to backend:", error);
+    logger.error("An error occurred while sending token to backend:", error);
   }
 };
 
@@ -83,7 +83,7 @@ const deleteDeck = async (deckId) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while sending token to backend:", error);
+    logger.error("An error occurred while sending token to backend:", error);
   }
 };
 
@@ -100,7 +100,7 @@ const getDeck = async (deckId) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while sending token to backend:", error);
+    logger.error("An error occurred while sending token to backend:", error);
   }
 };
 
@@ -117,7 +117,7 @@ const editDeck = async (deckId) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while sending token to backend:", error);
+    logger.error("An error occurred while sending token to backend:", error);
   }
 };
 
@@ -135,7 +135,7 @@ const createDeck = async (deck) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while sending token to backend:", error);
+    logger.error("An error occurred while sending token to backend:", error);
   }
 };
 
@@ -160,7 +160,7 @@ const downloadDeckCsv = async (deckId) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while sending token to backend:", error);
+    logger.error("An error occurred while sending token to backend:", error);
     return false;
   }
 };
@@ -178,7 +178,7 @@ const setChildDeck = async (parentId, childId) => {
       return false;
     }
   } catch (error) {
-    console.error(
+    logger.error(
       "An error occurred while trying to set parent child relationship:",
       error
     );
@@ -207,7 +207,7 @@ const deckLink = async (deckId) => {
       };
     }
   } catch (error) {
-    console.error(
+    logger.error(
       "An error occurred while trying to set parent child relationship:",
       error
     );
@@ -231,7 +231,7 @@ const getSharedDecks = async (deckId) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while trying to get shared decks:", error);
+    logger.error("An error occurred while trying to get shared decks:", error);
   }
 };
 
@@ -248,7 +248,7 @@ const deleteSharedDeck = async (deckId) => {
       return false;
     }
   } catch (error) {
-    console.error(
+    logger.error(
       "An error occurred while trying to delete shared deck:",
       error
     );
@@ -268,7 +268,7 @@ const approveSharedDeck = async (deckId) => {
       return false;
     }
   } catch (error) {
-    console.error(
+    logger.error(
       "An error occurred while trying to approve shared deck:",
       error
     );
@@ -291,7 +291,7 @@ const shareDeck = async (deckId) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while trying to share deck:", error);
+    logger.error("An error occurred while trying to share deck:", error);
   }
 };
 

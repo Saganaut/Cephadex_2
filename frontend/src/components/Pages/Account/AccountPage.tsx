@@ -7,7 +7,7 @@ import { InputField } from "@common/Form/InputField";
 import { PreferencesSelect } from "@common/Form/PreferencesSelect";
 import { validationSchema } from "@pages/Account/AccountFormValidation";
 import { Plans } from "@pages/Account/Plans";
-
+import { logger } from "@source/Lib/utils/Logger";
 const roles: Array<{ value: number; label: string }> = [
   { value: 0, label: "None" },
   { value: 1, label: "Student" },
@@ -55,8 +55,7 @@ function AccountPage(): ReactElement {
           validationSchema={validationSchema}
           validateOnBlur={true}
           onSubmit={(values) => {
-            console.log("submit ----------------------------------");
-            console.log(values);
+            logger.log("Submitting Account Page Values:", values);
           }}
         >
           {(formik) => (

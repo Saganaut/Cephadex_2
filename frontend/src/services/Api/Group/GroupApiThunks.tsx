@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { logger } from "@source/Lib/utils/Logger";
 
 export const fetchGroupsThunk = createAsyncThunk(
   "groups/fetchGroups",
@@ -11,7 +12,6 @@ export const fetchGroupsThunk = createAsyncThunk(
       );
 
       if (response.data.status === "success") {
-        console.log(response.data);
         return response.data["groups"].map((group) => ({
           ...group,
           type: "Group",
@@ -20,7 +20,7 @@ export const fetchGroupsThunk = createAsyncThunk(
         return rejectWithValue(response.data);
       }
     } catch (error) {
-      console.error("An error occurred while fetching Groups:", error);
+      logger.error("An error occurred in fetchGroupsThunk", error);
       return rejectWithValue(error.response.data);
     }
   }

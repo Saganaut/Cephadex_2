@@ -36,6 +36,7 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
+    print("loading user", user_id)
     return User.query.get(int(user_id))
 
 
@@ -61,6 +62,7 @@ def after_request(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
+
     response.headers[
         "Referrer-Policy"
     ] = "no-referrer-when-downgrade"  ## ONLY FOR http AND LOCALHOST, FOR GOOGLE AUTH

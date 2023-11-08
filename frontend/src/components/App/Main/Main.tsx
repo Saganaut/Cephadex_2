@@ -1,12 +1,7 @@
 import { DashboardCardContainer } from "@source/components/App/Main/DashboardCardContainer";
-// import { useUser } from "@contexts/UserContext";
 import React, { type ReactElement } from "react";
 
 const Main = (): ReactElement => {
-  // const { user } = useUser();
-
-  // console.log(user["user-id"]);
-
   return (
     <div>
       <section className="body-font text-gray-600">

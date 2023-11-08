@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { type User } from "@source/types/User";
 import { fetchUserThunk } from "@source/services/Api/User/UserApiThunks";
+import { logoutThunk } from "@source/services/Api/User/UserApiThunks";
 interface UserState {
   user: User | null;
   loading: boolean;
@@ -17,7 +18,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      return action.payload;
+      state.user = action.payload;
     },
     logout: (state) => {
       state.user = null;
@@ -34,6 +35,12 @@ const userSlice = createSlice({
       })
       .addCase(fetchUserThunk.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(logoutThunk.fulfilled, (state) => {
+        return initialState;
+      })
+      .addCase(logoutThunk.rejected, (state, action) => {
         state.error = action.payload;
       });
   },

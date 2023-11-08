@@ -1,38 +1,38 @@
-import { sendGoogleSignInToken } from "@services/Auth";
-import { useUser } from "@contexts/UserContext";
-import { useModal } from "@contexts/ModalContext";
-import { type CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import React, { type ReactElement } from "react";
+// import { useUser } from "@contexts/UserContext";
+import { useModal } from "@contexts/ModalContext";
+import { sendGoogleSignInToken } from "@services/Auth";
+import { type CredentialResponse, GoogleLogin } from "@react-oauth/google";
+import { useDispatch } from "react-redux";
+import { setUser } from "@store/userSlice";
+import { logger } from "@source/Lib/utils/Logger";
 
 const GoogleLoginButton = (): ReactElement => {
-  const { setUserData } = useUser();
+  // const { setUserData } = useUser();
   const { closeSignInModal } = useModal();
-
+  const dispatch = useDispatch();
   const handleGoogleLogin = async (
     credentialResponse: CredentialResponse
   ): Promise<void> => {
     try {
       const response = await sendGoogleSignInToken(credentialResponse);
 
-      if (response.data.status === "success") {
-        console.log("handleGoogleLogin Response", response.data);
-
-        // Update the user context with the user data from the response
-        setUserData(response.user);
-        const userData = response.user;
-        setUserData(userData);
+      if (response.status === "success") {
+        dispatch(setUser(response.user));
         closeSignInModal();
-        console.log("Login successful:", response.user);
+        logger.log("Login successful:", response.user);
       } else {
-        console.error("Login failed:", response);
+        logger.error("Login failed:", response);
       }
     } catch (error) {
-      setUserData({
-        "user-id": "0",
-        username: "guest",
-        email: "XXXXXXXXXXXXXXX",
-      });
-      console.error("An error occurred while sending token to backend:", error);
+      dispatch(
+        setUser({
+          "user-id": "0",
+          username: "guest",
+          email: "XXXXXXXXXXXXXXX",
+        })
+      );
+      logger.error("An error occurred while sending token to backend:", error);
     }
   };
 
@@ -41,7 +41,7 @@ const GoogleLoginButton = (): ReactElement => {
       <GoogleLogin
         onSuccess={handleGoogleLogin} // Use the async function as the callback
         onError={() => {
-          console.log("Login Failed");
+          logger.error("Login Failed");
         }}
         useOneTap
       />

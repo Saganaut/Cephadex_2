@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logger } from "@source/Lib/utils/Logger";
 
 const fetchCardsFromDeck = async (deckId) => {
   try {
@@ -6,14 +7,14 @@ const fetchCardsFromDeck = async (deckId) => {
       `http://localhost:5000/deck_bp/api_0/deck/${deckId}/cards`,
       { withCredentials: true }
     );
-    console.log("fetchCardsFromDeck response:", response);
+
     if (response.data.status === "success") {
       return response.data.cards;
     } else {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 
@@ -30,7 +31,7 @@ const deleteCard = async (deckId, cardId) => {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 
@@ -48,7 +49,7 @@ const createCard = async (deckId, card) => {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 
@@ -66,7 +67,7 @@ const editCard = async (deckId, cardId, card) => {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 
@@ -84,7 +85,7 @@ const regenerateDefinition = async (deckId, cardId, details) => {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 

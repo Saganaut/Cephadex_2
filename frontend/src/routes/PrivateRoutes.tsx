@@ -15,13 +15,21 @@ import { Play } from "@app/Features/Play/Play";
 import { Quizzes } from "@source/components/App/Features/Quizzes/Quizzes";
 import { Quiz } from "@app/Features/Quiz/Quiz";
 import { Study } from "@app/Features/Study/Study";
-
+import { Logout } from "@app/Main/Logout";
 const privateRoutePaths = [
   {
     path: "/",
     element: (
       <Layout>
         <Main />
+      </Layout>
+    ),
+  },
+  {
+    path: "/logout",
+    element: (
+      <Layout>
+        <Logout />
       </Layout>
     ),
   },

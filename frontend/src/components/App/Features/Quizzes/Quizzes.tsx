@@ -3,15 +3,18 @@ import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { type Quiz } from "@source/types/Quiz";
 import { QuizCard } from "./QuizCard";
 import { fetchQuizzesThunk } from "@services/Api/Quiz/QuizApiThunks";
+import { logger } from "@source/Lib/utils/Logger";
 
 const Quizzes = (): ReactElement => {
+  logger.log("Quizzes");
   const dispatch = useAppDispatch();
   const quizzes = useAppSelector((state) => state.quizzes);
 
   useEffect(() => {
     dispatch(fetchQuizzesThunk());
   }, [dispatch]);
-  console.log(quizzes);
+  logger.log("Quizzes", quizzes);
+
   return (
     <>
       <div className="flex flex-wrap mt-40">

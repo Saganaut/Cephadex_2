@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import dashboardCardsReducer from "./dashboardCardSlice";
+// import dashboardCardsReducer from "./dashboardCardSlice";
 import decksReducer from "./decksSlice";
 import quizzesReducer from "./quizzesSlice";
 import groupsReducer from "./groupsSlice";
@@ -9,7 +9,7 @@ import deckCardsReducer from "./deckCardsSlice";
 
 export const store = configureStore({
   reducer: {
-    dashboardCards: dashboardCardsReducer,
+    // dashboardCards: dashboardCardsReducer,
     decks: decksReducer,
     quizzes: quizzesReducer,
     groups: groupsReducer,

@@ -1,9 +1,9 @@
 import { type Card } from "@source/types/Globals";
+import { logger } from "@source/Lib/utils/Logger";
 
 const filterCards = (cardsData: Card[], filter: string): Card[] => {
-  console.log("entered filterCards");
+  logger.log("filterCards");
   if (!Array.isArray(cardsData)) {
-    console.log("not array");
     return [];
   }
   if (filter === "") return cardsData;

@@ -4,7 +4,6 @@ import { useModal } from "@contexts/ModalContext";
 import React from "react";
 
 const RegisterModal = () => {
-  console.log("REgister modal");
   const { isRegisterModalOpen, closeRegisterModal } = useModal();
 
   if (!isRegisterModalOpen) return null;

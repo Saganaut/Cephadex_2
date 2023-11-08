@@ -5,11 +5,9 @@ import { GoogleLoginButton } from "@components/Modals/GoogleLogin/GoogleLoginBut
 import React from "react";
 
 const SignInModal = () => {
-  console.log("rendering SignInModal ");
   const { isSignInModalOpen, closeSignInModal } = useModal();
 
   if (!isSignInModalOpen) {
-    console.log("modal is not open");
     return null;
   }
 

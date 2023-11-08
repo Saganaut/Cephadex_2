@@ -40,7 +40,7 @@ const updateUserSettings = (data) => {
 };
 
 const logoutUser = () => {
-  const response = axios.get(
+  const response = axios.delete(
     "http://localhost:5000/user_bp/api_0/auth/logout",
     { withCredentials: true }
   );

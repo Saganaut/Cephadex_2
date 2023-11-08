@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logger } from "@source/Lib/utils/Logger";
 
 const createGameFlex = async () => {
   try {
@@ -11,7 +12,7 @@ const createGameFlex = async () => {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    logger.error("An error occursed in createGameFlex", error);
   }
 };
 
@@ -30,7 +31,7 @@ const joinGameFlex = async (game_id) => {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    logger.error("An error occured in joinGameFlex:", error);
   }
 };
 
@@ -46,7 +47,7 @@ const addPlayerToGameFlex = async (game_id) => {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    logger.error("An error occured in addPlayerToGameFlex:", error);
   }
 };
 
@@ -62,7 +63,7 @@ const fetchPlayersFromGameFlex = async (game_id) => {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    logger.error("An error occured in fetchPlayersFromGameFlex:", error);
   }
 };
 

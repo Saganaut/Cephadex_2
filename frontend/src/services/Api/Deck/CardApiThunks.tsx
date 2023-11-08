@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { logger } from "@source/Lib/utils/Logger";
 
 const fetchDeckCardsThunk = createAsyncThunk(
   "deckCards/fetchDeckCards",
@@ -11,15 +12,13 @@ const fetchDeckCardsThunk = createAsyncThunk(
       );
 
       if (response.data.status === "success") {
-        console.log("fetchDeckCardsThunk API response data", response.data);
         const deckCardsData = { "deck-id": deckId, cards: response.data.cards };
-        console.log(deckCardsData);
         return deckCardsData;
       } else {
         return rejectWithValue(response.data);
       }
     } catch (error) {
-      console.error("An error occurred while fetching decks:", error);
+      logger.error("An error occurred while fetching decks:", error);
       return rejectWithValue(error.response.data);
     }
   }

@@ -1,6 +1,7 @@
 import { type CredentialResponse } from "@react-oauth/google";
 import { axiosPrivate } from "@services/axios";
 import { type AxiosError } from "axios";
+import { logger } from "@source/Lib/utils/Logger";
 
 interface AuthenticatedResponse {
   status: string;
@@ -23,14 +24,14 @@ const sendGoogleSignInToken = async (
       {
         withCredentials: true,
         headers: {
-          "Access-Control-Allow-Origin": "*",
+          // "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
         },
       }
     );
 
     if (response.data.status === "success") {
-      console.log("Login successful:", response.data);
+      logger.log("Login successful:", response.data);
       return response.data;
     } else {
       throw new Error("Authentication failed. No further details provided.");
@@ -38,10 +39,10 @@ const sendGoogleSignInToken = async (
   } catch (error) {
     const axiosError = error as AxiosError<ErrorResponse>;
     if (axiosError?.response != null) {
-      console.error("Login failed:", axiosError.response.data);
+      logger.error("Login failed:", axiosError.response.data);
       throw new Error("Authentication failed. No further details provided.");
     } else {
-      console.error(
+      logger.error(
         "An unknown error occurred while sending token to backend:",
         error
       );

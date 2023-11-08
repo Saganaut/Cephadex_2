@@ -30,7 +30,6 @@ const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
     setIsRegisterModalOpen(false);
   };
 
-  console.log("SignInModalProvider");
   return (
     <ModalContext.Provider
       value={{
@@ -48,7 +47,6 @@ const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 };
 
 const useModal = (): ModalContextProps => {
-  console.log("useSignInModal");
   return useContext(ModalContext) as ModalContextProps;
 };
 

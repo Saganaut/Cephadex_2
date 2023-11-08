@@ -7,11 +7,13 @@ import { AdvancedOptionsContainer } from "@app/Features/Extract/AdvancedOptionsC
 import { ExtractSubmitButton } from "@app/Features/Extract/ExtractSubmitButton";
 import { SelectionAndOutputContainer } from "@app/Features/Extract/SelectionAndOutputContainer";
 import { extract } from "@services/Api/Deck/CreateApi";
+import { logger } from "@source/Lib/utils/Logger";
 interface ExtractProps {
   customIsSelected: boolean;
 }
 
 const ExtractForm: React.FC<ExtractProps> = ({ customIsSelected }) => {
+  logger.log(ExtractForm);
   return (
     <>
       <Formik
@@ -33,8 +35,8 @@ const ExtractForm: React.FC<ExtractProps> = ({ customIsSelected }) => {
         validationSchema={validationSchema}
         validateOnBlur={true}
         onSubmit={(values) => {
-          console.log("submit ----------------------------------");
-          console.log(values);
+          logger.log("ExtractForm", values);
+
           extract(values);
         }}
       >

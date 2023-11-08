@@ -45,9 +45,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       <Combobox
         value={selected}
         onChange={(option) => {
-          console.log("Combobox change detected:", name, option);
-          // setSelected(option); // Update local state
-          setFieldValue(name, option); // Update Formik state
+          setFieldValue(name, option);
         }}
       >
         <div className="relative mt-1">
@@ -92,7 +90,6 @@ const Dropdown: React.FC<DropdownProps> = ({
                     }
                     value={option}
                     onChange={() => {
-                      console.log("option selected is", name, option);
                       setSelected(option);
                       setFieldValue(name, option);
                     }}

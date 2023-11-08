@@ -64,7 +64,6 @@ const Pricing = (): ReactElement => {
 
   const toggleMonthly = (): void => {
     setMonthly(!monthly);
-    console.log(monthly);
   };
 
   return (

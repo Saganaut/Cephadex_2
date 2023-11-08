@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logger } from "@source/Lib/utils/Logger";
 
 const fetchAllQuizzes = async () => {
   try {
@@ -8,7 +9,6 @@ const fetchAllQuizzes = async () => {
     );
 
     if (response.data.status === "success") {
-      console.log("QUizzes", response.data);
       return response.data["quizzes"].map((quiz) => ({
         ...quiz,
         type: "Quiz",
@@ -17,7 +17,7 @@ const fetchAllQuizzes = async () => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while sending token to backend:", error);
+    logger.error("An error occurred in fetchAllQuizzes:", error);
   }
 };
 
@@ -34,7 +34,7 @@ const setQuizAsFavorite = async (quizId) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while sending token to backend:", error);
+    logger.error("An error occured in setQuizAsFavourite", error);
   }
 };
 
@@ -51,7 +51,7 @@ const removeQuizAsFavorite = async (quizId) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while sending token to backend:", error);
+    logger.error("An error occurred in removeQuizAsFavourite", error);
   }
 };
 
@@ -64,20 +64,14 @@ const downloadQuizPdf = async (quizId) => {
         withCredentials: true,
       }
     );
-
-    // Create a blob from the response for download
     const blob = new Blob([response.data], { type: "application/pdf" });
-
-    // Create a link element to initiate download
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `quiz_${quizId}.pdf`; // Modify the download filename if needed
+    link.download = `quiz_${quizId}.pdf`; 
     link.click();
-
-    // Cleanup
     URL.revokeObjectURL(link.href);
   } catch (error) {
-    console.error("Error downloading the quiz:", error);
+    logger.error("An error occured in downloadQuizPdf:", error);
   }
 };
 
@@ -93,9 +87,7 @@ const deleteQuestion = async (quizId, questionId) => {
       return false;
     }
   } catch (error) {
-    console.error(
-      "An error occurred while trying to delete a question:",
-      error
+    logger.error("An error occured in delete Question:", error)
     );
   }
 };
@@ -112,7 +104,7 @@ const deleteQuiz = async (quizId) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while trying to delete a quiz:", error);
+    logger.error("An error occured in deleteQuiz", error)
   }
 };
 
@@ -130,7 +122,7 @@ const newQuiz = async (data) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while trying to create a quiz:", error);
+    logger.error("An error occured in newQuiz:", error)
   }
 };
 
@@ -147,7 +139,7 @@ const editQuiz = async (quizId, data) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while trying to create a quiz:", error);
+    logger.error("An error occured in editQuiz:", error)
   }
 };
 
@@ -173,10 +165,7 @@ const quizLink = async (quizId) => {
       };
     }
   } catch (error) {
-    console.error(
-      "An error occurred while trying to set parent child relationship:",
-      error
-    );
+    logger.error("An error occured in quizLink", error)
     return {
       success: false,
       error: error.message,
@@ -199,9 +188,7 @@ const assignQuiz = async (quizId, data) => {
       return response.data;
     }
   } catch (error) {
-    console.error(
-      "An error occurred while trying to assign quiz to deck:",
-      error
+    logger.error("An error occured in assignQuiz:", error
     );
   }
 };
@@ -219,7 +206,7 @@ const submitQuiz = async (quizId, data) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while trying to submit quiz:", error);
+  logger.error("An error occured in submitQuiz:", error)
   }
 };
 
@@ -235,10 +222,7 @@ const rejectAssignedQuiz = async (quizId) => {
       return false;
     }
   } catch (error) {
-    console.error(
-      "An error occurred while trying to reject assigned quiz:",
-      error
-    );
+  logger.error("An error occured in rejectAssignedQuiz:", error)
   }
 };
 
@@ -254,8 +238,7 @@ const fetchQuizResult = async (quizResultId) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while trying to get quiz result:", error);
-  }
+logger.error("An error occured in fetchQuizResult:", error) }
 };
 
 const fetchAllMyResults = async () => {
@@ -270,10 +253,7 @@ const fetchAllMyResults = async () => {
       return false;
     }
   } catch (error) {
-    console.error(
-      "An error occurred while trying to get your quiz results:",
-      error
-    );
+      logger.error("An error occured in fetchAllMyResults:", error)
   }
 };
 const fetchAllMyStudentresults = async () => {
@@ -288,10 +268,7 @@ const fetchAllMyStudentresults = async () => {
       return false;
     }
   } catch (error) {
-    console.error(
-      "An error occurred while trying to get your quiz results:",
-      error
-    );
+    logger.error("An error occured in fetchAllMyStudentresults:", error)
   }
 };
 
@@ -307,7 +284,7 @@ const fetchQuiz = async (quizId) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while trying to get quiz:", error);
+    logger.error("An error occurred in fetchQuiz:", error);
   }
 };
 
@@ -323,7 +300,8 @@ const fetchSharedQuiz = async (sharedQuizId) => {
       return false;
     }
   } catch (error) {
-    console.error("An error occurred while trying to get shared quiz:", error);
+    logger.error("An error occurred in fetchSharedQuiz:", error);
+
   }
 };
 
