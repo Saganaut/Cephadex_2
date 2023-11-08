@@ -4,6 +4,7 @@ import { Dropdown } from "@common/Form/Dropdown";
 import ArrowSmallUpIcon from "@heroicons/react/20/solid/ArrowSmallUpIcon";
 import EllipsisVerticalIcon from "@heroicons/react/20/solid/EllipsisVerticalIcon";
 import MagnifyingGlassIcon from "@heroicons/react/24/outline/MagnifyingGlassIcon";
+import { getStudyCards } from "@services/Api/Study/StudyApi";
 import { Form, Formik } from "formik";
 import React, { type ReactElement } from "react";
 
@@ -99,7 +100,7 @@ function Study(): ReactElement {
 
         <div className={"w-full"}>
           <h1 className={"pb-2 font-medium text-white"}>Select deck</h1>
-
+          <button onClick={async () => await getStudyCards()}>DEEE</button>
           <div
             className={"flex w-full items-center justify-between gap-x-[38px]"}
           >
