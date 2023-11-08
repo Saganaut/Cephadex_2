@@ -67,7 +67,7 @@ function AccountPage(): ReactElement {
           {(formik) => (
             <Form>
               <div className={"flex flex-col gap-y-[34px]"}>
-                <div>
+                <div className={"max-w-[50%]"}>
                   <InputField
                     label={"Name"}
                     onBlur={formik.handleBlur}
@@ -82,7 +82,7 @@ function AccountPage(): ReactElement {
                     errorMessage={"Error On Name Field"}
                   />
                 </div>
-                <div>
+                <div className={"max-w-[50%]"}>
                   <InputField
                     label={"Email"}
                     onBlur={formik.handleBlur}
@@ -97,7 +97,7 @@ function AccountPage(): ReactElement {
                     errorMessage={"Error On Email Field"}
                   />
                 </div>
-                <div>
+                <div className={"max-w-[50%]"}>
                   <InputField
                     label={"Username"}
                     onBlur={formik.handleBlur}
@@ -113,7 +113,7 @@ function AccountPage(): ReactElement {
                   />
                 </div>
 
-                <div>
+                <div className={"max-w-[650px]"}>
                   <Dropdown
                     name={"genderField"}
                     onBlur={formik.handleBlur}
@@ -123,7 +123,7 @@ function AccountPage(): ReactElement {
                     options={genders}
                   />
                 </div>
-                <div>
+                <div className={"max-w-[650px]"}>
                   <Dropdown
                     name={"roleField"}
                     value={formik.values.roleField}

@@ -2,11 +2,11 @@ import { NavBarButtonCreate } from "@app/Dashboard/NavBar/NavBarButtons";
 import { ThemeToggle } from "@app/ThemeToggle";
 import UpgradeIcon from "@assets/UpgradeIcon.svg";
 import Avatar from "@assets/UserAvatar.svg";
+import { PreferencesSelect } from "@common/Form/PreferencesSelect";
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/solid";
 import { IconButton } from "@pages/Account/IconButton";
-import { PreferencesSelect } from "@common/Form/PreferencesSelect";
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface NavBarAppProps {
   isSidebarOpen: boolean;
@@ -46,7 +46,7 @@ const NavBarApp: React.FC<NavBarAppProps> = ({ isSidebarOpen }) => {
             <>
               <IconButton
                 collapse={false}
-                theme={"white"}
+                theme={"violet"}
                 icon={<ChevronDoubleLeftIcon />}
                 onClick={() => {}}
                 ariaLabel={"Go Back"}
@@ -71,7 +71,13 @@ const NavBarApp: React.FC<NavBarAppProps> = ({ isSidebarOpen }) => {
             to={"/upgrade"}
           />
           <ThemeToggle />
-          <img src={Avatar} alt="avatar-img" className={"h-[44px] w-[44px]"} />
+          <Link to={"/account"}>
+            <img
+              src={Avatar}
+              alt="avatar-img"
+              className={"h-[44px] w-[44px]"}
+            />
+          </Link>
         </div>
       </div>
     </header>
