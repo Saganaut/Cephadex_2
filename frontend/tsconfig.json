@@ -17,7 +17,7 @@
     "paths": {
       "@source/*": ["*"],
       "@components/*": ["components/*"],
-      "@utils/*": ["src/Lib/utils/*"],
+      "@utils/*": ["utils/*"],
       "@contexts/*": ["contexts/*"],
       "@services/*": ["services/*"],
       "@hooks/*": ["hooks/*"],
@@ -27,7 +27,7 @@
       "@app/*": ["components/App/*"],
       "@extract/*": ["components/App/Extract*"],
       "@assets/*": ["assets/*"],
-      "@types/*": ["types/*"]
+      "@customTypes/*": ["types/*"]
     }
   },
   "include": [
@@ -35,6 +35,7 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.jsx",
+    "vite.config.js",
     "./tailwind.config.js"
   ],
   "exclude": ["node_modules"]

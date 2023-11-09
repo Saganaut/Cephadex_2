@@ -38,8 +38,6 @@ const SelectionButtonContainer: React.FC = () => {
   const deckCount = cardsData.filter((card) => card.type === "Deck").length;
   const favCount = cardsData.filter((card) => card.fav).length;
 
-  console.log("In Parent: ", setSelectedFilter);
-
   const filterButtonsWithCount = filterButtons.map((button) => {
     if (button.name === "All") {
       return { ...button, count: `(${cardCount})` };

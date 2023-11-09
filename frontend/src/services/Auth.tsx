@@ -1,11 +1,13 @@
+import { type User } from "@customTypes//User";
 import { type CredentialResponse } from "@react-oauth/google";
-import { axiosPrivate } from "@services/axios";
 import { type AxiosError } from "axios";
 import { logger } from "@source/Lib/utils/Logger";
 
+import { axiosPrivate } from "./axios";
+
 interface AuthenticatedResponse {
   status: string;
-  user: any;
+  user: User;
 }
 interface ErrorResponse {
   error: string;
@@ -32,6 +34,7 @@ const sendGoogleSignInToken = async (
 
     if (response.data.status === "success") {
       logger.log("Login successful:", response.data);
+
       return response.data;
     } else {
       throw new Error("Authentication failed. No further details provided.");

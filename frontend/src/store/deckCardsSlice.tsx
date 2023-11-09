@@ -34,13 +34,10 @@ const deckCardsSlice = createSlice({
       })
       .addCase(fetchDeckCardsThunk.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("fetchDeckCardsThunk.fulfilled");
-        console.log(state.deckCards);
-        console.log(action.payload);
+
         state.deckCards = action.payload;
       })
       .addCase(fetchDeckCardsThunk.rejected, (state, action) => {
-        console.log("FetchDeckCardsThunk rejected");
         state.loading = false;
         state.error = action.payload;
       });

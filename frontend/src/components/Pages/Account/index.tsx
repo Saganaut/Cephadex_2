@@ -1,13 +1,16 @@
-import React, { type ReactElement } from "react";
-import { Form, Formik } from "formik";
 import UserAvatar from "@assets/UserAvatar.svg";
 import { Dropdown } from "@common/Form/Dropdown";
 import { InputErrorMessage } from "@common/Form/InputErrorMessage";
 import { InputField } from "@common/Form/InputField";
 import { PreferencesSelect } from "@common/Form/PreferencesSelect";
+// import { useUser } from "@contexts/UserContext";
 import { validationSchema } from "@pages/Account/AccountFormValidation";
 import { Plans } from "@pages/Account/Plans";
 import { logger } from "@source/Lib/utils/Logger";
+import { Form, Formik } from "formik";
+import React, { type ReactElement } from "react";
+import { useSelector } from "react-redux";
+
 const roles: Array<{ value: number; label: string }> = [
   { value: 0, label: "None" },
   { value: 1, label: "Student" },
@@ -35,11 +38,14 @@ const options = [
     value: "none",
   },
 ];
-function AccountPage(): ReactElement {
+function Account(): ReactElement {
+  const user = useSelector((state) => state.user.user);
+  if (user == null) return <div>loading...</div>;
+  console.log(user);
   return (
     <div>
       {/*   Content */}
-      <div className={"w-full pl-[60px] pt-[200px]  "}>
+      <div className={"w-full"}>
         <h1 className={"text-[24px] font-semibold text-blaze-orange"}>
           Account Information
         </h1>
@@ -48,9 +54,11 @@ function AccountPage(): ReactElement {
         {/*   Form */}
         <Formik
           initialValues={{
-            nameField: "",
-            emailField: "",
-            usernameField: "",
+            nameField: user["first-name"] ?? "",
+            emailField: user.email ?? "",
+            usernameField: user.username ?? "",
+            roleField: user.gender ?? "",
+            genderField: user.gender ?? "",
           }}
           validationSchema={validationSchema}
           validateOnBlur={true}
@@ -61,7 +69,7 @@ function AccountPage(): ReactElement {
           {(formik) => (
             <Form>
               <div className={"flex flex-col gap-y-[34px]"}>
-                <div>
+                <div className={"max-w-[50%]"}>
                   <InputField
                     label={"Name"}
                     onBlur={formik.handleBlur}
@@ -76,7 +84,7 @@ function AccountPage(): ReactElement {
                     errorMessage={"Error On Name Field"}
                   />
                 </div>
-                <div>
+                <div className={"max-w-[50%]"}>
                   <InputField
                     label={"Email"}
                     onBlur={formik.handleBlur}
@@ -91,7 +99,7 @@ function AccountPage(): ReactElement {
                     errorMessage={"Error On Email Field"}
                   />
                 </div>
-                <div>
+                <div className={"max-w-[50%]"}>
                   <InputField
                     label={"Username"}
                     onBlur={formik.handleBlur}
@@ -107,11 +115,25 @@ function AccountPage(): ReactElement {
                   />
                 </div>
 
-                <div>
-                  <Dropdown label={"Gender"} options={genders} />
+                <div className={"max-w-[650px]"}>
+                  <Dropdown
+                    name={"genderField"}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.genderField}
+                    label={"Gender"}
+                    options={genders}
+                  />
                 </div>
-                <div>
-                  <Dropdown label={"Role"} options={roles} />
+                <div className={"max-w-[650px]"}>
+                  <Dropdown
+                    name={"roleField"}
+                    value={formik.values.roleField}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    label={"Role"}
+                    options={roles}
+                  />
                 </div>
               </div>
             </Form>
@@ -127,4 +149,4 @@ function AccountPage(): ReactElement {
     </div>
   );
 }
-export default AccountPage;
+export default Account;

@@ -6,7 +6,7 @@ interface ButtonLinkProps {
 const ButtonLink: React.FC<ButtonLinkProps> = ({ children }) => {
   return (
     <div>
-      <div className="flex items-center  rounded-full  bg-white  text-sm text-black hover:bg-electric-violet hover:text-white">
+      <div className="flex items-center  rounded-full  bg-gray-200 text-sm text-black hover:bg-electric-violet hover:text-white">
         {children}
       </div>
     </div>

@@ -11,6 +11,7 @@ import { privateRoutePaths } from "../routes/PrivateRoutes";
 import { publicRoutePaths } from "../routes/PublicRoutes";
 import { checkUserAuth } from "@services/CheckUserAuth";
 import { logger } from "@source/Lib/utils/Logger";
+
 const AppRoutes = (): ReactElement => {
   const dispatch = useAppDispatch();
   const user = useSelector((state) => state.user); // Assuming state.user holds the user's information

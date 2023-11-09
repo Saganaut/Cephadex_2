@@ -7,7 +7,7 @@ interface IconButtonProps {
   onClick: () => void;
   ariaLabel: string;
   to: string;
-  theme: "cyan" | "white";
+  theme: "cyan" | "violet" | "transparent";
   collapse: boolean;
 }
 const IconButton: React.FC<IconButtonProps> = ({
@@ -19,10 +19,14 @@ const IconButton: React.FC<IconButtonProps> = ({
   theme,
 }) => {
   const className = twMerge(
-    `flex items-center transition-all duration-300 rounded-full p-2 text-sm", ${
-      theme === "cyan" ? "bg-aquamarine text-mariana-blue" : "bg-white"
+    `flex items-center transition-all duration-300 rounded-full p-[6px] text-sm", ${
+      theme === "cyan"
+        ? "bg-aquamarine text-mariana-blue"
+        : theme === "violet"
+        ? "bg-electric-violet text-white"
+        : "text-aquamarine"
     }
-    ${collapse ? "w-[60px]" : "w-full"}
+    ${collapse ? "w-[54px]" : "w-full"}
     
     `
   );
@@ -43,7 +47,7 @@ const IconButton: React.FC<IconButtonProps> = ({
             }
           >
             {React.cloneElement(icon as React.ReactElement, {
-              className: "h-[24px] w-[24px]",
+              className: "h-[24px] text-black w-[24px]",
             })}
           </div>
         )}

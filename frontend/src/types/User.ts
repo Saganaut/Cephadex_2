@@ -18,8 +18,8 @@ export interface User {
   username: string;
   email: string;
   "email-confirmed-at": string | null;
-  first_name: string;
-  last_name: string;
+  "first-name": string;
+  "last-name": string;
   external_id: string | null;
   external_type: string | null;
   "time-created": string;

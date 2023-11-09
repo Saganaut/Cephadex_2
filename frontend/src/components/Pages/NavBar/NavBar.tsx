@@ -57,7 +57,6 @@ const NavBar = (): ReactElement => {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <StdButton
             onClick={() => {
-              console.log("Button clicked!");
               openSignInModal();
             }}
             label="Log in"

@@ -19,11 +19,9 @@ const NavBarButton: React.FC<NavBarButtonProps> = ({
   setSelectedFilter,
 }) => {
   const { setFilter } = useFilter();
-  console.log("In NavBarButton: ", setSelectedFilter);
 
   const handleButtonClick: () => void = () => {
     setFilter(filter.value);
-    console.log("filter value", filter.value);
     setSelectedFilter(filter.value);
   };
 

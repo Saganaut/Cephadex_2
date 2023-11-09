@@ -22,17 +22,12 @@ const DeckPage = (): ReactElement => {
     }
   }, [dispatch]);
 
-  console.log("Decks", decks);
   useEffect(() => {
-    console.log("deckId is", deckId);
-
     const id = parseInt(deckId, 10);
-    console.log("DeckId", id);
     if (!isNaN(id)) {
       dispatch(fetchDeckCardsThunk(id));
     }
   }, [dispatch, deckId]);
-  console.log("DeckCards", deckCards);
 
   return (
     <div className="mt-40">

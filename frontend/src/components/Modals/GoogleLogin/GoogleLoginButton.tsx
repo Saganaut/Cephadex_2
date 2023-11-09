@@ -39,7 +39,9 @@ const GoogleLoginButton = (): ReactElement => {
   return (
     <div>
       <GoogleLogin
-        onSuccess={handleGoogleLogin} // Use the async function as the callback
+        onSuccess={(credentialResponse) => {
+          void handleGoogleLogin(credentialResponse);
+        }}
         onError={() => {
           logger.error("Login Failed");
         }}

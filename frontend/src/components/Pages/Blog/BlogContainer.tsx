@@ -14,7 +14,6 @@ const BlogContainer = (): ReactElement => {
   const [blogs, setBlogs] = useState<Blog[] | null>(null);
   const [blog, setBlog] = useState<Blog | null>(null);
   const { slug } = useParams();
-  console.log("Slug from useParams:", slug);
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {

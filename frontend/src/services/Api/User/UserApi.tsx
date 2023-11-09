@@ -1,21 +1,27 @@
+// fetch user settings
+// log out
+import { type UserSettings } from "@customTypes/User";
+import { axiosPrivate } from "@services/axios";
 import axios from "axios";
 
-const fetchUserSettings = async () => {
-  const response = await axios.get(
-    "http://localhost:5000/user_bp/api_0/user/settings",
-    { withCredentials: true }
-  );
+interface UserSettingsResponse {
+  isLoggedIn: boolean;
+  userSettings: UserSettings | null;
+}
+const fetchUserSettings = async (): Promise<UserSettingsResponse> => {
+  const response = await axiosPrivate.get("/user_bp/api_0/user/settings");
   try {
     if (response.status === 200) {
-      return response.data.settings;
+      return { isLoggedIn: true, userSettings: response.data.userSettings };
     } else {
-      return false;
+      return { isLoggedIn: false, userSettings: null };
     }
   } catch (error) {
     console.error(
       "An error occurred while trying to get your user settings:",
       error
     );
+    return { isLoggedIn: false, userSettings: null };
   }
 };
 

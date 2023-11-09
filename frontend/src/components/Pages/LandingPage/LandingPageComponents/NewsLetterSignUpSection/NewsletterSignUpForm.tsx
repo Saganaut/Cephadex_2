@@ -34,7 +34,6 @@ const validate = (values) => {
 };
 
 const Input = React.memo(({ value, onChange, onBlur }) => {
-  console.log("rendering input");
   return (
     <>
       <input
@@ -66,7 +65,6 @@ const NewsletterSignUpForm = () => {
 
   const Subscribe = useCallback(async (email) => {
     const endpoint = `${process.env.REACT_APP_BACKEND_URL}/user_bp/api_0/subscribe`;
-    console.log("subscribing", email);
     try {
       const response = await axios.post(
         endpoint,

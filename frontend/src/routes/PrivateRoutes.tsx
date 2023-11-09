@@ -1,7 +1,9 @@
 import { Layout } from "@app/AppLayout";
+import { Deck } from "@app/Features/Deck/Deck";
 import { Extract } from "@app/Features/Extract/Extract";
 import { Main } from "@app/Main/Main";
-import AccountPage from "@pages/Account/AccountPage";
+import Account from "@pages/Account";
+import Study from "@pages/Study";
 // import Blog from "@pages/Blog/Blog";
 // import { Contact } from "@pages/Contact/Contact";
 // import { Documentation } from "@pages/Documentation/Documentation";
@@ -14,8 +16,9 @@ import { Groups } from "@app/Features/Groups/Groups";
 import { Play } from "@app/Features/Play/Play";
 import { Quizzes } from "@source/components/App/Features/Quizzes/Quizzes";
 import { Quiz } from "@app/Features/Quiz/Quiz";
-import { Study } from "@app/Features/Study/Study";
+// import { Study } from "@app/Features/Study/Study";
 import { Logout } from "@app/Main/Logout";
+
 const privateRoutePaths = [
   {
     path: "/",
@@ -37,7 +40,7 @@ const privateRoutePaths = [
     path: "/account",
     element: (
       <Layout>
-        <AccountPage />
+        <Account />
       </Layout>
     ),
   },
@@ -86,6 +89,14 @@ const privateRoutePaths = [
     element: (
       <Layout>
         <Quiz />
+      </Layout>
+    ),
+  },
+  {
+    path: "/study",
+    element: (
+      <Layout>
+        <Study />
       </Layout>
     ),
   },
