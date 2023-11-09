@@ -27,6 +27,7 @@
     "react-router-dom": "^6.17.0",
     "redux-devtools-extension": "^2.13.9",
     "save-dev": "^0.0.1-security",
+    "swiper": "^11.0.4",
     "tailwind-merge": "^2.0.0",
     "tailwindcss": "^3.3.5",
     "vite": "^4.5.0",

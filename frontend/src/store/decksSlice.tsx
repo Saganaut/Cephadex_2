@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { type Deck } from "@source/types/Deck";
 import { fetchDecksThunk } from "@services/Api/Deck/DeckApiThunks";
+import { type Deck } from "@source/types/Deck";
 
 interface DecksState {
   decks: Deck[];

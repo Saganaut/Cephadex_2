@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import { logger } from "@source/Lib/utils/Logger";
+import axios from "axios";
 
 export const fetchDecksThunk = createAsyncThunk(
   "decks/fetchDecks",
@@ -12,7 +12,7 @@ export const fetchDecksThunk = createAsyncThunk(
       );
 
       if (response.data.status === "success") {
-        return response.data["decks"].map((deck) => ({
+        return response.data.decks.map((deck) => ({
           ...deck,
           type: "Deck",
         }));
