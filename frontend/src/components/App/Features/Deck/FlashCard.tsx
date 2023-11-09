@@ -1,34 +1,53 @@
-import React, {
-  type ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
-import { type Card } from "@source/types/Deck";
 import { CardStructure } from "@source/components/App/Shared/CardStructure";
+import { type Card } from "@source/types/Deck";
+import React, { useEffect, useState } from "react";
+
 interface FlashCardProps {
   card: Card;
 }
+const shuffleMCQ = (array: Array<string | null>): Array<string | null> => {
+  const shuffledArray = array.slice();
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+};
+const FlashCard: React.FC<FlashCardProps> = ({ card }) => {
+  const [shuffledValues, setShuffledValues] = useState<Array<string | null>>(
+    []
+  );
 
-const FlashCard = ({ card }: FlashCardProps): ReactElement => {
+  useEffect(() => {
+    // Extract values from the card object
+    const valuesToShuffle = [
+      card.content,
+      card["boc-2"],
+      card["boc-3"],
+      card["boc-4"],
+    ];
+    // Shuffle the values and set the state
+    setShuffledValues(shuffleMCQ(valuesToShuffle));
+  }, []);
+
   return (
     <div>
       <CardStructure>
-        <div className="front-of-card  mb-5 border border-aquamarine rounded-lg p-5">
+        <div className="front-of-card  mb-5 rounded-lg border border-aquamarine p-5">
           <h4 className="text-2xl">{card.term} </h4>
           <p>Id: {card.id}</p>
           <p>Category: {card.category}</p>
         </div>
 
-        <div className="back-of-card border border-blaze-orange rounded-xl p-5">
-          {card.category === "Definitions" && <p>1{card.content} </p>}
+        <div className="back-of-card rounded-xl border border-blaze-orange p-5">
+          {card.category === "Definitions" && <p>{card.content}</p>}
           {card.category === "Mcq" && (
             <>
               <ul>
-                <li>A - {card.content} </li>
-                <li>B - {card["boc-2"]}</li>
-                <li>C - {card["boc-3"]}</li>
-                <li>D - {card["boc-4"]}</li>
+                <li>A - {shuffledValues[0]}</li>
+                <li>B - {shuffledValues[1]}</li>
+                <li>C - {shuffledValues[2]}</li>
+                <li>D - {shuffledValues[3]}</li>
               </ul>
             </>
           )}
