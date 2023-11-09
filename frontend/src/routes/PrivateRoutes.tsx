@@ -18,7 +18,7 @@ import { Quizzes } from "@source/components/App/Features/Quizzes/Quizzes";
 import { Quiz } from "@app/Features/Quiz/Quiz";
 // import { Study } from "@app/Features/Study/Study";
 import { Logout } from "@app/Main/Logout";
-
+import { UpgradePage } from "@pages/Upgrade/index";
 const privateRoutePaths = [
   {
     path: "/",
@@ -105,6 +105,14 @@ const privateRoutePaths = [
     element: (
       <Layout>
         <Study />
+      </Layout>
+    ),
+  },
+  {
+    path: "/upgrade",
+    element: (
+      <Layout>
+        <UpgradePage />
       </Layout>
     ),
   },
