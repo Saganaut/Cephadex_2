@@ -20,6 +20,12 @@ const LINKS = [
     // img: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
     img: QuizIcon,
   },
+  {
+    title: "Study",
+    href: "/study",
+    // img: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
+    img: DeckIcon,
+  },
   // {
   //   title: "Games",
   //   href: "/games",
