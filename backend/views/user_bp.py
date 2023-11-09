@@ -69,9 +69,9 @@ def user_status():
 
 @user_bp.route("/api_0/auth/google-sign-in", methods=["OPTIONS"])
 def options_accept():
-    start_time = time.time()
-    print("called options", start_time)
-    if request.method == "OPTIONS":
+    print("calling sign options")
+    for header, value in request.headers.items():
+        print(f"{header}: {value}")
         response = make_response()
 
         # response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173'
@@ -79,6 +79,7 @@ def options_accept():
         # response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
         # response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response, 200
+    print("not in options")
 
 @user_bp.route("/api_0/user", methods=["GET"])
 def get_user():
@@ -112,10 +113,10 @@ def google_sign_in():
         session["user_id"] = user.id  # Or another form of identification
         session.modified = True
         response = jsonify({"status": "success", "user": current_user.to_dict()})
-        # response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173'
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Credentials', 'true')        
         print(response.data)
         print(response.headers)
-        # response.headers.add('Access-Control-Allow-Credentials', 'true')
         return response, 200
     except ValueError as e:
         logger.error(f"Value error in google sign in {e}")

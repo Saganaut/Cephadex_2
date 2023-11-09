@@ -1,6 +1,7 @@
 import eventlet
 
-eventlet.monkey_patch(socket=False)
+# eventlet.monkey_patch(socket=True)
+
 from flask_cors import CORS
 
 import logging
@@ -19,18 +20,16 @@ from google.cloud import recaptchaenterprise_v1
 from google.cloud.recaptchaenterprise_v1 import Assessment
 from flask_wtf.csrf import generate_csrf
 from flask_login import login_user, logout_user, current_user, LoginManager
-
+from run.extensions import db, migrate, socketio, login_manager
 
 app = create_app()
 cors = CORS(
     app,
     resources={
-        r"/*": {"origins": "http://localhost:5173", "supports_credentials": True}
+        r"/*": {"origins": "*", "supports_credentials": True}
     },
 )
 logging.getLogger("flask_cors").level = logging.DEBUG
-login_manager = LoginManager()
-login_manager.init_app(app)
 
 
 
@@ -58,22 +57,26 @@ def get_csrf_token():
 
 @app.after_request
 def after_request(response):
-    """Ensure responses aren't cached"""
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Expires"] = 0
-    response.headers["Pragma"] = "no-cache"
+    # """Ensure responses aren't cached"""
+    # response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    # response.headers["Expires"] = 0
+    # response.headers["Pragma"] = "no-cache"
 
-    response.headers[
-        "Referrer-Policy"
-    ] = "no-referrer-when-downgrade"  ## ONLY FOR http AND LOCALHOST, FOR GOOGLE AUTH
+    # response.headers[
+    #     "Referrer-Policy"
+    # ] = "no-referrer-when-downgrade"  ## ONLY FOR http AND LOCALHOST, FOR GOOGLE AUTH
+    # return response
+    print("Response headers:")
+    for header, value in response.headers.items():
+        print(f"{header}: {value}")
+    
     return response
-
 
 @app.before_request
 def before_request():
     """Addressing bug with import anki and feedback form"""
-    g.feedback_form = None
-
+    print("before request")
+    print(request)
 
 ###  REGISTERING BLUEPRINTS AFTER REQUESTS
 register_blueprints(app)
@@ -348,14 +351,11 @@ def create_assessment(
 
 if __name__ == "__main__":
     print("app is main")
-    app.run(debug=DEBUG)
     socketio.run(app)
 
 else:
     print("app is being imported")
-    # For Alembic
-    ## from run.extensions import db
-    # db.init_app(app)
+
 
 ##objgraph.show_growth()
 

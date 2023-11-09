@@ -1,19 +1,11 @@
-# from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 db = SQLAlchemy()
-# bcrypt = Bcrypt()
 migrate = Migrate()
-socketio = SocketIO()
+socketio = SocketIO(logger=True,async_mode='eventlet', engineio_logger=True, cors_allowed_origins='*')
+login_manager = LoginManager()
 
-def init_extensions(app):
-    db.init_app(app)
-    # bcrypt.init_app(app)
-    migrate.init_app(app, db)
-    socketio.init_app(app, cors_allowed_origins="*")
 
-    return db,  migrate, socketio
-
-# bcrypt,

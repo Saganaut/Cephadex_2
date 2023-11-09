@@ -22,8 +22,9 @@ def configure_app(app) -> None:
     app.config["SESSION_PERMANENT"] = False
     # app.config["SESSION_TYPE"] = "filesystem"
     app.config['SESSION_COOKIE_SECURE'] = False
-    app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+    app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
     app.config['SESSION_COOKIE_PATH'] = '/'
+    app.config['REMEMBER_COOKIE_DOMAIN'] = '127.0.0.1'
     openai.api_key = os.environ.get("OPENAI_API_KEY")
     stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
     endpoint_secret = os.environ.get("STRIPE_SIGNING_SECRET")

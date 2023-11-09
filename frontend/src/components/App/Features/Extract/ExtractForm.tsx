@@ -13,7 +13,7 @@ interface ExtractProps {
 }
 
 const ExtractForm: React.FC<ExtractProps> = ({ customIsSelected }) => {
-  logger.log(ExtractForm);
+  logger.log(ExtractForm, "ExtractForm");
   return (
     <>
       <Formik
