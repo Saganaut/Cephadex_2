@@ -1,8 +1,9 @@
-import { Layout } from "@source/pages/layouts/PrivateLayout";
+import { Layout } from "@layouts/PrivateLayout";
 import { Extract } from "@pages/Extract";
 import { Main } from "@pages/Dashboard/";
 import Account from "@pages/Account/";
 import Study from "@pages/Study";
+
 // import Blog from "@pages/Blog/Blog";
 // import { Contact } from "@pages/Contact/Contact";
 // import { Documentation } from "@pages/Documentation/Documentation";
@@ -12,12 +13,13 @@ import Study from "@pages/Study";
 import React from "react";
 import { DeckPage } from "@pages/Deck";
 import { Groups } from "@source/pages/Groups";
-import { Play } from "@source/pages/Play";
+// import { Play } from "@source/pages/Play";
 import { Quizzes } from "@source/pages/Quizzes";
 import { Quiz } from "@source/pages/Quiz";
 // import { Study } from "@app/Features/Study/Study";
 import { Logout } from "@pages/Dashboard/Logout";
 import { UpgradePage } from "@pages/Upgrade/index";
+
 const privateRoutePaths = [
   {
     path: "/",

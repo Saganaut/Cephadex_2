@@ -12,7 +12,7 @@ export const fetchDecksThunk = createAsyncThunk(
       );
 
       if (response.data.status === "success") {
-        return response.data["decks"].map((deck) => ({
+        return response.data.decks.map((deck) => ({
           ...deck,
           type: "Deck",
         }));
