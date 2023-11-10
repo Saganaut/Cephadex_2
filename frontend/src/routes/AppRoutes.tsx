@@ -7,10 +7,10 @@ import { Route, Routes } from "react-router-dom";
 import { useAppDispatch } from "@store/hooks";
 import { fetchUserThunk } from "@services/Api/User/UserApiThunks";
 import { fetchUserSettingsThunk } from "@services/Api/User/UserApiThunks";
-import { privateRoutePaths } from "../routes/PrivateRoutes";
-import { publicRoutePaths } from "../routes/PublicRoutes";
+import { privateRoutePaths } from "@routes/PrivateRoutes";
+import { publicRoutePaths } from "@routes/PublicRoutes";
 import { checkUserAuth } from "@services/CheckUserAuth";
-import { logger } from "@source/Lib/utils/Logger";
+import { logger } from "@utils/Logger";
 
 const AppRoutes = (): ReactElement => {
   const dispatch = useAppDispatch();
