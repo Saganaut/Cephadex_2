@@ -1,12 +1,7 @@
-import React, {
-  type ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
-import { type Card } from "@source/types/Deck";
 import { CardStructure } from "@common/Cards/CardStructure";
-import { decrementCard, incrementCard } from "@study/Study";
+import { type Card } from "@source/types/Deck";
+import { decrementCard, incrementCard } from "@study/components/PlayGround";
+import React, { useEffect, useState } from "react";
 
 interface FlashCardProps {
   card: Card;

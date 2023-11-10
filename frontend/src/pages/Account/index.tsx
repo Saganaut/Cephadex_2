@@ -1,11 +1,11 @@
+// import { useUser } from "@contexts/UserContext";
+import { validationSchema } from "@account/AccountFormValidation";
+import { Plans } from "@account/Plans";
 import UserAvatar from "@assets/UserAvatar.svg";
 import { Dropdown } from "@common/Form/Dropdown";
 import { InputErrorMessage } from "@common/Form/InputErrorMessage";
 import { InputField } from "@common/Form/InputField";
 import { PreferencesSelect } from "@common/Form/PreferencesSelect";
-// import { useUser } from "@contexts/UserContext";
-import { validationSchema } from "@account/AccountFormValidation";
-import { Plans } from "@account/Plans";
 import { logger } from "@utils/Logger";
 import { Form, Formik } from "formik";
 import React, { type ReactElement } from "react";
@@ -117,6 +117,7 @@ function Account(): ReactElement {
 
                 <div className={"max-w-[650px]"}>
                   <Dropdown
+                    style={"select"}
                     name={"genderField"}
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
@@ -127,6 +128,7 @@ function Account(): ReactElement {
                 </div>
                 <div className={"max-w-[650px]"}>
                   <Dropdown
+                    style={"select"}
                     name={"roleField"}
                     value={formik.values.roleField}
                     onChange={formik.handleChange}

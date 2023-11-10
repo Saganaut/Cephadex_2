@@ -1,9 +1,17 @@
 import { Layout } from "@layouts/PrivateLayout";
-import { Extract } from "@pages/Extract";
-import { Main } from "@pages/Dashboard/";
 import Account from "@pages/Account/";
+import { Main } from "@pages/Dashboard/";
+// import { Study } from "@app/Features/Study/Study";
+import { Logout } from "@pages/Dashboard/Logout";
+import { DeckPage } from "@pages/Deck";
+import { Extract } from "@pages/Extract";
+import { Play } from "@pages/Play";
 import Study from "@pages/Study";
-
+import { UpgradePage } from "@pages/Upgrade";
+import { Groups } from "@source/pages/Groups";
+import { Quiz } from "@source/pages/Quiz";
+// import { Play } from "@source/pages/Play";
+import { Quizzes } from "@source/pages/Quizzes";
 // import Blog from "@pages/Blog/Blog";
 // import { Contact } from "@pages/Contact/Contact";
 // import { Documentation } from "@pages/Documentation/Documentation";
@@ -11,14 +19,6 @@ import Study from "@pages/Study";
 // import { Pricing } from "@pages/Pricing/Pricing";
 // import { Terms } from "@pages/Terms/Terms";
 import React from "react";
-import { DeckPage } from "@pages/Deck";
-import { Groups } from "@source/pages/Groups";
-// import { Play } from "@source/pages/Play";
-import { Quizzes } from "@source/pages/Quizzes";
-import { Quiz } from "@source/pages/Quiz";
-// import { Study } from "@app/Features/Study/Study";
-import { Logout } from "@pages/Dashboard/Logout";
-import { UpgradePage } from "@pages/Upgrade/index";
 
 const privateRoutePaths = [
   {

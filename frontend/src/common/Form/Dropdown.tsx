@@ -1,12 +1,11 @@
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
-import { useField, useFormikContext } from "formik";
 import React, { Fragment, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface DropdownProps {
   label?: string;
-  options: Array<{ label: string; value: string | number }> | any[];
+  options: Array<{ label: string; value: number }>;
   value: string;
   name: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -21,13 +20,12 @@ const Dropdown: React.FC<DropdownProps> = ({
   name,
   style,
 }) => {
-  // const [selected, setSelected] = useState(
-  //   options[0] || { label: "", value: "" }
-  // );
+  const [selected, setSelected] = useState<{ label: string; value: number }>({
+    label: "None",
+    value: 0,
+  });
   const [query, setQuery] = useState("");
-  const [field, meta, helpers] = useField(name);
-  const { setFieldValue, values } = useFormikContext();
-  const selected = values[name];
+
   const filteredOptions =
     query === ""
       ? options
@@ -51,18 +49,13 @@ const Dropdown: React.FC<DropdownProps> = ({
     <div className="w-full">
       {/* Label */}
 
-      {label && (
+      {label != null && (
         <p className={"pb-2 text-[20px] font-medium text-white"}>
           {label} - {selected.label}
         </p>
       )}
 
-      <Combobox
-        value={selected}
-        onChange={(option) => {
-          setFieldValue(name, option);
-        }}
-      >
+      <Combobox value={selected} onChange={setSelected}>
         <div className="relative">
           <div
             className={`relative w-full cursor-default overflow-hidden rounded-lg bg-transparent text-left ${
@@ -109,8 +102,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                     }
                     value={option}
                     onChange={() => {
-                      setSelected(option);
-                      setFieldValue(name, option);
+                      setSelected({ label: option.label, value: option.value });
                     }}
                   >
                     {({ selected, active }) => (

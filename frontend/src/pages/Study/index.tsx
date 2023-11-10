@@ -1,5 +1,6 @@
 import { Filter } from "@pages/Study/components/Filter";
 import { Heading } from "@pages/Study/components/Heading";
+import { Playground } from "@study/components/PlayGround";
 import React, { type ReactElement } from "react";
 
 import { DeckCard } from "./components/DeckCard";
@@ -32,6 +33,7 @@ function Study(): ReactElement {
             <DeckCard />
             <DeckCard />
           </div>
+          <Playground />
         </div>
       </div>
     </div>

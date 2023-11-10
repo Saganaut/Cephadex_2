@@ -1,11 +1,11 @@
 // Import Swiper styles
 import "swiper/css";
 
-import { FlashCard } from "@app/Features/Deck/FlashCard";
 import { type Card } from "@customTypes/Deck";
+import { FlashCard } from "@deck/FlashCard";
+import { fetchDeckCardsThunk } from "@services/Api/Deck/CardApiThunks";
 import { fetchDecksThunk } from "@services/Api/Deck/DeckApiThunks";
 import { axiosPrivate } from "@services/axios";
-import { fetchDeckCardsThunk } from "@source/services/Api/Deck/CardApiThunks";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import React, { type ReactElement, useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -39,7 +39,7 @@ export const incrementCard = async (cardId: number): Promise<void> => {
   }
 };
 
-const Study = (): ReactElement => {
+const Playground = (): ReactElement => {
   const decks = useAppSelector((state) => state.decks);
   const dispatch = useAppDispatch();
   const deckCards = useAppSelector((state) => state.deckCards);
@@ -60,7 +60,7 @@ const Study = (): ReactElement => {
     swiperRef.current = ref;
   };
   return (
-    <div className="text-white">
+    <div className="bg-tolopea text-white">
       <h1 className="my-10 text-2xl">Select A deck</h1>
 
       {decks.decks.map((deck) => (
@@ -147,4 +147,4 @@ const Study = (): ReactElement => {
   );
 };
 
-export { Study };
+export { Playground };
