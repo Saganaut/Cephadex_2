@@ -1,10 +1,10 @@
-import React, { type ReactElement, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { type Deck } from "@source/types/Deck";
-import { FlashCard } from "@deck/FlashCard";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { FlashCard } from "@deck/components/FlashCard";
 import { fetchDeckCardsThunk } from "@services/Api/Deck/CardApiThunks";
 import { fetchDecksThunk } from "@services/Api/Deck/DeckApiThunks";
+import { type Deck } from "@source/types/Deck";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import React, { type ReactElement, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const DeckPage = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -31,7 +31,7 @@ const DeckPage = (): ReactElement => {
 
   return (
     <div className="mt-40">
-      <div id="deck-info" className="text-white p-5">
+      <div id="deck-info" className="p-5 text-white">
         Deck info
         {deck ? (
           <>
@@ -48,7 +48,7 @@ const DeckPage = (): ReactElement => {
           <div>Loading deck information...</div>
         )}
       </div>
-      <div id="deck-cards" className="text-white mt-5">
+      <div id="deck-cards" className="mt-5 text-white">
         CARDS
         <div className="flex flex-wrap">
           {deckCards && deckCards.deckCards && deckCards.deckCards.cards ? (

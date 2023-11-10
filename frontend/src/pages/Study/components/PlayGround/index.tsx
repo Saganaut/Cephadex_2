@@ -2,42 +2,13 @@
 import "swiper/css";
 
 import { type Card } from "@customTypes/Deck";
-import { FlashCard } from "@deck/FlashCard";
+import { FlashCard } from "@deck/components/FlashCard";
 import { fetchDeckCardsThunk } from "@services/Api/Deck/CardApiThunks";
 import { fetchDecksThunk } from "@services/Api/Deck/DeckApiThunks";
-import { axiosPrivate } from "@services/axios";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import React, { type ReactElement, useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { type Swiper as SwiperType } from "swiper/types";
-
-export const decrementCard = async (cardId: number): Promise<void> => {
-  try {
-    const res = await axiosPrivate.post(
-      `/study_bp/api_0/study/card/increment/${cardId}`
-    );
-
-    if (res.status === 200) {
-      console.log("OK!, decremented Card");
-    } else console.log("ERROR!, could not decrement Card");
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const incrementCard = async (cardId: number): Promise<void> => {
-  try {
-    const res = await axiosPrivate.post(
-      `/study_bp/api_0/study/card/increment/${cardId}`
-    );
-
-    if (res.status === 200) {
-      console.log("OK!, incremented Card");
-    } else console.log("ERROR!, could not increment Card");
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 const Playground = (): ReactElement => {
   const decks = useAppSelector((state) => state.decks);
@@ -45,13 +16,12 @@ const Playground = (): ReactElement => {
   const deckCards = useAppSelector((state) => state.deckCards);
   const [selectedDeckId, setSelectedDeckId] = useState(0);
   const [activeCard, setActiveCard] = useState<Card>();
-
+  const [show, setShow] = useState(false);
   useEffect(() => {
     void dispatch(fetchDecksThunk());
     void dispatch(fetchDeckCardsThunk(selectedDeckId));
   }, [dispatch, selectedDeckId]);
   const swiperRef = useRef<SwiperType | null>(null);
-  console.log(activeCard);
   useEffect(() => {
     setActiveCard(deckCards?.deckCards?.cards[0]);
   }, [deckCards]);
@@ -59,6 +29,7 @@ const Playground = (): ReactElement => {
   const setSwiperRef = (ref: SwiperType): void => {
     swiperRef.current = ref;
   };
+
   return (
     <div className="bg-tolopea text-white">
       <h1 className="my-10 text-2xl">Select A deck</h1>
@@ -85,14 +56,17 @@ const Playground = (): ReactElement => {
           spaceBetween={0}
           slidesPerView={1}
           onSlideChange={(e) => {
+            setShow(false);
             setActiveCard(deckCards?.deckCards?.cards[e.activeIndex]);
           }}
         >
           {deckCards?.deckCards?.cards.map((card, index) => (
             <SwiperSlide key={index} className={"w-full"}>
-              <div className={"flex w-full items-center justify-center"}>
-                <FlashCard card={card} />
-              </div>
+              {({ isActive }) => (
+                <div className={"flex w-full items-center justify-center"}>
+                  <FlashCard card={card} isActive={isActive} show={show} />
+                </div>
+              )}
             </SwiperSlide>
           ))}
         </Swiper>
@@ -104,16 +78,23 @@ const Playground = (): ReactElement => {
             }
           >
             <button
-              onClick={async () => {
-                await incrementCard(activeCard?.id);
+              onClick={() => {
+                incrementCardFunction(activeCard);
               }}
             >
               Lost it
             </button>
-            <button>Show</button>
             <button
-              onClick={async () => {
-                await decrementCard(activeCard?.id);
+              onClick={() => {
+                setShow(!show);
+              }}
+            >
+              Show
+            </button>
+            <button
+              onClick={() => {
+                setShow(!show);
+                decrementCardFunction(activeCard);
               }}
             >
               Got it
@@ -132,7 +113,6 @@ const Playground = (): ReactElement => {
           >
             Prev
           </button>
-          {/* {activeCard != null && <h1>{activeCard.id}</h1>} */}
           <h1>{activeCard?.id}</h1>
           <button
             onClick={() => {
@@ -148,3 +128,67 @@ const Playground = (): ReactElement => {
 };
 
 export { Playground };
+// Returns The New Card Data after it has been incremented
+export const incrementCardFunction = (card: Card): Card => {
+  const updatedCard = Object.assign({}, card);
+
+  updatedCard["times-correct"] += 1;
+  updatedCard["times-asked"] += 1;
+  updatedCard["times-correct_row"] += 1;
+
+  if (updatedCard["times-correct_row"] > 2) {
+    updatedCard["box-id"] += 1;
+    updatedCard["box-id"] = Math.min(updatedCard["box-id"], 3);
+  }
+  if (updatedCard["box-id"] === 0) {
+    updatedCard["srs-interval"] *= 2;
+  }
+
+  if (updatedCard["box-id"] === 1) {
+    updatedCard["srs-interval"] *= 4;
+  }
+  if (updatedCard["box-id"] === 2) {
+    updatedCard["srs-interval"] *= 6;
+  }
+  if (updatedCard["box-id"] === 3) {
+    updatedCard["srs-interval"] *= 10;
+  }
+  updatedCard["srs-interval"] = Math.min(updatedCard["srs-interval"], 525600);
+
+  if (updatedCard["times-correct_row"] > 3) {
+    updatedCard["srs-interval"] += 1440;
+  }
+
+  updatedCard["time-updated"] = new Date().toISOString().slice(0, 19);
+
+  return updatedCard;
+};
+
+// Returns The New Card Data after it has been decremented
+export const decrementCardFunction = (card: Card): Card => {
+  const updatedCard = Object.assign({}, card);
+
+  updatedCard["times-asked"] += 1;
+  updatedCard["times-correct_row"] = 0;
+  if (updatedCard["box-id"] === 1) {
+    updatedCard["srs-interval"] *= 0.5;
+  }
+  if (updatedCard["box-id"] === 2) {
+    updatedCard["srs-interval"] *= 0.8;
+  }
+  if (updatedCard["box-id"] === 3) {
+    updatedCard["srs-interval"] *= 0.9;
+  }
+
+  if (updatedCard["box-id"] !== 1 && updatedCard["srs-interval"] < 5) {
+    updatedCard["srs-interval"] = 5;
+  }
+
+  if (updatedCard["box-id"] > 0) {
+    updatedCard["box-id"] -= 1;
+  }
+
+  updatedCard["time-updated"] = new Date().toISOString().slice(0, 19);
+
+  return updatedCard;
+};

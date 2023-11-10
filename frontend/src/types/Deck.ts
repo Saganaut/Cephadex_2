@@ -86,12 +86,12 @@ export interface Card {
   img: string | null;
   sound: string | null;
   "boc-id": number | null;
-  "box-id": number | null;
-  "srs-interval": number | null;
+  "box-id": number;
+  "srs-interval": number;
   "time-updated": string | null;
   "times-asked": number;
   "times-correct": number;
-  "times-correct-row": number;
+  "times-correct_row": number;
   "create-method": string | null;
   category: string | null;
   edited: boolean;
