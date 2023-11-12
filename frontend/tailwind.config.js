@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   darkMode: "class",
   content: [
     "./src/pages/**/*.{js,jsx,ts,tsx}",
@@ -13,6 +13,7 @@ module.exports = {
       colors: {
         "electric-violet": {
           DEFAULT: "#6019FF",
+          100: "#4E26A5",
         },
         "blaze-orange": {
           DEFAULT: "#FF6E0B",

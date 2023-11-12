@@ -2,18 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif; 
+  font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -28,13 +26,13 @@ code {
   display: inline-block; /* Make it block-level to control the pseudo-element positioning */
 
   &:after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     right: 0;
     bottom: -5px; /* Adjust this value to move the underline up or down */
     height: 8px; /* Adjust underline thickness as needed */
-    background: linear-gradient(to right, transparent, #FFD700, transparent); 
+    background: linear-gradient(to right, transparent, #ffd700, transparent);
     border-radius: 5px; /* To make the underline slightly curved */
     z-index: -1;
   }
@@ -46,4 +44,22 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
   /* This essentially 'delays' the autofill background color change indefinitely */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  /*box-shadow: inset 0 0 5px grey;*/
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #015bea;
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #0254d1;
 }
