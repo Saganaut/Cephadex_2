@@ -1,25 +1,33 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
 interface ButtonProps {
   label: string;
   onClick: () => void;
   disabled?: boolean;
+  className?: string;
 }
-const Button: React.FC<ButtonProps> = ({ label, onClick, disabled }) => {
+const Button: React.FC<ButtonProps> = ({
+  label,
+  className,
+  onClick,
+  disabled,
+}) => {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={` 
-        hover:scale-101 active:bg-primary-400 hover:bg-blaze-orange-300 cursor-pointer rounded-full
+      className={twMerge(`
+        cursor-pointer rounded-full
        bg-blaze-orange px-[80px] py-[16px] text-[24px]
-        text-white transition-transform hover:shadow-md 
+        text-white
         ${
           disabled === true
             ? "bg-grey-300 cursor-not-allowed text-opacity-10 shadow-none"
             : ""
         }
-      `}
+       ${className}
+      `)}
     >
       {label}
     </button>

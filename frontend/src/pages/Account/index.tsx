@@ -41,7 +41,7 @@ const options = [
 function Account(): ReactElement {
   const user = useSelector((state) => state.user.user);
   if (user == null) return <div>loading...</div>;
-  console.log(user);
+
   return (
     <div>
       {/*   Content */}

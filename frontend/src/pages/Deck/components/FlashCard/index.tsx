@@ -5,7 +5,7 @@ import { useSaveBatch } from "@hooks/useSaveBatch";
 import {
   decrementCardFunction,
   incrementCardFunction,
-} from "@study/components/PlayGround";
+} from "@source/lib/utils/functions";
 import React, { useState } from "react";
 
 interface FlashCardProps {

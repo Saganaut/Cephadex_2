@@ -12,6 +12,7 @@ import { Groups } from "@source/pages/Groups";
 import { Quiz } from "@source/pages/Quiz";
 // import { Play } from "@source/pages/Play";
 import { Quizzes } from "@source/pages/Quizzes";
+import { DeckToStudy } from "@study/components/DeckToStudy";
 // import Blog from "@pages/Blog/Blog";
 // import { Contact } from "@pages/Contact/Contact";
 // import { Documentation } from "@pages/Documentation/Documentation";
@@ -102,13 +103,14 @@ const privateRoutePaths = [
     ),
   },
   {
-    path: "/study",
+    path: "/study/deck/:deckId",
     element: (
       <Layout>
-        <Study />
+        <DeckToStudy />
       </Layout>
     ),
   },
+
   {
     path: "/upgrade",
     element: (
