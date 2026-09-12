@@ -1,0 +1,6 @@
+node_modules
+dist
+/docker/.dockerignore
+/docker/Dockerfile.dev
+/docker/Dockerfile.prod
+/docker/Dockerfile.staging

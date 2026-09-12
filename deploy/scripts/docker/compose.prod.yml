@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ../../frontend
+      dockerfile: docker/Dockerfile.prod
+    ports:
+      - "5173:80"
+    restart: unless-stopped
+
+  server:
+    build:
+      context: ../../server
+      dockerfile: docker/Dockerfile.prod
+    ports:
+      - "5000:8000"
+    restart: unless-stopped
+    environment:
+      - UVICORN_HOST=0.0.0.0
+      - UVICORN_PORT=8000
+      - UVICORN_LOG_LEVEL=info
+      - DEBUG = 0
+    env_file:
+      - ./.env
+
+  job_processing:
+    build:
+      context: ../../server
+      dockerfile: docker/Dockerfile.job_processing
+    ports:
+      - "6000:81"
+    restart: unless-stopped
+    env_file:
+      - ./.env
+# docker-compose -f docker-compose.prod.yml up -d

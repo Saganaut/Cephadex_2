@@ -1,0 +1,29 @@
+{
+    "name": "Job container",
+    "dockerComposeFile": [
+      "../../compose.dev.yml"
+    ],
+    "service": "job_processing",
+    "workspaceFolder": "/code",
+    "customizations": {
+      "vscode": {
+        "settings": {
+          "terminal.integrated.shell.linux": "/bin/fish",
+          "extensions": [
+            "ms-python.python",
+            "ms-python.vscode-pylance",
+            "charliermarsh.ruff",
+            "ms-python-debugpy",
+          ]
+        }
+      }
+    },
+    "shutdownAction": "none",
+
+    "remoteUser": "root",
+    "forwardPorts": [
+      6000,
+      81
+    ]
+  }
+  

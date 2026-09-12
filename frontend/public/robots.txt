@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /register/
+Disallow: /game/
+Disallow: /admin/
+
+User-agent: *
+Allow: /
+
+Sitemap: 

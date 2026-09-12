@@ -1,0 +1,30 @@
+{
+  "name": "Server Container",
+  "dockerComposeFile": [
+    "../../compose.dev.yml"
+  ],
+  "service": "server",
+  "workspaceFolder": "/code",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/fish",
+        "extensions": [
+          "ms-python.python",
+          "ms-python.vscode-pylance",
+          "charliermarsh.ruff",
+          "formulahendry.auto-rename-tag",
+          "ms-python-debugpy",
+          "yoavbls.pretty-ts-errors"
+        ]
+      }
+    }
+  },
+  "shutdownAction": "none",
+
+  "remoteUser": "root",
+  "forwardPorts": [
+    5000,
+    8000
+  ]
+}

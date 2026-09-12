@@ -1,0 +1,107 @@
+[project]
+name = "server"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "aioboto3==12.3.0",
+    "aiomysql==0.2.0",
+    "anthropic==0.52.2",
+    "asyncpg==0.29.0",
+    "bleach==6.1.0",
+    "bs4==0.0.2",
+    "docx2txt==0.8",
+    "email-validator==2.1.1",
+    "fastapi==0.110.0",
+    "google-auth==2.28.1",
+    "gunicorn==21.2.0",
+    "mysql==0.0.3",
+    "mysql-connector-python==8.3.0",
+    "numpy==1.26.4",
+    "openai==1.55.3",
+    "openapi==1.1.0",
+    "pdf2image==1.17.0",
+    "pdfminer-six==20231228",
+    "posthog==3.4.2",
+    "psycopg2-binary==2.9.9",
+    "pydantic-settings==2.2.1",
+    "pydub==0.25.1",
+    "pylatexenc==2.10",
+    "pymediainfo==6.1.0",
+    "pytesseract==0.3.10",
+    "python-dotenv==1.0.1",
+    "python-jose==3.3.0",
+    "python-multipart==0.0.9",
+    "python-pptx==0.6.23",
+    "qrcode==7.4.2",
+    "redis==5.0.2",
+    "reportlab==4.1.0",
+    "sendgrid==6.11.0",
+    "sentry-sdk==1.40.6",
+    "sqlalchemy==2.0.27",
+    "stripe==8.5.0",
+    "tiktoken==0.6.0",
+    "uvicorn==0.27.1",
+    "websockets==12.0",
+    "youtube-transcript-api==0.6.2",
+]
+
+
+
+[tool.ruff.lint]
+select = ["ALL"]
+
+ignore = [
+"FA102",
+"ERA001",
+"D102",
+"TRY300",
+"FA100",
+"D101", 
+"PGH003",
+"D100",
+"D107",
+"D103",
+"TD003",
+"TD002",
+"D400",
+"D415",
+"D205",
+"D104",
+"TRY003",
+"FBT001",
+"FBT002",
+"SIM108",
+"ANN204",
+"N815",
+"D105",
+"D100",
+"PLR0913",
+"B008",
+"D106",
+"D401",
+"TD004",
+"FIX002",
+"DTZ005",
+"DTZ007",
+"DTZ005",
+]
+
+[dependency-groups]
+dev = [
+    "aiosqlite>=0.21.0",
+    "fakeredis[json]>=2.31.1",
+    "httpx>=0.28.1",
+    "pytest>=8.4.2",
+    "pytest-asyncio>=1.2.0",
+]
+[tool.ruff]
+fix = true 
+exclude = ["tests/*", "server/tests/*", "models/helpers/log_decorators.py", "tools/code_review.py"]
+line-length = 100
+
+
+
+
+

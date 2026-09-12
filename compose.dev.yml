@@ -1,0 +1,199 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx_proxy
+    ports: ## Internal -- External
+      - "8081:80" # Expose HTTP traffic
+    volumes: ## volume path relative to the compose file
+      # - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf:ro
+      # Custom Nginx config file
+      - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf:ro
+
+    networks:
+      - internal-network-1
+    depends_on:
+      - frontend
+      - backend
+      - minio
+      - postgres
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./frontend/src:/code/src
+      - ./frontend/public:/code/public
+      - ./frontend/.env.development:/code/.env.development:ro
+      # - frontend_node_modules:/code/node_modules
+    image: frontend-img
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      NODE_ENV: development
+      CHOKIDAR_USEPOLLING: true
+    networks:
+      - internal-network-1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+  backend:
+    container_name: backend
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5000:8000"
+    volumes:
+      - ./server:/code
+    command: uvicorn main:app --host 0.0.0.0 --reload
+    restart: unless-stopped
+    env_file:
+      - ./.env.dev
+    environment:
+      - DOCKER_ENV=true
+    networks:
+      - internal-network-1
+    depends_on:
+      - redis
+      - postgres
+      - minio
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  job_processing:
+    container_name: job_processing
+    build:
+      context: ./server
+      dockerfile: Dockerfile.jobs.dev
+    ports:
+      - "6000:81"
+    volumes:
+      - ./server:/code
+    env_file:
+      - ./.env.dev
+    restart: unless-stopped
+    networks:
+      - internal-network-1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+  postgres:
+    container_name: postgres
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ${PG_DB}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    restart: unless-stopped
+    volumes:
+      # - ./postgres:/docker-entrypoint-initdb.d
+      # - postgres_data:/var/lib/postgresql/data
+      - /mnt/dev_drive/balooski/docker-volumes/cephadex/postgres:/docker-entrypoint-initdb.d
+      - /mnt/dev_drive/balooski/docker-volumes/cephadex/postgres:/var/lib/postgresql/data
+    networks:
+      - internal-network-1
+    ports: # Internal -- External
+      - "5432:5432"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+  redis:
+    container_name: redis
+    image: redis/redis-stack-server:latest
+    ports:
+      - "6378:6378"
+    command:
+      [
+        "redis-server",
+        "--requirepass",
+        "1234",
+        "--loadmodule /opt/redis-stack/lib/redisearch.so",
+        "--loadmodule /opt/redis-stack/lib/rejson.so",
+      ]
+    networks:
+      - internal-network-1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    ports:
+      - "5050:8080"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pro.mccarthy@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_LISTEN_PORT: 8080
+      SERVER_MODE: "False"
+    user: root
+    volumes:
+      # - pgadmin_data:/var/lib/pgadmin
+      - /mnt/dev_drive/balooski/docker-volumes/cephadex/pgadmin-data:/var/lib/pgadmin
+    networks:
+      - internal-network-1
+    depends_on:
+      - postgres
+
+  minio:
+    container_name: minio
+    image: minio/minio:latest
+    command: server /data --console-address ":9003"
+    ports:
+      - "9003:9003" # MinIO Console Port
+    volumes:
+      - /mnt/dev_drive/balooski/docker-volumes/cephadex/minio-data:/data
+      # - minio_data:/data
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    networks:
+      - internal-network-1
+
+volumes:
+  minio_data:
+    external: true
+    name: minio_data
+  postgres_data:
+    external: true
+    name: postgres_data
+  pgadmin_data:
+    external: true
+    name: pgadmin_data
+
+networks:
+  internal-network-1:
+    driver: bridge
+
+  # redisinsight:
+  #   image: redislabs/redisinsight
+  #   container_name: redisinsight
+  #   restart: always
+  #   volumes:
+  #     - redisinsight_data:/db
+  #   ports:
+  #     - "8005:8005"
+  #   networks:
+  #     - internal-network-1
+  #   depends_on:
+  #     - redis

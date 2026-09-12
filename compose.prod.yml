@@ -1,0 +1,153 @@
+services:
+  ceph-nginx_proxy:
+    image: nginx:latest
+    container_name: ceph-nginx_proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes: ## volume path relative to the compose file
+      - ./nginx/nginx.prod.conf:/etc/nginx/nginx.conf:ro
+      - ./certs/origin.crt:/etc/ssl/cloudflare/origin.crt:ro
+      - ./certs/origin.key:/etc/ssl/cloudflare/origin.key:ro
+    networks:
+      - internal-network-1
+    depends_on:
+      - ceph-frontend
+      - ceph-backend
+      - ceph-minio
+      - ceph-postgres
+
+  ceph-frontend:
+    container_name: ceph-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    image: frontend-img
+    restart: unless-stopped
+    expose:
+      - "80"
+    networks:
+      - internal-network-1
+
+  ceph-backend:
+    container_name: ceph-backend
+    build:
+      context: ./server
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./server:/code
+    command: uvicorn main:app --host 0.0.0.0 --log-level info
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      - PG_HOST=ceph-postgres
+      - PG_PORT=5432
+    networks:
+      - internal-network-1
+    depends_on:
+      - ceph-redis
+      - ceph-postgres
+      - ceph-minio
+
+  ceph-job_processing:
+    container_name: ceph-job_processing
+    build:
+      context: ./server
+      dockerfile: Dockerfile.jobs.prod
+    volumes:
+      - ./server:/code
+    env_file:
+      - ./.env
+    restart: unless-stopped
+    networks:
+      - internal-network-1
+
+  ceph-postgres:
+    container_name: ceph-postgres
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ${PG_DB}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    restart: unless-stopped
+    volumes:
+      - /mnt/volume-nbg1-1/pg_data:/var/lib/postgresql/data
+    networks:
+      - internal-network-1
+
+  ceph-redis:
+    container_name: ceph-redis
+    image: redis/redis-stack-server:latest
+    # ports:
+    #   - "6378:6378"
+    command:
+      [
+        "redis-server",
+        "--requirepass",
+        "1234",
+        "--loadmodule /opt/redis-stack/lib/redisearch.so",
+        "--loadmodule /opt/redis-stack/lib/rejson.so",
+      ]
+    networks:
+      - internal-network-1
+
+  ceph-pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: ceph-pgadmin
+    ports:
+      - "5050:8080"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_LISTEN_PORT: ${PGADMIN_LISTEN_PORT}
+      SERVER_MODE: "False"
+    volumes:
+      # - pgadmin_data:/var/lib/pgadmin
+      - /mnt/volume-nbg1-1/pgadmin_data:/var/lib/pgadmin
+      - ./dumps:/var/lib/pgadmin/dumps:ro
+    networks:
+      - internal-network-1
+    depends_on:
+      - ceph-postgres
+
+  ceph-minio:
+    container_name: ceph-minio
+    image: minio/minio:latest
+    command: server /data --console-address ":9003"
+    ports:
+      - "9003:9003" # MinIO Console Port
+    volumes:
+      - /mnt/volume-nbg1-1/minio_data:/data
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    networks:
+      - internal-network-1
+
+volumes:
+  minio_data:
+    external: true
+    name: minio_data
+  postgres_data:
+    external: true
+    name: postgres_data
+  pgadmin_data:
+    external: true
+    name: pgadmin_data
+
+networks:
+  internal-network-1:
+    driver: bridge
+# redisinsight:
+#   image: redislabs/redisinsight
+#   container_name: redisinsight
+#   restart: always
+#   volumes:
+#     - redisinsight_data:/db
+#   ports:
+#     - "8005:8005"
+#   networks:
+#     - internal-network-1
+#   depends_on:
+#     - redis

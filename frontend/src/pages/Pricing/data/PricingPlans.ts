@@ -1,0 +1,73 @@
+const PricingPlans = [
+  {
+    plan: "free",
+    title: "Cuttle Cadet",
+    price: {
+      monthly: "0",
+      annual: "0",
+    },
+    image: "",
+    features: [
+      "50 credits a month*",
+      "Create Unlimited Decks",
+      "Create Unlimited Flashcards",
+      "Take quizzes",
+      "Play Games",
+    ],
+    populartag: false,
+    text: "Get started today",
+    link: "Register",
+    CTA: "SIGN UP FOR FREE",
+  },
+  {
+    plan: "basic",
+    title: "Squid Scholar",
+    price: {
+      monthly: "4.99",
+      annual: "49.99",
+    },
+    image: "",
+    features: [
+      "500 credits per month*",
+      "Create Unlimited Decks",
+      "Create Unlimited Flashcards",
+      "Take quizzes",
+      "Play Games",
+      "Auto grade quizzes",
+      "Tutor bot",
+    ],
+    populartag: false,
+    text: "Get your feet wet",
+    link: "Upgrade",
+    CTA: "TRY FOR FREE FOR 14 DAYS",
+  },
+  {
+    plan: "premium",
+    title: "Octopus Oracle",
+    price: {
+      monthly: "9.99",
+      annual: "99.99",
+    },
+    image: "",
+    features: [
+      "Unlimited credits",
+      "Create Unlimited Decks",
+      "Create Unlimited Flashcards",
+      "Take quizzes",
+      "Play Games",
+      "Auto grade quizzes",
+      "Create Custom Cards",
+      "Advanced Tutor bot",
+      "Chat with your documents",
+      "Advanced tutor bot",
+      "AI Card regeneration",
+      "Priority access to new features",
+    ],
+    populartag: true,
+    text: "Dive right in!",
+    link: "Upgrade",
+    CTA: "TRY FOR FREE FOR 14 DAYS",
+  },
+];
+
+export { PricingPlans };

@@ -1,0 +1,10 @@
+{
+  "python.analysis.extraPaths": ["${workspaceFolder}/server"],
+  "python.defaultInterpreterPath": "/home/balooski/Repos/Cephadex_2/server/myenv/bin/python3.12",
+
+  "eslint.options": {
+    "overrideConfigFile": "eslint.config.mjs"
+  },
+  "eslint.workingDirectories": ["${workspaceFolder}/frontend/"],
+  "eslint.lintTask.enable": true
+}

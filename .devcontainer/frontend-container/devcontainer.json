@@ -1,0 +1,20 @@
+{
+  "name": "Frontend Container",
+  "dockerComposeFile": [
+    "../../compose.dev.yml"
+  ],
+  "service": "frontend",
+  "workspaceFolder": "/code",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/fish",
+        "extensions": [
+          "yoavbls.pretty-ts-errors"
+        ]
+      }
+    }
+  },
+  "shutdownAction": "none",
+  "remoteUser": "root"
+}

@@ -1,0 +1,36 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Attach to Server",
+        "type": "shell",
+        "command": "code",
+        "args": [
+          ".",
+          "--folder-uri",
+          "vscode-remote://dev-container+server+cephadex_2/"
+        ]
+      },
+      {
+        "label": "Attach to Frontend",
+        "type": "shell",
+        "command": "code",
+        "args": [
+          ".",
+          "--folder-uri",
+          "vscode-remote://dev-container+frontend+cephadex_2/"
+        ]
+      },
+      {
+        "label": "Attach to job_processing",
+        "type": "shell",
+        "command": "code",
+        "args": [
+          ".",
+          "--folder-uri",
+          "vscode-remote://dev-container+job_processing+cephadex_2/"
+        ]
+      }
+    ]
+  }
+  

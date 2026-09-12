@@ -1,0 +1,84 @@
+
+# Build stage
+FROM python:3.12-alpine AS builder
+
+WORKDIR /code
+
+RUN apk update && apk --no-cache add \
+    mariadb-connector-c-dev \
+    build-base
+
+COPY ./reqs/requirements_job_processing.txt /code/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+
+COPY ./ /code
+
+FROM python:3.12-alpine
+
+WORKDIR /code
+
+COPY --from=builder /usr/local/lib/python3.*/site-packages /usr/local/lib/python3.12/site-packages
+
+#TODO: Is this necessary?
+COPY --from=builder /usr/local/bin /usr/local/bin 
+
+COPY ./ /code
+
+
+
+EXPOSE 81
+
+CMD ["python", "job_processing.py"]
+
+# FROM python:3.12-slim
+
+
+# WORKDIR /code
+
+
+# RUN apt-get update && apt-get install -y \
+#     default-libmysqlclient-dev \
+#     build-essential \
+#     pkg-config \
+#     && rm -rf /var/lib/apt/lists/*
+
+
+# COPY ./requirements_job_processing.txt /code/requirements.txt
+
+# RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+
+# COPY ./ /code
+
+
+# EXPOSE 81
+
+
+# ## python job_processing.py
+# CMD ["python", "job_processing.py"]
+
+# FROM python:3.12-alpine
+
+# WORKDIR /code
+
+# # Install dependencies required for compiling mysqlclient
+# RUN apk --no-cache add \
+#     mariadb-connector-c-dev \
+#     build-base \
+#     && apk add --no-cache --virtual .build-deps \
+#     gcc \
+#     musl-dev \
+#     mariadb-dev
+
+# COPY ./requirements_job_processing.txt /code/requirements.txt
+
+# # Install Python dependencies
+# RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt \
+#     # Cleanup unnecessary files
+#     && apk del .build-deps
+
+# COPY ./ /code
+
+# EXPOSE 81
+
+# CMD ["python", "job_processing.py"]

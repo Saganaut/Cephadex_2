@@ -1,0 +1,10 @@
+__pycache__
+.pytest_cache
+job-venv
+venv
+.dockerignore
+logs
+.env
+.dockerignore
+Dockerfile.dev
+Dockerfile.prod

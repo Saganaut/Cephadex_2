@@ -1,0 +1,48 @@
+
+
+services:
+    - type: web
+      name: server
+      runtime: docker
+      dockerfilePath: ./docker/Dockerfile.prod
+      healthCheckPath: /info/healthcheck
+      region: frankfurt
+      plan: standard
+      rootDir: ./server
+      envVars:
+          - key: UVICORN_HOST
+            value: 0.0.0.0
+          - key: UVICORN_PORT
+            value: 8000
+          - key: UVICORN_LOG_LEVEL
+            value: info
+          - key: DEBUG
+            value: 0
+      dockerContext: .
+
+    - type: web
+      name: frontend
+      runtime: docker
+      dockerfilePath: ./docker/Dockerfile.prod
+      region: frankfurt
+      plan: starter
+      rootDir: frontend
+
+    - type: worker
+      name: job_processing
+      runtime: docker
+      dockerfilePath: ./docker/Dockerfile.job_processing
+      region: frankfurt
+      plan: starter
+      rootDir: ./server
+      dockerContext: .
+
+    - type: cron
+      name: sub_rollover
+      runtime: docker
+      schedule: '0 6 * * *'
+      dockerfilePath: ./docker/Dockerfile.cron
+      region: frankfurt
+      plan: starter
+      rootDir: ./server
+      dockerContext: .

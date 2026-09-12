@@ -1,0 +1,82 @@
+certs/
+
+# IDE and Editor files
+.vscode/
+.idea/
+.devcontainer/
+.devcontianer/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.prettierrc
+.eslintrc.cjs
+.DS_Store
+
+# Environment files
+.env
+env/.env
+env/.env.*
+server/.env
+frontend/env/.env.*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.ruff_cache/
+server/venv/
+server/.venv/
+server/myenv/
+server/mynewvenv/
+
+# Node
+node_modules/
+frontend/node_modules/
+package-lock.json
+package.json
+frontend/.pnp
+frontend/.pnp.js
+
+# Logs
+*.log
+server/logs/
+frontend/logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Build and Distribution
+frontend/build/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+
+# Testing and Coverage
+frontend/coverage/
+frontend/stats.html
+
+# Server specific
+server/static/
+server/training_data/
+server/report.csv
+server/temp/
+
+# Database
+postgres-data/
+backups/*.sql
+services/db/data/
+
+# Microsoft Identity
+frontend/public/microsoft-identity-association.json
+.env*
+.flaskenv*
+!.env.project
+
+
+.devcontainer
+.vscode
+.aider*

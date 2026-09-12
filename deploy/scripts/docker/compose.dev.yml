@@ -1,0 +1,77 @@
+services:
+  server:
+    build:
+      context: ../../
+      dockerfile: server/deploy/docker/Dockerfile.dev
+    ports:
+      - "5000:8000"
+    volumes:
+      - ../../server:/code
+    environment:
+      - UVICORN_HOST=0.0.0.0
+      - UVICORN_PORT=8000
+      - UVICORN_LOG_LEVEL=debug
+      - DEBUG=1
+      - PYTHONUNBUFFERED=1
+    command: uvicorn main:app --host 0.0.0.0 --reload
+    restart: unless-stopped
+    env_file:
+      - ./env/.env.dev
+    depends_on:
+      - redis
+      - postgres
+
+  job_processing:
+    build:
+      context: ../../
+      dockerfile: server/deploy/docker/Dockerfile.job_processing
+    ports:
+      - "6000:81"
+    volumes:
+      - ../../server:/code
+    restart: unless-stopped
+    env_file:
+      - ./env/.env.dev
+
+  frontend:
+    build:
+      context: ../../
+      dockerfile: frontend/deploy/docker/Dockerfile.dev
+    volumes:
+      - ../../frontend:/code
+      - /code/node_modules
+    network_mode: "host"
+    image: ceph_frontend
+    restart: unless-stopped
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - VITE_SENTRY_AUTH_TOKEN =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
+
+  postgres:
+    image: postgres:16
+    environment:
+      PG_DB: db
+      PG_USER: user
+      PG_PASSWORD: 1234
+    restart: unless-stopped
+    volumes:
+      - ./postgres:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis/redis-stack-server:latest
+    ports:
+      - "6379:6379"
+    command:
+      [
+        "redis-server",
+        "--requirepass",
+        "1234",
+        "--loadmodule /opt/redis-stack/lib/redisearch.so",
+        "--loadmodule /opt/redis-stack/lib/rejson.so",
+      ]
+
+volumes:
+  postgres_data:
