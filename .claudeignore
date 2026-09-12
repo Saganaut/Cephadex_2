@@ -1,26 +1,31 @@
 # Claude Ignore File
-# Excludes files/directories that Claude doesn't need to read for development tasks
 
-# Virtual environments and dependencies
+## Excludes files/directories that Claude doesn't need to read for development tasks
+
+## Virtual environments and dependencies
+
 server/myenv/
 frontend/node_modules/
 **/__pycache__/
 *.pyc
 *.pyo
 
-# Build outputs and generated files
+## Build outputs and generated files
+
 frontend/dist/
 frontend/build/
 server/static/
 *.min.js
 *.min.css
 
-# Log files
+## Log files
+
 *.log
 logs/
 server/logs/
 
-# Environment and sensitive files
+## Environment and sensitive files
+
 .env
 .env.local
 .env.prod
@@ -29,35 +34,41 @@ server/logs/
 *.key
 *.pem
 
-# OS and IDE files
+## OS and IDE files
+
 .DS_Store
 Thumbs.db
 *.swp
 *.swo
 *~
 
-# Package manager files
+## Package manager files
+
 package-lock.json
 *.lock
 *.backup
 
-# Cache directories
+## Cache directories
+
 .cache/
 .pytest_cache/
 .eslintcache
 **/.coverage
 htmlcov/
 
-# Docker and container files
+## Docker and container files
+
 *.tar
 *.tar.gz
 
-# Database files
+## Database files
+
 *.db
 *.sqlite
 *.sqlite3
 
-# Large binary files and media
+## Large binary files and media
+
 *.pdf
 *.mp4
 *.avi
@@ -75,40 +86,49 @@ htmlcov/
 *.ttf
 *.eot
 
-# Documentation that's not code-related
+## Documentation that's not code-related
+
 docs/images/
 *.docx
 *.pptx
 
-# Backup files
+## Backup files
+
 *.bak
 *.backup
 *.orig
 
-# Git files
+## Git files
+
 .git/
 
-# Test coverage reports
+## Test coverage reports
+
 coverage/
 .nyc_output/
 
-# Temporary files
+## Temporary files
+
 tmp/
 temp/
 *.tmp
 
-# IDE specific files
+## IDE specific files
+
 .vscode/settings.json
 .idea/
 *.code-workspace
 
-# Deployment and infrastructure
+## Deployment and infrastructure
+
 deploy/secrets/
 *.pem
 *.crt
 
-# AI training data (likely large)
+## AI training data (likely large)
+
 training_data/
 
-# Aider cache
+## Aider cache
+
 .aider.tags.cache.v4/

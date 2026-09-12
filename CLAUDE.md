@@ -19,6 +19,7 @@ Stripe payments and SendGrid email. Do not assume these code paths work end-to-e
 ## Architecture
 
 ### Core Services
+
 1. **Server** (`/server`) - FastAPI backend with API endpoints
 2. **Frontend** (`/frontend`) - React TypeScript application
 3. **Job Processing Service** - Async content generation and AI processing
@@ -28,6 +29,7 @@ Stripe payments and SendGrid email. Do not assume these code paths work end-to-e
 7. **MinIO** - S3-compatible object storage
 
 ### Key Features
+
 - AI-powered content generation (flashcards, notes from PDFs/audio/web)
 - Intelligent chatbot with RAG (Retrieval-Augmented Generation)
 - Spaced repetition system for learning
@@ -38,6 +40,7 @@ Stripe payments and SendGrid email. Do not assume these code paths work end-to-e
 ## Development Commands
 
 ### Frontend (`/frontend`)
+
 ```bash
 npm run dev          # Start development server
 npm run build        # Production build
@@ -46,6 +49,7 @@ npm run generate-client  # Generate API types from OpenAPI spec
 ```
 
 ### Backend (`/server`)
+
 ```bash
 # Python environment management
 cd server && source myenv/bin/activate
@@ -62,6 +66,7 @@ pytest tests/        # Run specific test directory (legacy)
 ```
 
 ### Docker Development
+
 ```bash
 docker compose -f compose.dev.yml up    # Start all development services
 docker compose -f compose.prod.yml up   # Start production services
@@ -102,12 +107,14 @@ docker compose -f compose.prod.yml up   # Start production services
 ## Testing
 
 ### Backend
+
 - Framework: Pytest
 - Location: `server/tests/`
 - Coverage: Currently low, needs improvement
 - Run: `cd server && pytest`
 
 ### Frontend
+
 - Framework: Vitest + React Testing Library + MSW (see `frontend/TESTING.md`)
 - Run: `cd frontend && npm run test`
 
@@ -120,12 +127,14 @@ docker compose -f compose.prod.yml up   # Start production services
 ## Common Tasks
 
 ### Regenerate Frontend API Types
+
 ```bash
 cd frontend
 npm run generate-client
 ```
 
 ### Add New Dependencies
+
 ```bash
 # Frontend
 cd frontend && npm install <package>
@@ -135,11 +144,13 @@ cd server && pip install <package>
 ```
 
 ### Database Changes
+
 - Models located in `server/models/`
 - Use SQLAlchemy for database operations
 - PostgreSQL as primary database
 
 ### Environment Setup
+
 - Development: Use `compose.dev.yml`
 - Production: Use `compose.prod.yml`
 - Environment variables in `.env*` files
@@ -147,11 +158,13 @@ cd server && pip install <package>
 ## Code Quality
 
 ### Backend (Python)
+
 - Linter: Ruff (configured in `pyproject.toml`)
 - Line length: 100 characters
 - Many rules ignored for practical development
 
 ### Frontend (TypeScript)
+
 - Linter: ESLint with TypeScript rules
 - Formatter: Prettier
 - Style: TailwindCSS
